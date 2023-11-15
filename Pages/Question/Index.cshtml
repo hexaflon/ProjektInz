@@ -1,0 +1,49 @@
+﻿@page
+@model TestTest.Pages.Question.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Pytanie[0].Tresc)
+            </th>
+            <th>
+                Kategoria
+            </th>
+            <th>
+                Typ pytania
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Pytanie) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tresc)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdKategoriiNavigation.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)
+            </td>
+            <td>
+                <a asp-page="/Answer/CreateWithQuestionId" asp-route-id="@item.Id">Dodaj Odpowiedź</a>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
