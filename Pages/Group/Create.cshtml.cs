@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TestTest.Models.Db;
 
-namespace ProjektInzynierski.Pages.Exam
+namespace ProjektInzynierski.Pages.Group
 {
     public class CreateModel : PageModel
     {
@@ -20,29 +20,36 @@ namespace ProjektInzynierski.Pages.Exam
 
         public IActionResult OnGet()
         {
-        ViewData["IdGrupy"] = new SelectList(_context.Grupy, "IdGrupy", "Nazwa");
+        
+            //ViewData["IdNauczyciela"] = new SelectList(_context.Osoba.Where(o => o.StatusNavigation.Nazwa.ToLower().Contains("uczen")), "IdOsoba", "imie" + " " + "nazwisko" + "email");
             return Page();
         }
 
         [BindProperty]
-        public Test Test { get; set; } = default!;
+        public Grupy Grupy { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Test == null || Test == null)
+            if (!ModelState.IsValid || _context.Grupy == null || Grupy == null)
             {
                 return Page();
             }
-            Test.DataUtworzenia = DateTime.Now;
-            //dodać dla obecnego użytkownika
-            Test.IdNauczyciela = 1;
 
-            _context.Test.Add(Test);
+            var grupyList = _context.Grupy.ToList();
+
+            if (grupyList == null) Grupy.IdGrupy = 0;
+            else
+            {
+                Grupy.IdGrupy = grupyList.OrderByDescending(gr => gr.IdGrupy).Select(gr => gr.IdGrupy).FirstOrDefault()+1;
+            }
+            //zmienić na obecnego użytkownika
+            Grupy.IdNauczyciela = 1;
+            _context.Grupy.Add(Grupy);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./List");
+            return RedirectToPage("./AddMembers", new {id = Grupy.IdGrupy});
         }
     }
 }
