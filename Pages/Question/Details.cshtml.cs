@@ -22,12 +22,12 @@ namespace TestTest.Pages.Question
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Pytania == null)
+            if (id == null || _context.Pytanie == null)
             {
                 return NotFound();
             }
 
-            var pytanie = await _context.Pytania.FirstOrDefaultAsync(m => m.Id == id);
+            var pytanie = await _context.Pytanie.FirstOrDefaultAsync(m => m.IdPytanie == id);
             if (pytanie == null)
             {
                 return NotFound();

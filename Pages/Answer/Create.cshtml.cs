@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using TestTest.Models.Db;
 
 namespace TestTest.Pages.Answer
@@ -16,52 +18,56 @@ namespace TestTest.Pages.Answer
         public CreateModel(TestTest.Models.Db.DatabaseContext context)
         {
             _context = context;
+            
         }
         [BindProperty]
-        public OdpowiedziDto Odpowiedzi { get; set; } = default!;
-        
-        public IActionResult OnGet()
+        public Odpowiedz Odpowiedz { get; set; }
+        public Pytanie wysPytanie { get; set; }
+
+        public IActionResult OnGet([FromQuery]int? id)
         {
-            List<SelectListItem> IdPytania = new List<SelectListItem>();
-            var IdPytaniaList = _context.Pytania.ToList();
-            //Console.WriteLine(IdPytaniaList)
-            foreach(var kat in IdPytaniaList)
+            if (id.HasValue)
             {
-                IdPytania.Add(new SelectListItem { Value = Convert.ToString(kat.Id), Text = kat.Tresc });
+                ViewData["id"] = id;
+                if (_context.Pytanie == null) return Page();
+                var PytanieList = _context.Pytanie.Include(p => p.Odpowiedz).ToList();
+                wysPytanie = (from pyt in PytanieList
+                              where pyt.IdPytanie == id
+                              select pyt).FirstOrDefault();
+                if (wysPytanie == null) return RedirectToPage("/Question/Index");
             }
-            ViewData["IdPytania"] = IdPytania;
+            else
+            {
+                ViewData["id"] = -1;
+            }
+            
+            
             return Page();
         }
-
-
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync([FromQuery]int id)
         {
-          if (!ModelState.IsValid || _context.Odpowiedzi == null || Odpowiedzi == null)
+            var pytanie = _context.Pytanie.FirstOrDefault(p => p.IdPytanie == id);
+            if (pytanie == null) return NotFound();
+            if (!ModelState.IsValid||_context.Odpowiedz == null || Odpowiedz == null)
             {
                 return Page();
             }
-            if (_context.Odpowiedzi == null) Odpowiedzi.Id = 0;
+            if (_context.Odpowiedz == null) Odpowiedz.IdOdpowiedz = 0;
             else
             {
-                var OdpowiedziList = _context.Pytania.ToList();
-                Odpowiedzi.Id = (from odp in OdpowiedziList
-                              orderby Odpowiedzi.Id descending
-                              select Odpowiedzi.Id).FirstOrDefault() + 1;
+                var OdpowiedziList = _context.Odpowiedz.ToList();
+                Odpowiedz.IdOdpowiedz = (from odp in OdpowiedziList
+                              orderby odp.IdOdpowiedz descending
+                              select odp.IdOdpowiedz).FirstOrDefault() + 1;
+
             }
+            if (id != null) Odpowiedz.IdPytanie = id;
 
-            Odpowiedzi nowaOdpowiedz = new Odpowiedzi();
-
-            nowaOdpowiedz.Id = Odpowiedzi.Id;
-            nowaOdpowiedz.IdPytania = Convert.ToInt32(Odpowiedzi.IdPytania);
-            nowaOdpowiedz.Odpowiedz = Odpowiedzi.Odpowiedz;
-            nowaOdpowiedz.CzyPoprawna = Odpowiedzi.CzyPoprawna;
-
-            _context.Odpowiedzi.Add(nowaOdpowiedz);
+            _context.Odpowiedz.Add(Odpowiedz);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("", new { id = id });
         }
     }
 }

@@ -3,6 +3,8 @@
 
 @{
     ViewData["Title"] = "Index";
+
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <h1>Index</h1>
@@ -10,17 +12,27 @@
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+@{
+    var katP = "Kategoria pytania";
+    var emailN = "Email nauczyciela";
+    var typP = "Typ pytania";
+    var trescP = "Tresc pytania";
+}
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.Pytanie[0].Tresc)
+                @Html.DisplayFor(model => trescP)
             </th>
             <th>
-                Kategoria
+
+                @Html.DisplayFor(model => katP)
             </th>
             <th>
-                Typ pytania
+                @Html.DisplayFor(model => emailN)
+            </th>
+            <th>
+                @Html.DisplayFor(model => typP)
             </th>
             <th></th>
         </tr>
@@ -32,18 +44,40 @@
                 @Html.DisplayFor(modelItem => item.Tresc)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdKategoriiNavigation.Nazwa)
+                @Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)
+                @Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.Email)
             </td>
             <td>
-                <a asp-page="/Answer/CreateWithQuestionId" asp-route-id="@item.Id">Dodaj Odpowiedź</a>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-page="./Edit" asp-route-id="@item.IdPytanie">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.IdPytanie">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.IdPytanie">Delete</a>
             </td>
-        </tr>
-}
+            </tr>
+            if(@item.Odpowiedz != null)
+            {
+                <tr><td><b>Odpowiedzi</b></td></tr>
+                foreach(var answer in item.Odpowiedz)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(model => answer.TrescOdpowiedzi)
+                        </td>
+                        <td>
+                            @Html.DisplayFor(modle => answer.CzyPoprawny)
+                        </td>
+                    </tr>
+                }
+            }
+            <tr>
+                <td>
+
+                </td>
+                <td>
+                <a asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

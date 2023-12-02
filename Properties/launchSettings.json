@@ -8,7 +8,7 @@
     }
   },
   "profiles": {
-    "TestTest": {
+    "ProjektInzynierski": {
       "commandName": "Project",
       "dotnetRunMessages": true,
       "launchBrowser": true,

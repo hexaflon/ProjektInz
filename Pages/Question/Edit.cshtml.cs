@@ -24,19 +24,20 @@ namespace TestTest.Pages.Question
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Pytania == null)
+            if (id == null || _context.Pytanie == null)
             {
                 return NotFound();
             }
 
-            var pytanie =  await _context.Pytania.FirstOrDefaultAsync(m => m.Id == id);
+            var pytanie =  await _context.Pytanie.FirstOrDefaultAsync(m => m.IdPytanie == id);
             if (pytanie == null)
             {
                 return NotFound();
             }
             Pytanie = pytanie;
-           ViewData["IdKategorii"] = new SelectList(_context.Kategorie, "Id", "Id");
-           ViewData["IdTypPytania"] = new SelectList(_context.TypPytan, "Id", "Id");
+           ViewData["IdKategoriaPytania"] = new SelectList(_context.KategoriaPytania, "IdKategoriaPytania", "IdKategoriaPytania");
+           ViewData["IdNauczyciela"] = new SelectList(_context.Osoba, "IdOsoba", "IdOsoba");
+           ViewData["IdTypPytania"] = new SelectList(_context.TypPytania, "IdTypPytania", "IdTypPytania");
             return Page();
         }
 
@@ -57,7 +58,7 @@ namespace TestTest.Pages.Question
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!PytanieExists(Pytanie.Id))
+                if (!PytanieExists(Pytanie.IdPytanie))
                 {
                     return NotFound();
                 }
@@ -72,7 +73,7 @@ namespace TestTest.Pages.Question
 
         private bool PytanieExists(int id)
         {
-          return (_context.Pytania?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Pytanie?.Any(e => e.IdPytanie == id)).GetValueOrDefault();
         }
     }
 }

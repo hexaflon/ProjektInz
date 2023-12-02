@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Net.Http.Headers;
 using TestTest.Models.Db;
 
 namespace TestTest.Pages.Question
@@ -22,12 +23,23 @@ namespace TestTest.Pages.Question
 
         public async Task OnGetAsync()
         {
-            if (_context.Pytania != null)
+            if (_context.Pytanie != null)
             {
-                Pytanie = await _context.Pytania
-                .Include(p => p.IdKategoriiNavigation)
-                .Include(p => p.IdTypPytaniaNavigation).ToListAsync();
+                Pytanie = await _context.Pytanie
+                .Include(p => p.IdKategoriaPytaniaNavigation)
+                .Include(p => p.IdNauczycielaNavigation)
+                .Include(p => p.IdTypPytaniaNavigation)
+                .Include(p => p.Odpowiedz)
+                .ToListAsync();
+
+                Pytanie = Pytanie.OrderByDescending(p => p.Odpowiedz.FirstOrDefault()?.IdPytanie).ToList();
             }
+        }
+        public IActionResult OnGetAddAnswer(int idPytanie)
+        {
+            if (idPytanie == null) return Page();
+
+            return RedirectToPage("/Answer/Create",new{id=idPytanie });
         }
     }
 }
