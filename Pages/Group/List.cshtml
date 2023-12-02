@@ -1,0 +1,43 @@
+﻿@page
+@model ProjektInzynierski.Pages.Group.ListModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Grupy[0].Nazwa)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Grupy[0].IdNauczycielaNavigation)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Grupy) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Nazwa)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.IdOsoba)
+            </td>
+            <td>
+                <a asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.IdGrupy">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.IdGrupy">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

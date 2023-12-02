@@ -51,6 +51,7 @@ namespace TestTest.Pages.Question
                 id = query.IdPytanie + 1;
             }
             Pytanie.IdPytanie = id;
+            //dodać dla obecnego użytkownika
             Pytanie.IdNauczyciela = 1;
             _context.Pytanie.Add(Pytanie);
             await _context.SaveChangesAsync();
