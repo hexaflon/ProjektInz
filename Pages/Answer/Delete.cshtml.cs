@@ -19,16 +19,16 @@ namespace TestTest.Pages.Answer
         }
 
         [BindProperty]
-      public Odpowiedzi Odpowiedzi { get; set; } = default!;
+      public Odpowiedz Odpowiedzi { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Odpowiedzi == null)
+            if (id == null || _context.Odpowiedz == null)
             {
                 return NotFound();
             }
 
-            var odpowiedzi = await _context.Odpowiedzi.FirstOrDefaultAsync(m => m.Id == id);
+            var odpowiedzi = await _context.Odpowiedz.FirstOrDefaultAsync(m => m.IdOdpowiedz == id);
 
             if (odpowiedzi == null)
             {
@@ -43,16 +43,16 @@ namespace TestTest.Pages.Answer
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Odpowiedzi == null)
+            if (id == null || _context.Odpowiedz == null)
             {
                 return NotFound();
             }
-            var odpowiedzi = await _context.Odpowiedzi.FindAsync(id);
+            var odpowiedzi = await _context.Odpowiedz.FindAsync(id);
 
             if (odpowiedzi != null)
             {
                 Odpowiedzi = odpowiedzi;
-                _context.Odpowiedzi.Remove(Odpowiedzi);
+                _context.Odpowiedz.Remove(Odpowiedzi);
                 await _context.SaveChangesAsync();
             }
 

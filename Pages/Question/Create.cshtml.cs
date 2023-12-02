@@ -20,53 +20,39 @@ namespace TestTest.Pages.Question
 
         public IActionResult OnGet()
         {
-            List<SelectListItem> kategorieList = new List<SelectListItem>();
-            var kategorie = _context.Kategorie;
-            foreach(var kat in kategorie)
-            {
-                kategorieList.Add(new SelectListItem { Value = Convert.ToString(kat.Id), Text = kat.Nazwa });
-            }
-            ViewData["Kategorie"] = kategorieList;
-
-            List<SelectListItem> typPytaniaList = new List<SelectListItem>();
-            var typPytan = _context.TypPytan;
-            foreach (var typ in typPytan)
-            {
-                typPytaniaList.Add(new SelectListItem { Value = Convert.ToString(typ.Id), Text = typ.Nazwa });
-            }
-            ViewData["TypPytania"] = typPytaniaList;
-
+            
+        ViewData["IdKategoriaPytania"] = new SelectList(_context.KategoriaPytania, "IdKategoriaPytania", "Nazwa");
+        ViewData["IdTypPytania"] = new SelectList(_context.TypPytania, "IdTypPytania", "Nazwa");
+            
             return Page();
         }
 
         [BindProperty]
-        public PytanieDto Pytanie { get; set; } = default!;
+        public Pytanie Pytanie { get; set; } = default!;
         
 
-        // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Pytania == null || Pytanie == null)
+          if (!ModelState.IsValid || Pytanie == null || _context.Pytanie == null)
             {
                 return Page();
             }
-            if (_context.Pytania == null) Pytanie.Id = 0;
+
+
+            /*Dodać dla aktywnego użytkownika
+             * 
+             * 
+             */
+            int id;
+            var query = _context.Pytanie.OrderByDescending(x => x.IdPytanie).FirstOrDefault();
+            if (query == null) id = 0;
             else
             {
-                var pytania = _context.Pytania.ToList();
-                Pytanie.Id = (from pytanie in pytania
-                           orderby pytanie.Id descending
-                           select pytanie.Id).FirstOrDefault() + 1;
+                id = query.IdPytanie + 1;
             }
-
-            Pytanie nowePytanie = new Pytanie();
-            nowePytanie.Id = Pytanie.Id;
-            nowePytanie.IdTypPytania = Convert.ToInt32(Pytanie.IdTypPytania);
-            nowePytanie.IdKategorii = Convert.ToInt32(Pytanie.IdKategorii);
-            nowePytanie.Tresc = Pytanie.Tresc;
-
-
-            _context.Pytania.Add(nowePytanie);
+            Pytanie.IdPytanie = id;
+            Pytanie.IdNauczyciela = 1;
+            _context.Pytanie.Add(Pytanie);
             await _context.SaveChangesAsync();
 
             return RedirectToPage("./Index");

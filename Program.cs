@@ -12,7 +12,7 @@ namespace TestTest
             var AppName = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
             // Add services to the container.
             builder.Services.AddRazorPages();
-            
+
             builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(AppName.GetSection("ConnectionStrings")["DB_Login"]));
 
             var app = builder.Build();
@@ -22,6 +22,9 @@ namespace TestTest
             {
                 app.UseExceptionHandler("/Error");
             }
+            
+            
+            
             app.UseStaticFiles();
 
             app.UseRouting();
@@ -29,6 +32,8 @@ namespace TestTest
             app.UseAuthorization();
 
             app.MapRazorPages();
+
+            app.UseAuthentication();
 
             app.Run();
         }

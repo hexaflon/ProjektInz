@@ -1,0 +1,107 @@
+﻿@page
+@model ProjektInzynierski.Pages.Exam.ListModel
+
+@{
+    ViewData["Title"] = "List";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>List</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+@{
+    var widocznosc = "czy widoczny";
+    var dataUtworzenia = "data utworzenia";
+    var dataRozpoczecia = "data rozpoczecia";
+    var dataZakonczenia = "data zakonczenia";
+    var tytul = "tytuł";
+    var opis = "opis";
+    var czasTrwania = "czas trwania";
+    var grupa = "grupa";
+    var pytania = "Pytania";
+}
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayFor(model => widocznosc)
+            </th>
+            <th>
+                @Html.DisplayFor(model => dataUtworzenia)
+            </th>
+            <th>
+                @Html.DisplayFor(model => dataRozpoczecia)
+            </th>
+            <th>
+                @Html.DisplayFor(model => dataZakonczenia)
+            </th>
+            <th>
+                @Html.DisplayFor(model => tytul)
+            </th>
+            <th>
+                @Html.DisplayFor(model => opis)
+            </th>
+            <th>
+                @Html.DisplayFor(model => czasTrwania)
+            </th>
+            <th>
+                @Html.DisplayFor(model => grupa)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Test) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.CzyWidoczny)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataUtworzenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataRozpoczecia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DataZakonczenia)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Tytul)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Opis)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.CzasTrwania)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdGrupyNavigation.IdGrupy)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.IdTest">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.IdTest">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.IdTest">Delete</a> |
+                <a asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj Pytanie</a>
+            </td>
+            </tr>
+            if (item.ListaPytan != null)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(x => pytania)
+                    </td>
+                </tr>
+                foreach(var pytanie in item.ListaPytan)
+                {
+                    <tr>
+                        <td>
+                            @Html.DisplayFor(x => pytanie.IdPytanieNavigation.Tresc)
+                        </td>
+                    </tr>
+                }
+            }
+        }
+    </tbody>
+</table>

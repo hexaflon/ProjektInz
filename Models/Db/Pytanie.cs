@@ -5,17 +5,23 @@ namespace TestTest.Models.Db;
 
 public partial class Pytanie
 {
-    public int Id { get; set; }
 
-    public int IdKategorii { get; set; }
+        public Pytanie()
+        {
+            ListaPytan = new HashSet<ListaPytan>();
+            Odpowiedz = new HashSet<Odpowiedz>();
+        }
 
-    public int IdTypPytania { get; set; }
+        public int IdPytanie { get; set; }
+        public int? IdNauczyciela { get; set; }
+        public int? IdKategoriaPytania { get; set; }
+        public int? IdTypPytania { get; set; }
+        public string? Tresc { get; set; }
 
-    public string Tresc { get; set; } = null!;
-
-    public virtual Kategoria IdKategoriiNavigation { get; set; } = null!;
-
-    public virtual TypPytanium IdTypPytaniaNavigation { get; set; } = null!;
-
-    public virtual ICollection<Odpowiedzi> Odpowiedzis { get; set; } = new List<Odpowiedzi>();
+        public virtual KategoriaPytania? IdKategoriaPytaniaNavigation { get; set; }
+        public virtual Osoba? IdNauczycielaNavigation { get; set; }
+        public virtual TypPytania? IdTypPytaniaNavigation { get; set; }
+        public virtual ICollection<ListaPytan> ListaPytan { get; set; }
+        public virtual ICollection<Odpowiedz> Odpowiedz { get; set; }
+    
 }

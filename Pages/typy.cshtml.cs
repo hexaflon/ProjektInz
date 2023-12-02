@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,24 +7,24 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TestTest.Models.Db;
 
-namespace TestTest.Pages
+namespace ProjektInzynierski.Pages
 {
-    public class IndexModel : PageModel
+    public class typyModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
 
-        public IndexModel(TestTest.Models.Db.DatabaseContext context)
+        public typyModel(TestTest.Models.Db.DatabaseContext context)
         {
             _context = context;
         }
 
-        public IList<Osoba> User { get;set; } = default!;
+        public IList<TypPytania> TypPytania { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Osoba != null)
+            if (_context.TypPytania != null)
             {
-                User = await _context.Osoba.ToListAsync();
+                TypPytania = await _context.TypPytania.ToListAsync();
             }
         }
     }

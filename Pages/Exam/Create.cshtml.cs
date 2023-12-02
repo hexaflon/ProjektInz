@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using TestTest.Models.Db;
 
-namespace TestTest.Pages
+namespace ProjektInzynierski.Pages.Exam
 {
     public class CreateModel : PageModel
     {
@@ -20,25 +20,28 @@ namespace TestTest.Pages
 
         public IActionResult OnGet()
         {
+        ViewData["IdGrupy"] = new SelectList(_context.Grupy, "IdGrupy", "Nazwa");
             return Page();
         }
 
         [BindProperty]
-        public User User { get; set; } = default!;
+        public Test Test { get; set; } = default!;
         
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync()
         {
-          if (!ModelState.IsValid || _context.Users == null || User == null)
+          if (!ModelState.IsValid || _context.Test == null || Test == null)
             {
                 return Page();
             }
+            Test.DataUtworzenia = DateTime.Now;
+            Test.IdNauczyciela = 1;
 
-            _context.Users.Add(User);
+            _context.Test.Add(Test);
             await _context.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }

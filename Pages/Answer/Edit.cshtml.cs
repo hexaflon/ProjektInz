@@ -20,22 +20,22 @@ namespace TestTest.Pages.Answer
         }
 
         [BindProperty]
-        public Odpowiedzi Odpowiedzi { get; set; } = default!;
+        public Odpowiedz Odpowiedzi { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Odpowiedzi == null)
+            if (id == null || _context.Odpowiedz == null)
             {
                 return NotFound();
             }
 
-            var odpowiedzi =  await _context.Odpowiedzi.FirstOrDefaultAsync(m => m.Id == id);
+            var odpowiedzi =  await _context.Odpowiedz.FirstOrDefaultAsync(m => m.IdOdpowiedz == id);
             if (odpowiedzi == null)
             {
                 return NotFound();
             }
             Odpowiedzi = odpowiedzi;
-           ViewData["IdPytania"] = new SelectList(_context.Pytania, "Id", "Id");
+           ViewData["IdPytania"] = new SelectList(_context.Pytanie, "Id", "Id");
             return Page();
         }
 
@@ -56,7 +56,7 @@ namespace TestTest.Pages.Answer
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!OdpowiedziExists(Odpowiedzi.Id))
+                if (!OdpowiedziExists(Odpowiedzi.IdOdpowiedz))
                 {
                     return NotFound();
                 }
@@ -71,7 +71,7 @@ namespace TestTest.Pages.Answer
 
         private bool OdpowiedziExists(int id)
         {
-          return (_context.Odpowiedzi?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Odpowiedz?.Any(e => e.IdOdpowiedz == id)).GetValueOrDefault();
         }
     }
 }

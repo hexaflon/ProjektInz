@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,22 +9,22 @@ using TestTest.Models.Db;
 
 namespace TestTest.Pages
 {
-    public class IndexModel : PageModel
+    public class TestKategoriiModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
 
-        public IndexModel(TestTest.Models.Db.DatabaseContext context)
+        public TestKategoriiModel(TestTest.Models.Db.DatabaseContext context)
         {
             _context = context;
         }
 
-        public IList<Osoba> User { get;set; } = default!;
+        public IList<KategoriaPytania> KategoriaPytania { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Osoba != null)
+            if (_context.KategoriaPytania != null)
             {
-                User = await _context.Osoba.ToListAsync();
+                KategoriaPytania = await _context.KategoriaPytania.ToListAsync();
             }
         }
     }

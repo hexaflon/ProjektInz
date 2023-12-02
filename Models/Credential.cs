@@ -6,7 +6,7 @@
     /// <summary>  
     /// Login view model class.  
     /// </summary>  
-    public class LoginViewModel
+    public class Credential
     {
         #region Properties  
 
@@ -14,8 +14,8 @@
         /// Gets or sets to username address.  
         /// </summary>  
         [Required]
-        [Display(Name = "Username")]
-        public string Username { get; set; }
+        [Display(Name = "Email")]
+        public string Email { get; set; }
 
         /// <summary>  
         /// Gets or sets to password address.  

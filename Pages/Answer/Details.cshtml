@@ -12,26 +12,26 @@
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Odpowiedzi.Odpowiedz)
+            @Html.DisplayNameFor(model => model.Odpowiedzi.TrescOdpowiedzi)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Odpowiedzi.Odpowiedz)
+            @Html.DisplayFor(model => model.Odpowiedzi.TrescOdpowiedzi)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Odpowiedzi.CzyPoprawna)
+            @Html.DisplayNameFor(model => model.Odpowiedzi.CzyPoprawny)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Odpowiedzi.CzyPoprawna)
+            @Html.DisplayFor(model => model.Odpowiedzi.CzyPoprawny)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Odpowiedzi.IdPytaniaNavigation)
+            @Html.DisplayNameFor(model => model.Odpowiedzi.IdPytanieNavigation)
         </dt>
         <dd class="col-sm-10">
-            @Html.DisplayFor(model => model.Odpowiedzi.IdPytaniaNavigation.Id)
+            @Html.DisplayFor(model => model.Odpowiedzi.IdPytanieNavigation.IdPytanie)
         </dd>
     </dl>
 </div>
 <div>
-    <a asp-page="./Edit" asp-route-id="@Model.Odpowiedzi?.Id">Edit</a> |
+    <a asp-page="./Edit" asp-route-id="@Model.Odpowiedzi?.IdOdpowiedz">Edit</a> |
     <a asp-page="./Index">Back to List</a>
 </div>

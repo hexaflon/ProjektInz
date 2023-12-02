@@ -18,14 +18,14 @@ namespace TestTest.Pages.Answer
             _context = context;
         }
 
-        public IList<Odpowiedzi> Odpowiedzi { get;set; } = default!;
+        public IList<Odpowiedz> Odpowiedzi { get;set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Odpowiedzi != null)
+            if (_context.Odpowiedz != null)
             {
-                Odpowiedzi = await _context.Odpowiedzi
-                .Include(o => o.IdPytaniaNavigation).ToListAsync();
+                Odpowiedzi = await _context.Odpowiedz
+                .Include(o => o.IdPytanieNavigation).ToListAsync();
             }
         }
     }
