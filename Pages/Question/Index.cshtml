@@ -3,81 +3,100 @@
 
 @{
     ViewData["Title"] = "Index";
-
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
+<style>
+    body {
+        background-color: #e6f7ff;
+    }
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-@{
-    var katP = "Kategoria pytania";
-    var emailN = "Email nauczyciela";
-    var typP = "Typ pytania";
-    var trescP = "Tresc pytania";
-}
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayFor(model => trescP)
-            </th>
-            <th>
+    .btn-primary {
+        background-color: #0056b3;
+        color: #fff;
+    }
 
-                @Html.DisplayFor(model => katP)
-            </th>
-            <th>
-                @Html.DisplayFor(model => emailN)
-            </th>
-            <th>
-                @Html.DisplayFor(model => typP)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Pytanie) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Tresc)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.Email)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.IdPytanie">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.IdPytanie">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.IdPytanie">Delete</a>
-            </td>
+    .btn-edit,
+    .btn-details {
+        background-color: #007bff;
+        color: #fff;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+        .btn-edit:hover,
+        .btn-details:hover {
+            background-color: #0056b3;
+            color: #fff;
+        }
+
+    .btn-danger {
+        background-color: #dc3545;
+        color: #fff;
+    }
+
+    .btn-success {
+        background-color: #0056b3;
+        color: #fff;
+    }
+</style>
+
+<div class="container">
+    <h1 class="display-4">Index</h1>
+
+    <p>
+        <a class="btn btn-primary" asp-page="Create">Create New</a>
+    </p>
+
+    @{
+        var katP = "Kategoria pytania";
+        var emailN = "Email nauczyciela";
+        var typP = "Typ pytania";
+        var trescP = "Tresc pytania";
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-muted">@Html.DisplayFor(model => trescP)</th>
+                <th class="text-muted">@Html.DisplayFor(model => katP)</th>
+                <th class="text-muted">@Html.DisplayFor(model => emailN)</th>
+                <th class="text-muted">@Html.DisplayFor(model => typP)</th>
+                <th></th>
             </tr>
-            if(@item.Odpowiedz != null)
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Pytanie)
             {
-                <tr><td><b>Odpowiedzi</b></td></tr>
-                foreach(var answer in item.Odpowiedz)
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Tresc)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.Email)</td>
+                    <td>
+                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edit</a> |
+                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdPytanie">Details</a> |
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.IdPytanie">Delete</a>
+                    </td>
+                </tr>
+                if (item.Odpowiedz != null)
                 {
                     <tr>
-                        <td>
-                            @Html.DisplayFor(model => answer.TrescOdpowiedzi)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(modle => answer.CzyPoprawny)
-                        </td>
+                        <td colspan="4"><b>Odpowiedzi</b></td>
                     </tr>
+                    foreach (var answer in item.Odpowiedz)
+                    {
+                        <tr>
+                            <td>@Html.DisplayFor(model => answer.TrescOdpowiedzi)</td>
+                            <td>@Html.DisplayFor(model => answer.CzyPoprawny)</td>
+                        </tr>
+                    }
                 }
+                <tr>
+                    <td colspan="3"></td>
+                    <td>
+                        <a class="btn btn-success" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
+                    </td>
+                </tr>
             }
-            <tr>
-                <td>
-
-                </td>
-                <td>
-                <a asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+        </tbody>
+    </table>
+</div>
