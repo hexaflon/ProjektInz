@@ -10,23 +10,23 @@
     <h1 class="display-4">Pytania</h1>
 
     <p>
-        <a class="btn btn-create" asp-page="Create">Create New</a>
+        <a class="btn btn-create" asp-page="Create">Utwórz pytanie</a>
     </p>
 
     @{
-        var katP = "Kategoria pytania";
-        var emailN = "Email nauczyciela";
-        var typP = "Typ pytania";
-        var trescP = "Treść pytania";
+        var kategoriaPytania = "Kategoria pytania";
+        var emailNauczyciela = "Email nauczyciela";
+        var typPytania = "Typ pytania";
+        var trescPytania = "Treść pytania";
     }
 
     <table class="table">
         <thead>
             <tr>
-                <th class="text-muted">@Html.DisplayFor(model => trescP)</th>
-                <th class="text-muted">@Html.DisplayFor(model => katP)</th>
-                <th class="text-muted">@Html.DisplayFor(model => emailN)</th>
-                <th class="text-muted">@Html.DisplayFor(model => typP)</th>
+                <th class="text-muted">@Html.DisplayFor(model => trescPytania)</th>
+                <th class="text-muted">@Html.DisplayFor(model => kategoriaPytania)</th>
+                <th class="text-muted">@Html.DisplayFor(model => emailNauczyciela)</th>
+                <th class="text-muted">@Html.DisplayFor(model => typPytania)</th>
                 <th></th>
             </tr>
         </thead>
@@ -37,10 +37,11 @@
                     <td>@Html.DisplayFor(modelItem => item.Tresc)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)</td>
                     <td>
-                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edit</a> |
-                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdPytanie">Details</a> |
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.IdPytanie">Delete</a>
+                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edytuj</a> |
+                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdPytanie">Więcej</a> |
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.IdPytanie">Usuń</a>
                     </td>
                 </tr>
                 if (item.Odpowiedz != null)
@@ -55,13 +56,12 @@
                             <td>@Html.DisplayFor(model => answer.CzyPoprawny)</td>
                         </tr>
                     }
+                    <tr>
+                        <td colspan="4" class="text-left">
+                            <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
+                        </td>
+                    </tr>
                 }
-                <tr>
-                    <td colspan="3"></td>
-                    <td>
-                        <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
-                    </td>
-                </tr>
             }
         </tbody>
     </table>

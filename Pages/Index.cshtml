@@ -3,52 +3,45 @@
 
 @{
     ViewData["Title"] = "Index";
-    
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Index</h1>
-@{if(ViewData["message"]!=null){
-    <h2>
-        @ViewData["message"];
-    </h2>
-}
-}
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Email)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Haslo)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.User[0].Imie)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.User) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Email)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Haslo)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Imie)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.IdOsoba">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.IdOsoba">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.IdOsoba">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+<div class="container">
+    <h1 class="display-4">Index</h1>
+
+    <p>
+        <a class="btn btn-create" asp-page="Create">Utwórz</a>
+    </p>
+
+    @{
+        var email = "Email";
+        var haslo = "Hasło";
+        var imie = "Imię";
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-muted">@Html.DisplayFor(model => email)</th>
+                <th class="text-muted">@Html.DisplayFor(model => haslo)</th>
+                <th class="text-muted">@Html.DisplayFor(model => imie)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.User)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Haslo)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Imie)</td>
+                    <td>
+                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdOsoba">Edit</a> |
+                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdOsoba">Details</a> |
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.IdOsoba">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
