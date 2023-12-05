@@ -6,45 +6,11 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<style>
-    body {
-        background-color: #e6f7ff;
-    }
-
-    .btn-primary {
-        background-color: #0056b3;
-        color: #fff;
-    }
-
-    .btn-edit,
-    .btn-details {
-        background-color: #007bff;
-        color: #fff;
-        transition: background-color 0.3s, color 0.3s;
-    }
-
-        .btn-edit:hover,
-        .btn-details:hover {
-            background-color: #0056b3;
-            color: #fff;
-        }
-
-    .btn-danger {
-        background-color: #dc3545;
-        color: #fff;
-    }
-
-    .btn-success {
-        background-color: #0056b3;
-        color: #fff;
-    }
-</style>
-
 <div class="container">
     <h1 class="display-4">Index</h1>
 
     <p>
-        <a class="btn btn-primary" asp-page="Create">Create New</a>
+        <a class="btn btn-create" asp-page="Create">Create New</a>
     </p>
 
     @{
@@ -93,7 +59,7 @@
                 <tr>
                     <td colspan="3"></td>
                     <td>
-                        <a class="btn btn-success" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
+                        <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
                     </td>
                 </tr>
             }

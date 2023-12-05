@@ -1,18 +1,42 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 html {
-  position: relative;
-  min-height: 100%;
+    position: relative;
+    min-height: 100%;
 }
 
 body {
-  margin-bottom: 60px;
+    background-color: #fff;
+    margin-bottom: 60px;
+}
+
+.btn-create {
+    background-color: #B85600;
+    color: #fff;
+}
+
+.btn-edit,
+.btn-details {
+    background-color: #EA7317;
+    color: #fff;
+}
+
+    .btn-edit:hover,
+    .btn-details:hover,
+    .btn-create:hover {
+        background-color: #EC8232;
+        color: #fff;
+    }
+
+.btn-danger {
+    background-color: #A41623;
+    color: #fff;
 }
