@@ -2,42 +2,43 @@
 @model ProjektInzynierski.Pages.Group.ListModel
 
 @{
-    ViewData["Title"] = "List";
+    ViewData["Title"] = "Grupy";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>List</h1>
+<div class="container">
+    <h1 class="display-4">Grupy</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Grupy[0].Nazwa)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Grupy[0].IdNauczycielaNavigation)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model.Grupy) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Nazwa)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.IdOsoba)
-            </td>
-            <td>
-                <a asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.IdGrupy">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.IdGrupy">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <p>
+        <a class="btn btn-create" asp-page="Create">Utwórz grupę</a>
+    </p>
+
+    @{
+        var nazwa = "Nazwa grupy";
+        var idNauczyciela = "ID nauczyciela";
+    }
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th class="text-muted">@Html.DisplayFor(model => nazwa)</th>
+                <th class="text-muted">@Html.DisplayFor(model => idNauczyciela)</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Grupy)
+            {
+                <tr>
+                    <td>@Html.DisplayFor(modelItem => item.Nazwa)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.IdOsoba)</td>
+                    <td>
+                        <a class="btn btn-edit" asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Edytuj</a> |
+                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdGrupy">Więcej</a> |
+                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.IdGrupy">Usuń</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

@@ -40,3 +40,15 @@ body {
     background-color: #A41623;
     color: #fff;
 }
+
+.btn-back {
+    color: #B85600;
+    background-color: #fff;
+    border-color: #B85600;
+}
+
+    .btn-back:hover {
+        color: #B85600;
+        background-color: #F8D2B4;
+        border-color: #B85600;
+    }

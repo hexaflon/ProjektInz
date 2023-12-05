@@ -2,67 +2,71 @@
 @model TestTest.Pages.Answer.CreateModel
 
 @{
-    ViewData["Title"] = "Create";
+    ViewData["Title"] = "Utwórz odpowiedź";
 }
 
-<h1>Create</h1>
-
-<h4></h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <table class="table">
-            <tr>
-                <td>
-                    @Html.DisplayFor(Model => Model.wysPytanie.Tresc)
-                </td>
-            </tr>
-            @if(Model.wysPytanie.Odpowiedz != null)
-            {
-                var nr_pytania = 1;
-
-                foreach(var odp in Model.wysPytanie.Odpowiedz)
+<div class="container">
+    <h1 class="display-4">Utwórz odpowiedź</h1>
+    @{
+        var trescOdpowiedzi = "Treść odpowiedzi";
+        var czyPoprawny = "Czy odpowiedź jest poprawna?";
+    }
+    <hr />
+    <div class="row">
+        <div class="col-md-4">
+            <table class="table">
+                <tr>
+                    <td>
+                        @Html.DisplayFor(Model => Model.wysPytanie.Tresc)
+                    </td>
+                </tr>
+                @if (Model.wysPytanie.Odpowiedz != null)
                 {
-                    <tr>
-                        <td>
-                            @Html.DisplayFor(z => nr_pytania)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(z => odp.TrescOdpowiedzi)
-                        </td>
-                        <td>
-                            @Html.DisplayFor(z => odp.CzyPoprawny)
-                        </td>
-                        
-                    </tr>
-                    nr_pytania++;
+                    var nr_pytania = 1;
+
+                    foreach (var odp in Model.wysPytanie.Odpowiedz)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(z => nr_pytania)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(z => odp.TrescOdpowiedzi)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(z => odp.CzyPoprawny)
+                            </td>
+
+                        </tr>
+                        nr_pytania++;
+                    }
                 }
-            }
-        </table>
-        <form method="post" asp-route-id="@ViewBag.id">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            </table>
+            <form method="post" asp-route-id="@ViewBag.id">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
-            <div class="form-group">
-                <label asp-for="Odpowiedz.TrescOdpowiedzi" class="control-label"></label>
-                <input asp-for="Odpowiedz.TrescOdpowiedzi" class="form-control" />
-                <span asp-validation-for="Odpowiedz.TrescOdpowiedzi" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Odpowiedz.CzyPoprawny" /> @Html.DisplayNameFor(model => model.Odpowiedz.CzyPoprawny)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+                <div class="form-group">
+                    <label asp-for="Odpowiedz.TrescOdpowiedzi" class="control-label">@Html.DisplayFor(model => trescOdpowiedzi)</label>
+                    <input asp-for="Odpowiedz.TrescOdpowiedzi" class="form-control" />
+                    <span asp-validation-for="Odpowiedz.TrescOdpowiedzi" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Odpowiedz.CzyPoprawny" /> @Html.DisplayFor(model => czyPoprawny)
+                    </label>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Create" class="btn btn-create" />
+                    <a class="btn btn-back ml-2" asp-page="Index">Powrót</a>
+                </div>
+            </form>
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
