@@ -39,6 +39,13 @@ namespace ProjektInzynierski.Pages.Exam
             //dodać dla obecnego użytkownika
             Test.IdNauczyciela = 1;
 
+            var testyList = _context.Test.ToList();
+            if (testyList == null) Test.IdTest = 0;
+            else
+            {
+                Test.IdTest = testyList.OrderByDescending(test => test.IdTest).Select(test => test.IdTest).FirstOrDefault()+1;
+            }
+
             _context.Test.Add(Test);
             await _context.SaveChangesAsync();
 
