@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - lab5</title>
+    <title>@ViewData["Title"] - TestTest</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/lab5.styles.css" asp-append-version="true" />
@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container-fluid">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">lab5</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">TestTest</a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -20,28 +20,25 @@
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/index">Home</a>
+                            <a class="nav-link" asp-page="/index">Strona główna</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/index">Privacy</a>
+                            <a class="nav-link" asp-page="/test">Login</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/test">Login</a>
+                            <a class="nav-link" asp-page="/Register/Create">Rejestracja</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Register/Create">Register</a>
+                            <a class="nav-link" asp-page="/Question/Index">Pytania</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Question/Index">Pytania</a>
+                            <a class="nav-link" asp-page="/Answer/Index">Odpowiedzi</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Answer/Index">Odpowiedzi</a>
+                            <a class="nav-link" asp-page="/Exam/List">Testy</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-page="/Exam/List">Testy</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-page ="/Group/List">Grupy</a>
+                            <a class="nav-link" asp-page ="/Group/List">Grupy</a>
                         </li>
                     </ul>
                 </div>
@@ -56,7 +53,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - lab5 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - TestTest
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
