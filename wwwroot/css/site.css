@@ -18,6 +18,28 @@ body {
     margin-bottom: 60px;
 }
 
+.navbar-nav .nav-item {
+    margin-right: 10px;
+}
+
+    .navbar-nav .nav-item .nav-link {
+        color: #000000;
+        padding: 10px 15px;
+        border-radius: 5px;
+    }
+
+    .navbar-nav .nav-item .nav-link:hover {
+        background-color: #B85600;
+        color: #fff;
+    }
+
+@media (max-width: 767px) {
+    .navbar-nav .nav-item {
+        margin-right: 0;
+        margin-bottom: 5px;
+    }
+}
+
 .btn-create {
     background-color: #B85600;
     color: #fff;
