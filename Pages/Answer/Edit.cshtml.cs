@@ -22,20 +22,19 @@ namespace TestTest.Pages.Answer
         [BindProperty]
         public Odpowiedz Odpowiedzi { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync([FromQuery]int? id)
         {
             if (id == null || _context.Odpowiedz == null)
             {
                 return NotFound();
-            }
-
+            }            
             var odpowiedzi =  await _context.Odpowiedz.FirstOrDefaultAsync(m => m.IdOdpowiedz == id);
             if (odpowiedzi == null)
             {
                 return NotFound();
             }
             Odpowiedzi = odpowiedzi;
-           ViewData["IdPytania"] = new SelectList(_context.Pytanie, "Id", "Id");
+            ViewData["IdPytanie"] = odpowiedzi.IdPytanie;
             return Page();
         }
 
