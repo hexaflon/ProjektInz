@@ -16,6 +16,8 @@ public partial class Pytanie
         public int? IdNauczyciela { get; set; }
         public int? IdKategoriaPytania { get; set; }
         public int? IdTypPytania { get; set; }
+        [Display(Name = "Treść pytania")]
+        [StringLength(300, ErrorMessage = "Maksymalna długość to 300 znaków.")]
         public string? Tresc { get; set; }
 
         public virtual KategoriaPytania? IdKategoriaPytaniaNavigation { get; set; }
