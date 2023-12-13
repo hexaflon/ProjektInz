@@ -41,8 +41,8 @@ namespace ProjektInzynierski.Pages.Exam
 
         [BindProperty]
         public ListaPytan ListaPytan { get; set; } = default!;
-        
-        public Test wysTest { get; set; }  
+
+        public Test wysTest { get; set; } = default!;
 
         // To protect from overposting attacks, see https://aka.ms/RazorPagesCRUD
         public async Task<IActionResult> OnPostAsync([FromQuery] int? id)
