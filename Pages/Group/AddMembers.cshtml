@@ -1,39 +1,66 @@
 ﻿@page
-@model ProjektInzynierski.Pages.Group.ListModel
-
+@model ProjektInzynierski.Pages.Group.AddMembersModel
 @{
-    ViewData["Title"] = "Dodaj uczniów do grupy";
+    ViewData["Title"] = "Dodaj ucznia do grupy";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<div class="container">
-    <h1 class="display-4">Dodaj uczniów do grupy</h1>
+<h1 class="display-4">Dodaj ucznia do grupy</h1>
 
-    <p>
-        <a class="btn btn-create" asp-page="Create">Utwórz grupę</a>
-    </p>
-
+@if (Model.wysUczniowie != null)
+{
     <table class="table">
         <thead>
             <tr>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().Nazwa)</th>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().IdNauczycielaNavigation.IdOsoba)</th>
+                <th>Nazwisko</th>
+                <th>Imię</th>
+                <th>Email</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Grupy)
+            @foreach (var uczen in Model.wysUczniowie)
             {
                 <tr>
-                    <td>@Html.DisplayFor(modelItem => item.Nazwa)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.IdOsoba)</td>
+                    <td>@Html.DisplayFor(m => uczen.Nazwisko)</td>
+                    <td>@Html.DisplayFor(m => uczen.Imie)</td>
+                    <td>@Html.DisplayFor(m => uczen.Email)</td>
                     <td>
-                        <a class="btn btn-edit" asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Edytuj</a> |
-                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdGrupy">Więcej</a> |
-                        <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdGrupy">Usuń</a>
+                        <a asp-page-handler="Delete" asp-route-idUcznia="@uczen.IdOsoba" asp-route-idGrupy="@ViewBag.idGrupy">Usuń ucznia</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+}
+
+<h4>Uczestnicy</h4>
+<hr />
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-route-id="@ViewBag.idGrupy">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="Uczestnicy.IdUcznia" class="control-label">Wybierz ucznia</label>
+                    <select asp-for="Uczestnicy.IdUcznia" class="form-control" asp-items="ViewBag.IdUcznia"></select>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Dodaj ucznia" class="btn btn-create" />
+                    <a class="btn btn-back ml-2" asp-page="List">Powrót</a>
+                </div>
+            </form>
+        </div>
+    </div>
 </div>
+
+<div>
+    <a asp-page="Index">Powrót do listy</a>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
