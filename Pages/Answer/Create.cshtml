@@ -5,54 +5,22 @@
     ViewData["Title"] = "Utwórz odpowiedź";
 }
 
+<h1 class="display-4">Utwórz odpowiedź</h1>
 <div class="container">
-    <h1 class="display-4">Utwórz odpowiedź</h1>
-    @{
-        var trescOdpowiedzi = "Treść odpowiedzi";
-        var czyPoprawny = "Czy odpowiedź jest poprawna?";
-    }
     <hr />
     <div class="row">
         <div class="col-md-4">
-            <table class="table">
-                <tr>
-                    <td>
-                        @Html.DisplayFor(Model => Model.wysPytanie.Tresc)
-                    </td>
-                </tr>
-                @if (Model.wysPytanie.Odpowiedz != null)
-                {
-                    var nr_pytania = 1;
-
-                    foreach (var odp in Model.wysPytanie.Odpowiedz)
-                    {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(z => nr_pytania)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(z => odp.TrescOdpowiedzi)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(z => odp.CzyPoprawny)
-                            </td>
-
-                        </tr>
-                        nr_pytania++;
-                    }
-                }
-            </table>
             <form method="post" asp-route-id="@ViewBag.id">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
 
                 <div class="form-group">
-                    <label asp-for="Odpowiedz.TrescOdpowiedzi" class="control-label">@Html.DisplayFor(model => trescOdpowiedzi)</label>
+                    <label asp-for="Odpowiedz.TrescOdpowiedzi" class="control-label">Treść odpowiedzi</label>
                     <input asp-for="Odpowiedz.TrescOdpowiedzi" class="form-control" />
                     <span asp-validation-for="Odpowiedz.TrescOdpowiedzi" class="text-danger"></span>
                 </div>
                 <div class="form-group form-check">
                     <label class="form-check-label">
-                        <input class="form-check-input" asp-for="Odpowiedz.CzyPoprawny" /> @Html.DisplayFor(model => czyPoprawny)
+                        <input class="form-check-input" asp-for="Odpowiedz.CzyPoprawny" /> Czy odpowiedź jest poprawna?
                     </label>
                 </div>
                 <div class="form-group mt-3">

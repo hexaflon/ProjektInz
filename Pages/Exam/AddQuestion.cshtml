@@ -2,31 +2,26 @@
 @model ProjektInzynierski.Pages.Exam.AddQuestionModel
 
 @{
-    ViewData["Title"] = "AddQuestion";
+    ViewData["Title"] = "Dodaj pytanie";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>AddQuestion</h1>
+<h1 class="display-4">Dodaj pytanie</h1>
 
-<h4>Test</h4>
-@{
-    var tytul = "tytul";
-    var pytanie = "pytanie";
-}
 <table class="table">
     <tr>
         <td>
-            @Html.DisplayFor(x => tytul)
+            Tytuł
         </td>
     </tr>
     @if (Model.wysTest.ListaPytan != null)
     {
         <tr>
             <td>
-                @Html.DisplayFor(x => pytanie)
+                Pytanie
             </td>
         </tr>
-        foreach(var pyt in Model.wysTest.ListaPytan)
+        foreach (var pyt in Model.wysTest.ListaPytan)
         {
             <tr>
                 <td>
@@ -36,26 +31,32 @@
         }
     }
 </table>
+
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post" asp-route-id="@ViewBag.IdTest">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="ListaPytan.IdPytanie" class="control-label"></label>
-                <select asp-for="ListaPytan.IdPytanie" class ="form-control" asp-items="ViewBag.IdPytanie"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post" asp-route-id="@ViewBag.IdTest">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <div class="form-group">
+                    <label asp-for="ListaPytan.IdPytanie" class="control-label">Wybierz pytanie</label>
+                    <select asp-for="ListaPytan.IdPytanie" class="form-control" asp-items="ViewBag.IdPytanie"></select>
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Create" class="btn btn-create" />
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="Index">Back to List</a>
+<div class="container mt-3">
+    <a class="btn btn-back" asp-page="List">Powrót</a>
 </div>
 
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
