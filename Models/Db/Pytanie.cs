@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace TestTest.Models.Db;
 
@@ -12,16 +13,24 @@ public partial class Pytanie
             Odpowiedz = new HashSet<Odpowiedz>();
         }
 
+        [Display(Name = "ID pytania")]
         public int IdPytanie { get; set; }
+        [Display(Name = "Nauczyciel")]
         public int? IdNauczyciela { get; set; }
+        [Display(Name = "Kategoria pytania")]
         public int? IdKategoriaPytania { get; set; }
+        [Display(Name = "Typ pytania")]
         public int? IdTypPytania { get; set; }
         [Display(Name = "Treść pytania")]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(300, ErrorMessage = "Maksymalna długość to 300 znaków.")]
         public string? Tresc { get; set; }
 
+        [Display(Name = "Kategoria pytania")]
         public virtual KategoriaPytania? IdKategoriaPytaniaNavigation { get; set; }
+        [Display(Name = "ID nauczyciela")]
         public virtual Osoba? IdNauczycielaNavigation { get; set; }
+        [Display(Name = "ID typu pytania")]
         public virtual TypPytania? IdTypPytaniaNavigation { get; set; }
         public virtual ICollection<ListaPytan> ListaPytan { get; set; }
         public virtual ICollection<Odpowiedz> Odpowiedz { get; set; }

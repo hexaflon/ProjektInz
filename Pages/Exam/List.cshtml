@@ -13,29 +13,17 @@
         <a class="btn btn-create" asp-page="Create">Utwórz test</a>
     </p>
 
-    @{
-        var widocznosc = "Widoczność";
-        var dataUtworzenia = "Data utworzenia";
-        var dataRozpoczecia = "Data rozpoczęcia";
-        var dataZakonczenia = "Data zakończenia";
-        var tytul = "Tytuł";
-        var opis = "Opis";
-        var czasTrwania = "Czas trwania";
-        var grupa = "Grupa";
-        var pytania = "Pytania";
-    }
-
     <table class="table">
         <thead>
             <tr>
-                <th class="text-muted">@Html.DisplayFor(model => widocznosc)</th>
-                <th class="text-muted">@Html.DisplayFor(model => dataUtworzenia)</th>
-                <th class="text-muted">@Html.DisplayFor(model => dataRozpoczecia)</th>
-                <th class="text-muted">@Html.DisplayFor(model => dataZakonczenia)</th>
-                <th class="text-muted">@Html.DisplayFor(model => tytul)</th>
-                <th class="text-muted">@Html.DisplayFor(model => opis)</th>
-                <th class="text-muted">@Html.DisplayFor(model => czasTrwania)</th>
-                <th class="text-muted">@Html.DisplayFor(model => grupa)</th>
+                <th class="text-muted">Widoczność</th>
+                <th class="text-muted">Data utworzenia</th>
+                <th class="text-muted">Data rozpoczęcia</th>
+                <th class="text-muted">Data zakończenia</th>
+                <th class="text-muted">Tytuł</th>
+                <th class="text-muted">Opis</th>
+                <th class="text-muted">Czas trwania</th>
+                <th class="text-muted">ID grupy</th>
                 <th></th>
             </tr>
         </thead>
@@ -54,7 +42,7 @@
                     <td>
                         <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdTest">Edytuj</a> |
                         <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdTest">Więcej</a> |
-                        <a class="btn btn-danger" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a> |
+                        <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a> |
                         <a class="btn btn-create" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj pytanie</a>
                     </td>
                 </tr>
@@ -62,7 +50,7 @@
                 {
                     <tr>
                         <td colspan="8">
-                            <b>@Html.DisplayFor(x => pytania)</b>
+                            <b>@Html.DisplayNameFor(x => x.Test.FirstOrDefault().ListaPytan.FirstOrDefault().IdPytanieNavigation.Tresc)</b>
                         </td>
                     </tr>
                     foreach (var pytanie in item.ListaPytan)

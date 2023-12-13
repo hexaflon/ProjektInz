@@ -2,44 +2,45 @@
 @model TestTest.Pages.Answer.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edytuj odpowiedź";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Edit</h1>
-
-<h4>Odpowiedzi</h4>
+<h1 class="display-4">Edytuj odpowiedź</h1>
 <hr />
-<div class="row">
-    <div class="col-md-4">
-        <form method="post">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Odpowiedzi.IdOdpowiedz" />
-            <div class="form-group">
-                <label asp-for="Odpowiedzi.IdPytanie" class="control-label"></label>
-                <select asp-for="Odpowiedzi.IdPytanie" class="form-control" asp-items="ViewBag.IdPytania"></select>
-                <span asp-validation-for="Odpowiedzi.IdPytanie" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Odpowiedzi.TrescOdpowiedzi" class="control-label"></label>
-                <input asp-for="Odpowiedzi.TrescOdpowiedzi" class="form-control" />
-                <span asp-validation-for="Odpowiedzi.TrescOdpowiedzi" class="text-danger"></span>
-            </div>
-            <div class="form-group form-check">
-                <label class="form-check-label">
-                    <input class="form-check-input" asp-for="Odpowiedzi.CzyPoprawny" /> @Html.DisplayNameFor(model => model.Odpowiedzi.CzyPoprawny)
-                </label>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Save" class="btn btn-primary" />
-            </div>
-        </form>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4">
+            <form method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                <input type="hidden" asp-for="Odpowiedzi.IdOdpowiedz" />
+
+                <div class="form-group">
+                    <label asp-for="Odpowiedzi.IdPytanie" class="control-label">@Html.DisplayNameFor(model => model.Odpowiedzi.IdPytanie)</label>
+                    <select asp-for="Odpowiedzi.IdPytanie" class="form-control" asp-items="ViewBag.IdPytania"></select>
+                    <span asp-validation-for="Odpowiedzi.IdPytanie" class="text-danger"></span>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Odpowiedzi.TrescOdpowiedzi" class="control-label">@Html.DisplayNameFor(model => model.Odpowiedzi.TrescOdpowiedzi)</label>
+                    <input asp-for="Odpowiedzi.TrescOdpowiedzi" class="form-control" />
+                    <span asp-validation-for="Odpowiedzi.TrescOdpowiedzi" class="text-danger"></span>
+                </div>
+                <div class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="Odpowiedzi.CzyPoprawny" /> @Html.DisplayNameFor(model => model.Odpowiedzi.CzyPoprawny)
+                    </label>
+                </div>
+                <div class="form-group mt-3">
+                    <input type="submit" value="Save" class="btn btn-create" />
+                    <a class="btn btn-back ml-2" asp-page="./Index">Powrót</a>
+                </div>
+            </form>
+        </div>
     </div>
 </div>
 
-<div>
-    <a asp-page="./Index">Back to List</a>
-</div>
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
 }
