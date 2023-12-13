@@ -28,16 +28,17 @@ namespace TestTest.Models.Db
         public DateTime? DataZakonczenia { get; set; }
         [Display(Name = "Tytuł testu")]
         [Required(ErrorMessage = "To pole jest wymagane.")]
-        [StringLength(15, ErrorMessage = "Maksymalna długość to 15 znaków.")]
+        [StringLength(90, ErrorMessage = "Maksymalna długość to 90 znaków.")]
         public string? Tytul { get; set; }
         [Display(Name = "Opis testu")]
-        [StringLength(200, ErrorMessage = "Maksymalna długość to 200 znaków.")]
+        [StringLength(255, ErrorMessage = "Maksymalna długość to 255 znaków.")]
         public string? Opis { get; set; }
         [Display(Name = "Czas trwania testu")]
-        [Range(5, 120, ErrorMessage = "Czas trwania testu musi wynosić od 5 minut do 2 godzin.")]
+        [Range(5, 180, ErrorMessage = "Czas trwania testu musi wynosić od 5 minut do 3 godzin.")]
         public int? CzasTrwania { get; set; }
-
+        [Display(Name = "ID grupy")]
         public virtual Grupy? IdGrupyNavigation { get; set; }
+        [Display(Name = "ID nauczyciela")]
         public virtual Osoba? IdNauczycielaNavigation { get; set; }
         public virtual ICollection<ListaPytan> ListaPytan { get; set; }
         public virtual ICollection<Rozwiazanie> Rozwiazanie { get; set; }

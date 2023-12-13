@@ -17,7 +17,7 @@ namespace TestTest.Models.Db
         public int? IdNauczyciela { get; set; }
         [Display(Name = "Nazwa grupy")]
         [Required(ErrorMessage = "To pole jest wymagane.")]
-        [StringLength(15, ErrorMessage = "Maksymalna długość to 15 znaków.")]
+        [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
         public string Nazwa { get; set; } = null!;
 
         public virtual Osoba? IdNauczycielaNavigation { get; set; }

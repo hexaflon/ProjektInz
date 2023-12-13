@@ -2,15 +2,12 @@
 @model ProjektInzynierski.Pages.Exam.ExamListModel
 
 @{
-    ViewData["Title"] = "ExamList";
+    ViewData["Title"] = "Aktywne testy";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>ExamList</h1>
+<h1 class="display-4">Aktywne testy</h1>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
 <table class="table">
     <thead>
         <tr>
@@ -75,9 +72,9 @@
                 @Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.IdOsoba)
             </td>
             <td>
-                <a asp-page="./Edit" asp-route-id="@item.IdTest">Edit</a> |
-                <a asp-page="./Details" asp-route-id="@item.IdTest">Details</a> |
-                <a asp-page="./Delete" asp-route-id="@item.IdTest">Delete</a>
+                <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdTest">Edytuj</a> |
+                <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdTest">Więcej</a> |
+                <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a> |
             </td>
         </tr>
 }

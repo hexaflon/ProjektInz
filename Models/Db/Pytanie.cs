@@ -23,7 +23,7 @@ public partial class Pytanie
         public int? IdTypPytania { get; set; }
         [Display(Name = "Treść pytania")]
         [Required(ErrorMessage = "To pole jest wymagane.")]
-        [StringLength(300, ErrorMessage = "Maksymalna długość to 300 znaków.")]
+        [StringLength(255, ErrorMessage = "Maksymalna długość to 255 znaków.")]
         public string? Tresc { get; set; }
 
         [Display(Name = "Kategoria pytania")]
