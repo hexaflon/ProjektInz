@@ -28,8 +28,7 @@ public partial class Pytanie
 
         [Display(Name = "Kategoria pytania")]
         public virtual KategoriaPytania? IdKategoriaPytaniaNavigation { get; set; }
-        [Display(Name = "ID nauczyciela")]
-        public virtual Osoba? IdNauczycielaNavigation { get; set; }
+        
         [Display(Name = "ID typu pytania")]
         public virtual TypPytania? IdTypPytaniaNavigation { get; set; }
         public virtual ICollection<ListaPytan> ListaPytan { get; set; }

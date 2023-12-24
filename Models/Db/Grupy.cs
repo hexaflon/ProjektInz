@@ -20,7 +20,7 @@ namespace TestTest.Models.Db
         [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
         public string Nazwa { get; set; } = null!;
 
-        public virtual Osoba? IdNauczycielaNavigation { get; set; }
+        
         public virtual ICollection<Test> Test { get; set; }
         public virtual ICollection<Uczestnicy> Uczestnicy { get; set; }
     }

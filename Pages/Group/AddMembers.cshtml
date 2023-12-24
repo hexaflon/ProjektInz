@@ -22,8 +22,8 @@
             @foreach (var uczen in Model.wysUczniowie)
             {
                 <tr>
-                    <td>@Html.DisplayFor(m => uczen.Nazwisko)</td>
-                    <td>@Html.DisplayFor(m => uczen.Imie)</td>
+                    <td>@Html.DisplayFor(m => uczen.Surname)</td>
+                    <td>@Html.DisplayFor(m => uczen.Name)</td>
                     <td>@Html.DisplayFor(m => uczen.Email)</td>
                     <td>
                         <a asp-page-handler="Delete" asp-route-idUcznia="@uczen.IdOsoba" asp-route-idGrupy="@ViewBag.idGrupy">Usuń ucznia</a>

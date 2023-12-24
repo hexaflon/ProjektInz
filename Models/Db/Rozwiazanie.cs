@@ -17,7 +17,7 @@ namespace TestTest.Models.Db
         public double? LiczbaPunktow { get; set; }
 
         public virtual Test? IdTestNavigation { get; set; }
-        public virtual Osoba? IdUczniaNavigation { get; set; }
+        
         public virtual ICollection<RozwiazanieDoPytan> RozwiazanieDoPytan { get; set; }
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Exam
 {
+    [Authorize(Roles = "Uczen,Admin")]
     public class ExamPerformModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +11,7 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Group
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class ListModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
@@ -24,8 +27,7 @@ namespace ProjektInzynierski.Pages.Group
         {
             if (_context.Grupy != null)
             {
-                Grupy = await _context.Grupy
-                .Include(g => g.IdNauczycielaNavigation).ToListAsync();
+                Grupy = await _context.Grupy.ToListAsync();
             }
         }
     }

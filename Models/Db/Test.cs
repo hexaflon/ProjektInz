@@ -38,8 +38,7 @@ namespace TestTest.Models.Db
         public int? CzasTrwania { get; set; }
         [Display(Name = "ID grupy")]
         public virtual Grupy? IdGrupyNavigation { get; set; }
-        [Display(Name = "ID nauczyciela")]
-        public virtual Osoba? IdNauczycielaNavigation { get; set; }
+        
         public virtual ICollection<ListaPytan> ListaPytan { get; set; }
         public virtual ICollection<Rozwiazanie> Rozwiazanie { get; set; }
     }
