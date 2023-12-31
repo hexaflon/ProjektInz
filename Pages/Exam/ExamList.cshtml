@@ -72,9 +72,7 @@
                 @Html.DisplayFor(modelItem => item.IdNauczyciela)
             </td>
             <td>
-                <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdTest">Edytuj</a> |
-                <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdTest">Więcej</a> |
-                <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a> |
+                <a class="btn btn-edit" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
             </td>
         </tr>
 }
