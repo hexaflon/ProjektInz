@@ -65,15 +65,17 @@ namespace TestTest.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
-            [EmailAddress]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
+            [Display(Name = "Adres e-mail")]
+            [EmailAddress(ErrorMessage = "Adres e-mail jest niepoprawny.")]
             public string Email { get; set; }
 
             /// <summary>
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Required]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
+            [Display(Name = "Hasło")]
             [DataType(DataType.Password)]
             public string Password { get; set; }
 
@@ -81,7 +83,7 @@ namespace TestTest.Areas.Identity.Pages.Account
             ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
             ///     directly from your code. This API may change or be removed in future releases.
             /// </summary>
-            [Display(Name = "Remember me?")]
+            [Display(Name = "Zapamiętaj hasło")]
             public bool RememberMe { get; set; }
         }
 

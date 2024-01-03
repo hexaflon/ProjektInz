@@ -16,7 +16,7 @@
     <table class="table">
         <thead>
             <tr>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
+                <th class="text-muted column1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
@@ -26,7 +26,7 @@
         <tbody>
             @foreach (var item in Model.Pytanie)
             {
-                <tr>
+                <tr class="text1">
                     <td>@Html.DisplayFor(modelItem => item.Tresc)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
@@ -39,12 +39,12 @@
                 </tr>
                 if (item.Odpowiedz != null)
                 {
-                    <tr>
+                    <tr class="text-muted">
                         <td colspan="4"><b>@Html.DisplayNameFor(model => item.Odpowiedz.FirstOrDefault().TrescOdpowiedzi)</b></td>
                     </tr>
                     foreach (var answer in item.Odpowiedz)
                     {
-                        <tr>
+                        <tr class="text1">
                             <td>@Html.DisplayFor(model => answer.TrescOdpowiedzi)</td>
                             <td>@Html.DisplayFor(model => answer.CzyPoprawny)</td>
                         </tr>

@@ -14,7 +14,7 @@ namespace TestTest.Models.Db
         [Display(Name = "ID odpowiedzi")]
         public int IdOdpowiedz { get; set; }
         public int? IdPytanie { get; set; }
-        [Display(Name = "Treść odpowiedzi")]
+        [Display(Name = "Odpowiedzi")]
         [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(255, ErrorMessage = "Maksymalna długość to 255 znaków.")]
         public string TrescOdpowiedzi { get; set; } = null!;

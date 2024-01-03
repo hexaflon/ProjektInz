@@ -2,30 +2,26 @@
 @model TestTest.Pages.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Zarejestrowani użytkownicy";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
 <div class="container">
-    <h1 class="display-4">Index</h1>
-
-    <p>
-        <a class="btn btn-create" asp-page="Create">Utwórz</a>
-    </p>
+    <h1 class="display-4">Zarejestrowani użytkownicy</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th class="text-muted">Email</th>
-                <th class="text-muted">Hasło</th>
-                <th class="text-muted">Imię</th>
+                <th class="text-muted">@Html.DisplayNameFor(model => model.User.FirstOrDefault().Email)</th>
+                <th class="text-muted column1">@Html.DisplayNameFor(model => model.User.FirstOrDefault().PasswordHash)</th>
+                <th class="text-muted">@Html.DisplayNameFor(model => model.User.FirstOrDefault().Name)</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.User)
             {
-                <tr>
+                <tr class="text1">
                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
                     <td>@Html.DisplayFor(modelItem => item.PasswordHash)</td>
                     <td>@Html.DisplayFor(modelItem => item.Name)</td>

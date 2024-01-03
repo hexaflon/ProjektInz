@@ -30,7 +30,7 @@
         <tbody>
             @foreach (var item in Model.Test)
             {
-                <tr>
+                <tr class="text1">
                     <td>@Html.DisplayFor(modelItem => item.CzyWidoczny)</td>
                     <td>@Html.DisplayFor(modelItem => item.DataUtworzenia)</td>
                     <td>@Html.DisplayFor(modelItem => item.DataRozpoczecia)</td>
@@ -43,20 +43,20 @@
                         <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdTest">Edytuj</a> |
                         <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdTest">Więcej</a> |
                         <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a> |
-                        <a class="btn btn-new" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj pytanie</a>
+                        <a class="btn btn-primary" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj pytanie</a>
                     </td>
                 </tr>
                 if (item.ListaPytan != null)
                 {
                     <tr>
-                        <td colspan="8">
+                        <td class="text-muted" colspan="8">
                             <b>@Html.DisplayNameFor(x => x.Test.FirstOrDefault().ListaPytan.FirstOrDefault().IdPytanieNavigation.Tresc)</b>
                         </td>
                     </tr>
                     foreach (var pytanie in item.ListaPytan)
                     {
                         <tr>
-                            <td colspan="8">
+                            <td class="text1" colspan="8">
                                 @Html.DisplayFor(x => pytanie.IdPytanieNavigation.Tresc)
                             </td>
                         </tr>

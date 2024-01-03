@@ -3,25 +3,119 @@
 @inject SignInManager<Osoba> SignInManager
 @inject UserManager<Osoba> UserManager
 
+@{
+    var user = await UserManager.GetUserAsync(User);
+    var userRoles = new List<string>();
+
+    if (user != null)
+    {
+        userRoles = (await UserManager.GetRolesAsync(user)).ToList();
+    }
+}
+
+@if (SignInManager.IsSignedIn(User) && userRoles.Contains("Uczen"))
+{
+    <ul class="navbar-nav custom-navbar">
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/index">Strona główna</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Exam/ExamList">Aktywne testy</a>
+        </li>
+    </ul>
+}
+
+@if (SignInManager.IsSignedIn(User) && userRoles.Contains("Nauczyciel"))
+{
+    <ul class="navbar-nav custom-navbar">
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/index">Strona główna</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Question/Index">Pytania</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Answer/Index">Odpowiedzi</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Exam/List">Testy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Group/List">Grupy</a>
+        </li>
+    </ul>
+}
+
+@if (SignInManager.IsSignedIn(User) && userRoles.Contains("Admin"))
+{
+    <ul class="navbar-nav custom-navbar">
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/index">Strona główna</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Question/Index">Pytania</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Answer/Index">Odpowiedzi</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Exam/List">Testy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Group/List">Grupy</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" asp-page="/Exam/ExamList">Aktywne testy</a>
+        </li>
+    </ul>
+}
+
+
 <ul class="navbar-nav">
     @if (SignInManager.IsSignedIn(User))
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Hello @User.Identity?.Name!</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Manage/Index" title="Manage">Witaj, @User.Identity?.Name!</a>
         </li>
         <li class="nav-item">
             <form class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Page("/", new { area = "" })" method="post">
-                <button type="submit" class="nav-link btn btn-link text-dark">Logout</button>
+                <button type="submit" class="nav-link btn btn-link">Wyloguj się</button>
             </form>
+        </li>
+        <li class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="darkModeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="darkModeDropdown">
+                <a class="dropdown-item" href="#" onclick="setTheme('light')">
+                    <i id="sunIcon" class="fas fa-sun"></i> Tryb jasny
+                </a>
+                <a class="dropdown-item" href="#" onclick="setTheme('dark')">
+                    <i id="moonIcon" class="fas fa-moon"></i> Tryb ciemny
+                </a>
+            </div>
         </li>
     }
     else
     {
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Register</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Login">Zaloguj się</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Login</a>
+            <a class="nav-link" asp-area="Identity" asp-page="/Account/Register">Zarejestruj się</a>
+        </li>
+        <li class="dropdown">
+            <button class="btn btn-light dropdown-toggle" type="button" id="darkModeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <i class="fas fa-adjust"></i>
+            </button>
+            <div class="dropdown-menu dropdown-menu-end" aria-labelledby="darkModeDropdown">
+                <a class="dropdown-item" href="#" onclick="setTheme('light')">
+                    <i id="sunIcon" class="fas fa-sun"></i> Tryb jasny
+                </a>
+                <a class="dropdown-item" href="#" onclick="setTheme('dark')">
+                    <i id="moonIcon" class="fas fa-moon"></i> Tryb ciemny
+                </a>
+            </div>
         </li>
     }
 </ul>

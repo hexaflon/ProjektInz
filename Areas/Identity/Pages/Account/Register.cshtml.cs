@@ -1,6 +1,4 @@
-﻿// Licensed to the .NET Foundation under one or more agreements.
-// The .NET Foundation licenses this file to you under the MIT license.
-#nullable disable
+﻿#nullable disable
 
 using System;
 using System.Collections.Generic;
@@ -51,67 +49,45 @@ namespace TestTest.Areas.Identity.Pages.Account
             _context = context;
         }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         [BindProperty]
         public InputModel Input { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public string ReturnUrl { get; set; }
-
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public IList<AuthenticationScheme> ExternalLogins { get; set; }
 
-        /// <summary>
-        ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-        ///     directly from your code. This API may change or be removed in future releases.
-        /// </summary>
         public class InputModel
         {
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [EmailAddress]
-            [Display(Name = "Email")]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
+            [EmailAddress(ErrorMessage = "Adres e-mail jest niepoprawny.")]
+            [Display(Name = "Adres e-mail")]
             public string Email { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
-            [Required]
-            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Hasło musi mieć co najmniej 8 znaków, jedną małą literę, jedną dużą literę i jedną cyfrę.")]
+            [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
             [DataType(DataType.Password)]
-            [Display(Name = "Password")]
+            [Display(Name = "Hasło")]
             public string Password { get; set; }
 
-            /// <summary>
-            ///     This API supports the ASP.NET Core Identity default UI infrastructure and is not intended to be used
-            ///     directly from your code. This API may change or be removed in future releases.
-            /// </summary>
             [DataType(DataType.Password)]
-            [Display(Name = "Confirm password")]
-            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            [Display(Name = "Potwierdź hasło")]
+            [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
+            [Compare("Password", ErrorMessage = "Wprowadzone hasła nie są takie same.")]
             public string ConfirmPassword { get; set; }
+
             [DataType(DataType.Text)]
-            [Display(Name = "Name")]
-            [Required]
+            [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
+            [Display(Name = "Imię")]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
             public string Name { get; set; }
+
             [DataType(DataType.Text)]
-            [Display(Name = "SurName")]
-            [Required]
+            [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
+            [Display(Name = "Nazwisko")]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
             public string Surname { get; set; }
-            [Required]
+
+            [Display(Name = "Rola")]
+            [Required(ErrorMessage = "To pole jest wymagane.")]
             public string Role { get; set; }
         }
 

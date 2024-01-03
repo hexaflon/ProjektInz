@@ -15,7 +15,7 @@ public partial class Pytanie
 
         [Display(Name = "ID pytania")]
         public int IdPytanie { get; set; }
-        [Display(Name = "Nauczyciel")]
+        [Display(Name = "ID nauczyciela")]
         public int? IdNauczyciela { get; set; }
         [Display(Name = "Kategoria pytania")]
         public int? IdKategoriaPytania { get; set; }

@@ -11,7 +11,6 @@ namespace TestTest
         {
             var builder = WebApplication.CreateBuilder(args);
             var AppName = new ConfigurationBuilder().AddJsonFile("appsettings.json").Build();
-            // Add services to the container.
             builder.Services.AddRazorPages();
             var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
             builder.Services.AddDbContext<IdentityDatabaseContext>(options =>
@@ -26,7 +25,6 @@ namespace TestTest
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
                 app.UseExceptionHandler("/Error");
