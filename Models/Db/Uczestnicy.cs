@@ -14,6 +14,6 @@ namespace TestTest.Models.Db
         public int? IdUcznia { get; set; }
 
         public virtual Grupy? IdGrupyNavigation { get; set; }
-        public virtual Osoba? IdUczniaNavigation { get; set; }
+        
     }
 }

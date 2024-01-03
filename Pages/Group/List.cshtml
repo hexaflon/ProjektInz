@@ -17,7 +17,7 @@
         <thead>
             <tr>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().Nazwa)</th>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().IdNauczycielaNavigation.IdOsoba)</th>
+                <th class="text-muted">@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().IdNauczyciela)</th>
                 <th></th>
             </tr>
         </thead>
@@ -26,9 +26,9 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Nazwa)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.IdOsoba)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
                     <td>
-                        <a class="btn btn-edit" asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Edytuj</a> |
+                        <a class="btn btn-edit" asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Dodaj ucznia</a> |
                         <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdGrupy">Więcej</a> |
                         <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdGrupy">Usuń</a>
                     </td>

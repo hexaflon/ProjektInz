@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,13 +12,15 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Group
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class CreateModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public CreateModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public CreateModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -44,8 +49,8 @@ namespace ProjektInzynierski.Pages.Group
             {
                 Grupy.IdGrupy = grupyList.OrderByDescending(gr => gr.IdGrupy).Select(gr => gr.IdGrupy).FirstOrDefault()+1;
             }
-            //zmienić na obecnego użytkownika
-            Grupy.IdNauczyciela = 1;
+
+            Grupy.IdNauczyciela = _userManager.GetUserAsync(User).Result.IdOsoba;
             _context.Grupy.Add(Grupy);
             await _context.SaveChangesAsync();
 

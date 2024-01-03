@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -9,13 +12,15 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Exam
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class CreateModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public CreateModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public CreateModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet()
@@ -37,7 +42,14 @@ namespace ProjektInzynierski.Pages.Exam
             }
             Test.DataUtworzenia = DateTime.Now;
             //dodać dla obecnego użytkownika
-            Test.IdNauczyciela = 1;
+            Test.IdNauczyciela = _userManager.GetUserAsync(User).Result.IdOsoba;
+
+            var testyList = _context.Test.ToList();
+            if (testyList == null) Test.IdTest = 0;
+            else
+            {
+                Test.IdTest = testyList.OrderByDescending(test => test.IdTest).Select(test => test.IdTest).FirstOrDefault()+1;
+            }
 
             _context.Test.Add(Test);
             await _context.SaveChangesAsync();

@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,36 +13,41 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Group
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class AddMembersModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
+        private readonly UserManager<Osoba> _userManager;
 
-        public AddMembersModel(TestTest.Models.Db.DatabaseContext context)
+        public AddMembersModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet([FromQuery]int? id)
         {
             if (!id.HasValue) return RedirectToPage("./List");
-            ViewData["idGrupy"] = id;
+            
 
-            var uczniowie = _context.Osoba
-                .Where(o => o.Status==3)
-                .Where(o => !_context.Uczestnicy.Any(u => u.IdUcznia == o.IdOsoba && u.IdGrupy == id)).ToList();
+            var uzytkownicy = _userManager.GetUsersInRoleAsync("Uczen");
+            var uczniowie = uzytkownicy.Result.ToList();
+            uczniowie = uczniowie.Where(o => !_context.Uczestnicy.Any(u => u.IdUcznia == o.IdOsoba && u.IdGrupy == id)).ToList();
 
-            wysUczniowie = _context.Osoba
-                .Where(o => o.Status == 3)
+
+            var wysuzytkownicy = _userManager.GetUsersInRoleAsync("Uczen");
+            wysUczniowie = wysuzytkownicy.Result.ToList();
+            wysUczniowie = wysUczniowie
                 .Where(o => _context.Uczestnicy.Any(u => u.IdUcznia == o.IdOsoba && u.IdGrupy == id))
-                .Include(o => o.Uczestnicy)
                 .ToList();
 
             var uczniowieList = uczniowie.Select(osoba => new SelectListItem
             {
                 Value = osoba.IdOsoba.ToString(),
-                Text = $"{osoba.Nazwisko} {osoba.Imie} {osoba.Email}"
+                Text = $"{osoba.Surname} {osoba.Name} {osoba.Email}"
             }).ToList();
             ViewData["IdUcznia"] = new SelectList(uczniowieList, "Value","Text");
+            ViewData["idGrupy"] = id; 
             return Page();
         }
 

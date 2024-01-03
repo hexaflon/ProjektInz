@@ -1,0 +1,40 @@
+﻿@page
+@model ProjektInzynierski.Pages.Exam.ExamPerformModel
+
+@{
+    ViewData["Title"] = "ExamPerform";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>ExamPerform</h1>
+<div>
+<form method="post">
+    @foreach (var question in Model.pytaniaSprawdzianu)
+    {
+            <p>@question.Tresc</p>
+            if (question.IdTypPytania == ViewBag.idWielokrotnego)
+            {
+                foreach (var answer in question.Odpowiedz)
+                {
+                    <input type="checkbox" name="@question.IdPytanie" value="@answer.IdOdpowiedz">
+
+                    @answer.TrescOdpowiedzi
+
+                    <br>
+                }
+            }
+            else
+            {
+                foreach (var answer in question.Odpowiedz)
+                {
+                    <input type="radio" name="@question.IdPytanie" value="@answer.IdOdpowiedz">
+
+                    @answer.TrescOdpowiedzi
+
+                    <br>
+                }
+            }
+        }
+    <input type="submit" value="Submit">
+</form>
+</div>

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +12,7 @@ using TestTest.Models.Db;
 
 namespace TestTest.Pages.Question
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class EditModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
@@ -22,7 +25,7 @@ namespace TestTest.Pages.Question
         [BindProperty]
         public Pytanie Pytanie { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync([FromQuery]int? id)
         {
             if (id == null || _context.Pytanie == null)
             {
@@ -35,21 +38,24 @@ namespace TestTest.Pages.Question
                 return NotFound();
             }
             Pytanie = pytanie;
-           ViewData["IdKategoriaPytania"] = new SelectList(_context.KategoriaPytania, "IdKategoriaPytania", "IdKategoriaPytania");
-           ViewData["IdNauczyciela"] = new SelectList(_context.Osoba, "IdOsoba", "IdOsoba");
-           ViewData["IdTypPytania"] = new SelectList(_context.TypPytania, "IdTypPytania", "IdTypPytania");
+            ViewData["idNauczyciela"] = pytanie.IdNauczyciela;
+            ViewData["IdKategoriaPytania"] = new SelectList(_context.KategoriaPytania, "IdKategoriaPytania", "Nazwa");
+            ViewData["IdTypPytania"] = new SelectList(_context.TypPytania, "IdTypPytania", "Nazwa");
             return Page();
         }
 
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see https://aka.ms/RazorPagesCRUD.
-        public async Task<IActionResult> OnPostAsync()
+        public async Task<IActionResult> OnPostAsync([FromQuery] int? id)
         {
             if (!ModelState.IsValid)
             {
                 return Page();
             }
-
+            if (id!=null) { 
+                Pytanie.IdPytanie = (int)id;
+            }
+            
             _context.Attach(Pytanie).State = EntityState.Modified;
 
             try

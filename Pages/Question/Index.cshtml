@@ -18,7 +18,7 @@
             <tr>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczycielaNavigation.Email)</th>
+                <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
                 <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
                 <th></th>
             </tr>
@@ -29,7 +29,7 @@
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Tresc)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdNauczycielaNavigation.Email)</td>
+                    <td>@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)</td>
                     <td>
                         <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edytuj</a> |

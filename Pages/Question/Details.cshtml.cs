@@ -6,9 +6,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TestTest.Models.Db;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Authorization;
 
 namespace TestTest.Pages.Question
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class DetailsModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;

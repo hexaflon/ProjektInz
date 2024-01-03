@@ -23,13 +23,12 @@ public partial class Pytanie
         public int? IdTypPytania { get; set; }
         [Display(Name = "Treść pytania")]
         [Required(ErrorMessage = "To pole jest wymagane.")]
-        [StringLength(300, ErrorMessage = "Maksymalna długość to 300 znaków.")]
+        [StringLength(255, ErrorMessage = "Maksymalna długość to 255 znaków.")]
         public string? Tresc { get; set; }
 
         [Display(Name = "Kategoria pytania")]
         public virtual KategoriaPytania? IdKategoriaPytaniaNavigation { get; set; }
-        [Display(Name = "ID nauczyciela")]
-        public virtual Osoba? IdNauczycielaNavigation { get; set; }
+        
         [Display(Name = "ID typu pytania")]
         public virtual TypPytania? IdTypPytaniaNavigation { get; set; }
         public virtual ICollection<ListaPytan> ListaPytan { get; set; }

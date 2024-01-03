@@ -24,7 +24,6 @@ public partial class DatabaseContext : DbContext
         public virtual DbSet<KategoriaPytania> KategoriaPytania { get; set; } = null!;
         public virtual DbSet<ListaPytan> ListaPytan { get; set; } = null!;
         public virtual DbSet<Odpowiedz> Odpowiedz { get; set; } = null!;
-        public virtual DbSet<Osoba> Osoba { get; set; } = null!;
         public virtual DbSet<Pytanie> Pytanie { get; set; } = null!;
         public virtual DbSet<Rozwiazanie> Rozwiazanie { get; set; } = null!;
         public virtual DbSet<RozwiazanieDoPytan> RozwiazanieDoPytan { get; set; } = null!;
@@ -60,11 +59,6 @@ public partial class DatabaseContext : DbContext
                 .HasMaxLength(45)
                 .IsUnicode(false)
                 .HasColumnName("nazwa");
-
-            entity.HasOne(d => d.IdNauczycielaNavigation)
-                .WithMany(p => p.Grupy)
-                .HasForeignKey(d => d.IdNauczyciela)
-                .HasConstraintName("FK__Grupy__idNauczyc__0C85DE4D");
         });
         modelBuilder.Entity<Grupy>().ToTable("Grupy");
 
@@ -144,51 +138,6 @@ public partial class DatabaseContext : DbContext
         });
         modelBuilder.Entity<Odpowiedz>().ToTable("Odpowiedz");
 
-        modelBuilder.Entity<Osoba>(entity =>
-        {
-            entity.HasKey(e => e.IdOsoba)
-                .HasName("PK__Osoba__EFB80D64D500B353");
-
-            entity.ToTable("Osoba");
-
-            entity.Property(e => e.IdOsoba)
-                .ValueGeneratedNever()
-                .HasColumnName("idOsoba");
-
-            entity.Property(e => e.Email)
-                .HasMaxLength(70)
-                .IsUnicode(false)
-                .HasColumnName("email");
-
-            entity.Property(e => e.Haslo)
-                .HasMaxLength(45)
-                .IsUnicode(false)
-                .HasColumnName("haslo");
-
-            entity.Property(e => e.Imie)
-                .HasMaxLength(45)
-                .IsUnicode(false)
-                .HasColumnName("imie");
-
-            entity.Property(e => e.Nazwisko)
-                .HasMaxLength(45)
-                .IsUnicode(false)
-                .HasColumnName("nazwisko");
-
-            entity.Property(e => e.NrTelefonu)
-                .HasMaxLength(11)
-                .IsUnicode(false)
-                .HasColumnName("nrTelefonu");
-
-            entity.Property(e => e.Status).HasColumnName("status");
-
-            entity.HasOne(d => d.StatusNavigation)
-                .WithMany(p => p.Osoba)
-                .HasForeignKey(d => d.Status)
-                .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("FK__Osoba__status__09A971A2");
-        });
-        modelBuilder.Entity<Osoba>().ToTable("Osoba");
 
 
         modelBuilder.Entity<Pytanie>(entity =>
@@ -218,10 +167,6 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdKategoriaPytania)
                 .HasConstraintName("FK__Pytanie__idKateg__17F790F9");
 
-            entity.HasOne(d => d.IdNauczycielaNavigation)
-                .WithMany(p => p.Pytanie)
-                .HasForeignKey(d => d.IdNauczyciela)
-                .HasConstraintName("FK__Pytanie__idNaucz__17036CC0");
 
             entity.HasOne(d => d.IdTypPytaniaNavigation)
                 .WithMany(p => p.Pytanie)
@@ -252,10 +197,6 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdTest)
                 .HasConstraintName("FK__Rozwiazan__idTes__2739D489");
 
-            entity.HasOne(d => d.IdUczniaNavigation)
-                .WithMany(p => p.Rozwiazanie)
-                .HasForeignKey(d => d.IdUcznia)
-                .HasConstraintName("FK__Rozwiazan__idUcz__2645B050");
         });
         modelBuilder.Entity<Rozwiazanie>().ToTable("Rozwiazanie");
 
@@ -355,10 +296,6 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdGrupy)
                 .HasConstraintName("FK__Test__idGrupy__1EA48E88");
 
-            entity.HasOne(d => d.IdNauczycielaNavigation)
-                .WithMany(p => p.Test)
-                .HasForeignKey(d => d.IdNauczyciela)
-                .HasConstraintName("FK__Test__idNauczyci__1F98B2C1");
         });
         modelBuilder.Entity<Test>().ToTable("Test");
 
@@ -403,10 +340,6 @@ public partial class DatabaseContext : DbContext
                 .HasForeignKey(d => d.IdGrupy)
                 .HasConstraintName("FK__Uczestnic__idGru__0F624AF8");
 
-            entity.HasOne(d => d.IdUczniaNavigation)
-                .WithMany(p => p.Uczestnicy)
-                .HasForeignKey(d => d.IdUcznia)
-                .HasConstraintName("FK__Uczestnic__idUcz__10566F31");
         });
         modelBuilder.Entity<Uczestnicy>().ToTable("Uczestnicy");
     }

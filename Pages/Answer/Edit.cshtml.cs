@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -10,6 +12,7 @@ using TestTest.Models.Db;
 
 namespace TestTest.Pages.Answer
 {
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class EditModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
@@ -22,20 +25,19 @@ namespace TestTest.Pages.Answer
         [BindProperty]
         public Odpowiedz Odpowiedzi { get; set; } = default!;
 
-        public async Task<IActionResult> OnGetAsync(int? id)
+        public async Task<IActionResult> OnGetAsync([FromQuery]int? id)
         {
             if (id == null || _context.Odpowiedz == null)
             {
                 return NotFound();
-            }
-
+            }            
             var odpowiedzi =  await _context.Odpowiedz.FirstOrDefaultAsync(m => m.IdOdpowiedz == id);
             if (odpowiedzi == null)
             {
                 return NotFound();
             }
             Odpowiedzi = odpowiedzi;
-           ViewData["IdPytania"] = new SelectList(_context.Pytanie, "Id", "Id");
+            ViewData["IdPytanie"] = odpowiedzi.IdPytanie;
             return Page();
         }
 

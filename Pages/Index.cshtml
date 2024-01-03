@@ -27,8 +27,8 @@
             {
                 <tr>
                     <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Haslo)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Imie)</td>
+                    <td>@Html.DisplayFor(modelItem => item.PasswordHash)</td>
+                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
                     <td>
                         <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdOsoba">Edytuj</a> |
                         <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdOsoba">Więcej</a> |
