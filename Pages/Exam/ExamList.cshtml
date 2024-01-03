@@ -10,7 +10,7 @@
 
 <table class="table">
     <thead>
-        <tr>
+        <tr class="text-muted">
             <th>
                 @Html.DisplayNameFor(model => model.Test[0].CzyWidoczny)
             </th>
@@ -43,7 +43,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model.Test) {
-        <tr>
+        <tr class="text1">
             <td>
                 @Html.DisplayFor(modelItem => item.CzyWidoczny)
             </td>

@@ -13,13 +13,52 @@
         <a class="btn btn-create" asp-page="Create">Utwórz pytanie</a>
     </p>
 
+    <form method="get" class="form-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="categoryId">Kategoria:</label>
+                        <select class="form-control" id="categoryId" name="categoryId">
+                            <option value="">Wszystkie</option>
+                            @foreach (var category in Model.Kategorie)
+                            {
+                                <option value="@category.IdKategoriaPytania">@category.Nazwa</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="typeId">Typ pytania:</label>
+                        <select class="form-control" id="typeId" name="typeId">
+                            <option value="">Wszystkie</option>
+                            @foreach (var type in Model.TypyPytan)
+                            {
+                                <option value="@type.IdTypPytania">@type.Nazwa</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <br />
+                        <button type="submit" class="btn btn-primary">Filtruj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <table class="table">
         <thead>
-            <tr>
-                <th class="text-muted column1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
-                <th class="text-muted">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
+            <tr class="text-muted">
+                <th class="column1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
+                <th>@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
+                <th>@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
+                <th>@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
                 <th></th>
             </tr>
         </thead>
@@ -37,25 +76,43 @@
                         <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdPytanie">Usuń</a>
                     </td>
                 </tr>
-                if (item.Odpowiedz != null)
-                {
-                    <tr class="text-muted">
-                        <td colspan="4"><b>@Html.DisplayNameFor(model => item.Odpowiedz.FirstOrDefault().TrescOdpowiedzi)</b></td>
-                    </tr>
-                    foreach (var answer in item.Odpowiedz)
-                    {
-                        <tr class="text1">
-                            <td>@Html.DisplayFor(model => answer.TrescOdpowiedzi)</td>
-                            <td>@Html.DisplayFor(model => answer.CzyPoprawny)</td>
-                        </tr>
-                    }
-                    <tr>
-                        <td colspan="4" class="text-left">
-                            <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
-                        </td>
-                    </tr>
-                }
+                <tr>
+                    <td colspan="5" class="text-left">
+                        <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
+                        <button class="btn btn-show-answers" data-question-id="@item.IdPytanie" data-toggle-text="Pokaż odpowiedzi">Pokaż odpowiedzi</button>
+                    </td>
+                </tr>
+                <tr class="text-muted answers-row" id="answers-row-@item.IdPytanie" style="display: none;">
+                    <td colspan="5">
+                        <b>Odpowiedzi</b>
+                        <table>
+                            @foreach (var answer in item.Odpowiedz)
+                            {
+                                <tr class="text1">
+                                    <td class="answer1">@Html.DisplayFor(model => answer.TrescOdpowiedzi)</td>
+                                    <td class="answer1">@Html.DisplayFor(model => answer.CzyPoprawny)</td>
+                                </tr>
+                            }
+                        </table>
+                    </td>
+                </tr>
             }
         </tbody>
     </table>
 </div>
+
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $(".btn-show-answers").click(function () {
+                var questionId = $(this).data("question-id");
+                var toggleText = $(this).data("toggle-text");
+                $("#answers-row-" + questionId).toggle();
+                $(this).text(function (_, currentText) {
+                    return currentText === toggleText ? "Ukryj odpowiedzi" : toggleText;
+                });
+            });
+        });
+    </script>
+}

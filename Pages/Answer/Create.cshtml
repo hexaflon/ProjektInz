@@ -15,10 +15,10 @@
             {
                 <table class="table">
                     <thead>
-                        <tr>
-                            <th class="text1">Nr pytania</th>
-                            <th class="text1">Treść odpowiedzi</th>
-                            <th class="text1">Czy poprawna</th>
+                        <tr class="text1">
+                            <th>Nr pytania</th>
+                            <th>Treść odpowiedzi</th>
+                            <th>Czy poprawna</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -28,10 +28,10 @@
 
                         @foreach (var odp in Model.wysPytanie.Odpowiedz)
                         {
-                            <tr>
-                                <td class="text1">@nr_pytania</td>
-                                <td class="text1">@Html.DisplayFor(z => odp.TrescOdpowiedzi)</td>
-                                <td class="text1">@Html.DisplayFor(z => odp.CzyPoprawny)</td>
+                            <tr class="text1">
+                                <td>@nr_pytania</td>
+                                <td>@Html.DisplayFor(z => odp.TrescOdpowiedzi)</td>
+                                <td>@Html.DisplayFor(z => odp.CzyPoprawny)</td>
                             </tr>
                             nr_pytania++;
                         }
@@ -56,7 +56,7 @@
                 </div>
                 <div class="form-group mt-3">
                     <input type="submit" value="Utwórz" class="btn btn-primary" />
-                    <a class="btn btn-back ml-2" asp-page="Index">Powrót</a>
+                    <a class="btn btn-back ml-2" asp-page="/Question/Index">Powrót</a>
                 </div>
             </form>
         </div>

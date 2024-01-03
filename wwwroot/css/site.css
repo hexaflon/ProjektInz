@@ -23,17 +23,6 @@ body {
             color: #fff;
         }
 
-
-            /* Styl dla trybu ciemnego */
-body.dark-mode .text1 {
-    color: #fff;
-}
-
-/* Styl dla trybu jasnego (domyœlny) */
-body:not(.dark-mode) .text1 {
-    color: #000;
-}
-
 .navbar-nav .nav-item {
     margin-right: 10px;
 }
@@ -67,6 +56,10 @@ body:not(.dark-mode) .navbar-nav .nav-item .nav-link {
     color: #000;
 }
 
+body:not(.dark-mode) .text1 {
+    color: #000;
+}
+
 /* tryb ciemny */
 body.dark-mode .navbar-brand {
     color: #fff;
@@ -81,25 +74,52 @@ body.dark-mode .navbar-nav .nav-item .nav-link {
         color: #fff;
     }
 
+body.dark-mode .text1 {
+    color: #fff;
+}
+
+body.dark-mode .text-muted {
+    color: #EC8232 !important;
+}
+
+/* przyciski */
+
 .btn-create,
 .btn-primary,
 .btn-edit,
 .btn-details,
-.btn-danger,
-.btn-back,
-.btn-delete {
+.btn-show-answers {
     color: #fff;
-}
-
-.btn-create,
-.btn-primary {
     background-color: #B85600;
+    border-color: #914400;
 }
 
-    .btn-primary:hover {
+    .btn-primary:hover,
+    .btn-edit:hover,
+    .btn-details:hover,
+    .btn-create:hover,
+    .btn-show-answers:hover {
+        color: #fff;
         background-color: #EC8232;
+        border-color: #B85600;
     }
 
+/*
+body.dark-mode .btn-create,
+body.dark-mode .btn-primary,
+body.dark-mode .btn-edit,
+body.dark-mode .btn-details {
+    background-color: #EC8232;
+    color: #fff;
+}
+    body.dark-mode .btn-create:hover,
+    body.dark-mode .btn-primary:hover,
+    body.dark-mode .btn-edit:hover,
+    body.dark-mode .btn-details:hover {
+        background-color: #EC8232;
+        color: #fff;
+    }*/
+/*
 .btn-edit,
 .btn-details {
     background-color: #EA7317;
@@ -109,15 +129,15 @@ body.dark-mode .navbar-nav .nav-item .nav-link {
     .btn-details:hover,
     .btn-create:hover {
         background-color: #EC8232;
-    }
-
+    }*/
+/*
 .btn-danger {
     background-color: #A41623;
-}
+}*/
 
 .btn-back {
     color: #B85600;
-    background-color: #fff;
+    background-color: #B85600;
     border-color: #B85600;
 }
 
@@ -127,22 +147,36 @@ body.dark-mode .navbar-nav .nav-item .nav-link {
         border-color: #B85600;
     }
 
-.btn-delete {
-    background-color: #fae6e6;
-    border-color: #A41623;
-    border-width: 2px;
+body.dark-mode .btn-back {
+    color: #EC8232;
+    background-color: #333333;
+    border-color: #EC8232;
 }
 
+    body.dark-mode .btn-back:hover {
+        color: #EC8232;
+        background-color: #4d4c4c;
+        border-color: #EC8232;
+    }
+
+.btn-delete {
+    color: #fff;
+    background-color: #A41623;
+    border-color: #7d0913;
+}
     .btn-delete:hover {
-        color: #FF0000;
-        background-color: #F8D2B4;
-        border-color: #FF0000;
+        color: #fff;
+        background-color: #c40818;
     }
 
 .column1 {
     width: 500px;
     overflow: hidden;
     white-space: nowrap;
+}
+
+.answer1 {
+    padding-right: 20px;
 }
 
 .registration-links {
@@ -170,7 +204,7 @@ body.dark-mode form select {
 }
 */
 
-
+/* tryb ciemny - pola formularzy */
 body.dark-mode form input[type="text"],
 body.dark-mode form input[type="password"],
 body.dark-mode form input[type="email"],
@@ -189,10 +223,6 @@ body.dark-mode form textarea:-webkit-autofill:focus {
         background-color: #262626;
         color: #fff;
     }
-
-
-
-
 
 
 @media (max-width: 575px) {
