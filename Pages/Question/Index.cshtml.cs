@@ -24,7 +24,11 @@ namespace TestTest.Pages.Question
         public IList<KategoriaPytania> Kategorie { get; set; } = default!;
         public IList<TypPytania> TypyPytan { get; set; } = default!;
 
-        public async Task OnGetAsync(int? categoryId, int? typeId)
+        public int? CategoryId { get; set; }
+        public int? TypeId { get; set; }
+        public string SearchText { get; set; }
+
+        public async Task OnGetAsync(int? categoryId, int? typeId, string searchText)
         {
             var query = _context.Pytanie
                 .Include(p => p.IdKategoriaPytaniaNavigation)
@@ -42,12 +46,18 @@ namespace TestTest.Pages.Question
                 query = query.Where(p => p.IdTypPytania == typeId);
             }
 
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(p => p.Tresc.Contains(searchText));
+            }
+
             Pytanie = await query.ToListAsync();
             Pytanie = Pytanie.OrderByDescending(p => p.Odpowiedz.FirstOrDefault()?.IdPytanie).ToList();
 
             Kategorie = await _context.KategoriaPytania.ToListAsync();
             TypyPytan = await _context.TypPytania.ToListAsync();
         }
+
 
 
         public IActionResult OnGetAddAnswer(int idPytanie)

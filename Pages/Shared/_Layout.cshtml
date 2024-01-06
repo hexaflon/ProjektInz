@@ -6,7 +6,6 @@
     <title>@ViewData["Title"] - TestTest</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/lab5.styles.css" asp-append-version="true" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
 </head>
 <body>
@@ -18,41 +17,6 @@
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <!--
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/index">Strona główna</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Question/Index">Pytania</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Answer/Index">Odpowiedzi</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Exam/List">Testy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page ="/Group/List">Grupy</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" asp-page="/Exam/ExamList">Aktywne testy</a>
-                        </li>
-                    </ul>
-                    <div class="dropdown">
-                        <button class="btn btn-light dropdown-toggle" type="button" id="darkModeDropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-adjust"></i>
-                        </button>
-                        <div class="dropdown-menu" aria-labelledby="darkModeDropdown">
-                            <a class="dropdown-item" href="#" onclick="setTheme('light')">
-                                <i id="sunIcon" class="fas fa-sun"></i> Tryb jasny
-                            </a>
-                            <a class="dropdown-item" href="#" onclick="setTheme('dark')">
-                                <i id="moonIcon" class="fas fa-moon"></i> Tryb ciemny
-                            </a>
-                        </div>
-                    </div>-->
                     <partial name="_LoginPartial" />
                 </div>
             </div>

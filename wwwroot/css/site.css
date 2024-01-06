@@ -83,7 +83,6 @@ body.dark-mode .text-muted {
 }
 
 /* przyciski */
-
 .btn-create,
 .btn-primary,
 .btn-edit,
@@ -103,37 +102,6 @@ body.dark-mode .text-muted {
         background-color: #EC8232;
         border-color: #B85600;
     }
-
-/*
-body.dark-mode .btn-create,
-body.dark-mode .btn-primary,
-body.dark-mode .btn-edit,
-body.dark-mode .btn-details {
-    background-color: #EC8232;
-    color: #fff;
-}
-    body.dark-mode .btn-create:hover,
-    body.dark-mode .btn-primary:hover,
-    body.dark-mode .btn-edit:hover,
-    body.dark-mode .btn-details:hover {
-        background-color: #EC8232;
-        color: #fff;
-    }*/
-/*
-.btn-edit,
-.btn-details {
-    background-color: #EA7317;
-}
-
-    .btn-edit:hover,
-    .btn-details:hover,
-    .btn-create:hover {
-        background-color: #EC8232;
-    }*/
-/*
-.btn-danger {
-    background-color: #A41623;
-}*/
 
 .btn-back {
     color: #B85600;
@@ -193,22 +161,42 @@ body.dark-mode .btn-back {
         text-decoration: underline;
     }
 
-/*
-body.dark-mode form input[type="text"],
-body.dark-mode form input[type="password"],
-body.dark-mode form input[type="email"],
-body.dark-mode form select {
-    background-color: #262626;
-    color: #fff;
-    border-color: #fff;
+::-webkit-scrollbar {
+    width: 12px;
 }
-*/
+
+::-webkit-scrollbar-thumb {
+    background-color: #d9d9d9;
+    border-radius: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background-color: #f1f1f1;
+}
+
+body.dark-mode ::-webkit-scrollbar {
+    width: 12px;
+}
+
+body.dark-mode ::-webkit-scrollbar-thumb {
+    background-color: #444;
+    border-radius: 6px;
+}
+
+body.dark-mode ::-webkit-scrollbar-track {
+    background-color: #333;
+}
+
+body.dark-mode ::-webkit-scrollbar-corner {
+    background-color: #333;
+}
 
 /* tryb ciemny - pola formularzy */
 body.dark-mode form input[type="text"],
 body.dark-mode form input[type="password"],
 body.dark-mode form input[type="email"],
 body.dark-mode form select,
+body.dark-mode form #searchText,
 body.dark-mode form input:-webkit-autofill,
 body.dark-mode form input:-webkit-autofill:focus,
 body.dark-mode form textarea:-webkit-autofill,
@@ -219,10 +207,33 @@ body.dark-mode form textarea:-webkit-autofill:focus {
     box-shadow: 0 0 0 30px #262626 inset;
 }
 
-    body.dark-mode form select:focus {
+    body.dark-mode form select:focus,
+    body.dark-mode form #searchText:focus {
         background-color: #262626;
         color: #fff;
     }
+
+/* tryb ciemny - podpowiedzi w wyszukiwarce */
+body.dark-mode .ui-autocomplete {
+    background-color: #262626;
+    color: #fff;
+    border-color: #fff;
+    box-shadow: 0 0 0 30px #262626 inset;
+}
+
+    body.dark-mode .ui-autocomplete.ui-widget-content a {
+        color: #fff;
+    }
+
+        body.dark-mode .ui-autocomplete.ui-widget-content a.ui-state-focus {
+            background-color: #555;
+            color: #fff;
+        }
+
+    body.dark-mode .ui-autocomplete.ui-widget-content {
+        border: 1px solid #fff;
+    }
+
 
 
 @media (max-width: 575px) {
