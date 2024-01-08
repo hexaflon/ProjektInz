@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -10,13 +9,14 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using TestTest.Models.Db;
 
-namespace TestTest.Pages.Question
+namespace ProjektInzynierski.Pages.Group
 {
     [Authorize(Roles = "Nauczyciel,Admin")]
     public class DeleteModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
         private readonly UserManager<Osoba> _userManager;
+
         public DeleteModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
@@ -24,57 +24,54 @@ namespace TestTest.Pages.Question
         }
 
         [BindProperty]
-      public Pytanie Pytanie { get; set; } = default!;
+      public Grupy Grupy { get; set; } = default!;
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
-            if (id == null || _context.Pytanie == null)
+            if (id == null || _context.Grupy == null)
             {
                 return NotFound();
             }
 
-            var pytanie = await _context.Pytanie.FirstOrDefaultAsync(m => m.IdPytanie == id);
+            var grupy = await _context.Grupy.FirstOrDefaultAsync(m => m.IdGrupy == id);
 
-            if (pytanie == null)
+            if (grupy == null)
             {
                 return NotFound();
             }
             else 
             {
-                Pytanie = pytanie;
+                Grupy = grupy;
             }
             return Page();
         }
 
         public async Task<IActionResult> OnPostAsync(int? id)
         {
-            if (id == null || _context.Pytanie == null)
+            if (id == null || _context.Grupy == null)
             {
                 return NotFound();
             }
-            var pytanie = await _context.Pytanie.FindAsync(id);
-
+            var grupy = await _context.Grupy.FindAsync(id);
             
-            if (pytanie != null)
+            if (grupy != null)
             {
-                if (pytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
-                Pytanie = pytanie;
-
-                var odpowiedzi = _context.Odpowiedz.Where(o => o.IdPytanie == pytanie.IdPytanie);
-                foreach (var odp in odpowiedzi)
+                if (grupy.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                Grupy = grupy;
+                foreach(var test in _context.Test.Where(t => t.IdGrupy == grupy.IdGrupy))
                 {
-                    foreach(var rozDP in _context.RozwiazanieDoPytan.Where(rdp=> rdp.IdOdpowiedz == odp.IdOdpowiedz))
-                    {
-                        _context.RozwiazanieDoPytan.Remove(rozDP);
-                    }
-                    _context.Odpowiedz.Remove(odp);
+                    test.IdGrupy = null;
                 }
 
-                _context.Pytanie.Remove(Pytanie);
+                foreach(var os in _context.Uczestnicy.Where(u => u.IdGrupy == grupy.IdGrupy))
+                {
+                    _context.Uczestnicy.Remove(os);
+                }
+                _context.Grupy.Remove(Grupy);
                 await _context.SaveChangesAsync();
             }
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./List");
         }
     }
 }

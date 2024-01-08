@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,11 +17,11 @@ namespace TestTest.Pages.Answer
     public class CreateModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public CreateModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public CreateModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
-            
+            _userManager = userManager;
         }
         [BindProperty]
         public Odpowiedz Odpowiedz { get; set; }
@@ -31,12 +32,17 @@ namespace TestTest.Pages.Answer
             if (id.HasValue)
             {
                 ViewData["id"] = id;
+
                 if (_context.Pytanie == null) return Page();
                 var PytanieList = _context.Pytanie.Include(p => p.Odpowiedz).ToList();
                 wysPytanie = (from pyt in PytanieList
                               where pyt.IdPytanie == id
                               select pyt).FirstOrDefault();
-                if (wysPytanie == null) return RedirectToPage("/Question/Index");
+                if (wysPytanie == null)
+                {
+                    if (wysPytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return Forbid();
+                    return RedirectToPage("/Question/Index");
+                }
             }
             else
             {
@@ -49,6 +55,7 @@ namespace TestTest.Pages.Answer
         
         public async Task<IActionResult> OnPostAsync([FromQuery]int id)
         {
+
             var pytanie = _context.Pytanie.FirstOrDefault(p => p.IdPytanie == id);
             if (pytanie == null) return NotFound();
             if (!ModelState.IsValid||_context.Odpowiedz == null || Odpowiedz == null)

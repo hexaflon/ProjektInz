@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,11 @@ namespace ProjektInzynierski.Pages.Group
     public class ListModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public ListModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public ListModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IList<Grupy> Grupy { get;set; } = default!;
@@ -27,7 +29,12 @@ namespace ProjektInzynierski.Pages.Group
         {
             if (_context.Grupy != null)
             {
-                Grupy = await _context.Grupy.ToListAsync();
+                var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
+                Grupy = await _context.Grupy
+                    .Where(g=>g.IdNauczyciela==userId)
+                    .ToListAsync();
+                
+
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,10 +17,12 @@ namespace ProjektInzynierski.Pages.Exam
     public class AddQuestionModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
+        private readonly UserManager<Osoba> _userManager;
 
-        public AddQuestionModel(TestTest.Models.Db.DatabaseContext context)
+        public AddQuestionModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         public IActionResult OnGet([FromQuery] int? id)
@@ -37,8 +40,8 @@ namespace ProjektInzynierski.Pages.Exam
             {
                 return RedirectToPage("/List");
             }
-
-            ViewData["IdPytanie"] = new SelectList(_context.Pytanie, "IdPytanie", "Tresc");
+            var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
+            ViewData["IdPytanie"] = new SelectList(_context.Pytanie.Where(p=>p.IdNauczyciela==userId), "IdPytanie", "Tresc");
             return Page();
         }
 
