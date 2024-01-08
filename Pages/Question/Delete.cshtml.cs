@@ -60,7 +60,7 @@ namespace TestTest.Pages.Question
                 if (pytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
                 Pytanie = pytanie;
 
-                var odpowiedzi = _context.Odpowiedz.Where(o => o.IdPytanie == pytanie.IdPytanie);
+                var odpowiedzi = _context.Odpowiedz.Where(o => o.IdPytanie == pytanie.IdPytanie).ToList();
                 foreach (var odp in odpowiedzi)
                 {
                     foreach(var rozDP in _context.RozwiazanieDoPytan.Where(rdp=> rdp.IdOdpowiedz == odp.IdOdpowiedz))

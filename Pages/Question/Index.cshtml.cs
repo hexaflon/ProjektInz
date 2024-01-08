@@ -32,13 +32,11 @@ namespace TestTest.Pages.Question
 
         public async Task OnGetAsync(int? categoryId, int? typeId, string searchText)
         {
-            var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
             var query = _context.Pytanie
                 .Include(p => p.IdKategoriaPytaniaNavigation)
                 .Include(p => p.IdTypPytaniaNavigation)
                 .Include(p => p.Odpowiedz)
                 .AsQueryable();
-            query = query.Where(p => p.IdNauczyciela == userId);
 
             if (categoryId.HasValue)
             {

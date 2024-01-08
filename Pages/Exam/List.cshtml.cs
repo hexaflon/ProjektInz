@@ -30,7 +30,7 @@ namespace ProjektInzynierski.Pages.Exam
             if (_context.Test != null)
             {
                 var iduser = _userManager.GetUserAsync(User).Result.IdOsoba;
-                Test = await _context.Test.Where(t => t.IdNauczyciela == iduser)
+                Test = await _context.Test
                 .Include(t => t.IdGrupyNavigation)
                 .Include(t => t.ListaPytan)
                 .ThenInclude(lp => lp.IdPytanieNavigation).ToListAsync();
