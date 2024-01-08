@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,10 +17,11 @@ namespace ProjektInzynierski.Pages.Exam
     public class EditModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public EditModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public EditModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -51,7 +53,7 @@ namespace ProjektInzynierski.Pages.Exam
             {
                 return Page();
             }
-
+            if (Test.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./List");
             _context.Attach(Test).State = EntityState.Modified;
 
             try

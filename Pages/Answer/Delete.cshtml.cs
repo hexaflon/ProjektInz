@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,11 @@ namespace TestTest.Pages.Answer
     public class DeleteModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public DeleteModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public DeleteModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -54,6 +56,7 @@ namespace TestTest.Pages.Answer
 
             if (odpowiedzi != null)
             {
+                if (odpowiedzi.IdPytanieNavigation.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
                 Odpowiedzi = odpowiedzi;
                 _context.Odpowiedz.Remove(Odpowiedzi);
                 await _context.SaveChangesAsync();

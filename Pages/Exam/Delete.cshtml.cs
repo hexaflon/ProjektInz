@@ -4,6 +4,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -15,10 +16,11 @@ namespace ProjektInzynierski.Pages.Exam
     public class DeleteModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-
-        public DeleteModel(TestTest.Models.Db.DatabaseContext context)
+        private readonly UserManager<Osoba> _userManager;
+        public DeleteModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
+            _userManager = userManager;
         }
 
         [BindProperty]
@@ -54,7 +56,21 @@ namespace ProjektInzynierski.Pages.Exam
 
             if (test != null)
             {
+                if (test.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./List");
                 Test = test;
+                foreach(var lp in _context.ListaPytan.Where(l => l.IdTest == test.IdTest))
+                {
+                    _context.ListaPytan.Remove(lp);
+                }
+                var rozwiazania = _context.Rozwiazanie.Where(r => r.IdTest == test.IdTest).ToList();
+                foreach (var roz in rozwiazania)
+                {
+                    foreach(var rozDP in _context.RozwiazanieDoPytan.Where(rdp => rdp.IdRozwiazanie == roz.IdRozwiazanie))
+                    {
+                        _context.RozwiazanieDoPytan.Remove(rozDP);
+                    }
+                    _context.Rozwiazanie.Remove(roz);
+                }
                 _context.Test.Remove(Test);
                 await _context.SaveChangesAsync();
             }

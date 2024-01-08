@@ -25,7 +25,8 @@ namespace ProjektInzynierski.Pages.Exam
 
         public IActionResult OnGet()
         {
-        ViewData["IdGrupy"] = new SelectList(_context.Grupy, "IdGrupy", "Nazwa");
+            var userId = _userManager.GetUserAsync(User).Result.IdOsoba; 
+            ViewData["IdGrupy"] = new SelectList(_context.Grupy.Where(g => g.IdNauczyciela==userId), "IdGrupy", "Nazwa");
             return Page();
         }
 
