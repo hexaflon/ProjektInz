@@ -29,14 +29,20 @@ namespace ProjektInzynierski.Pages.Exam
         {
             if (_context.Test != null)
             {
-                
 
-                var iducznia = _userManager.GetUserAsync(User).Result.IdOsoba;
+                if (User.IsInRole("Admin"))
+                {
+                    Test = _context.Test
+                        .Where(t => t.DataRozpoczecia <= DateTime.Now && t.DataZakonczenia >= DateTime.Now)
+                        .ToList();
+                }
+                else { 
+                    var iducznia = _userManager.GetUserAsync(User).Result.IdOsoba;
 
-                Test = _context.Test
+                    Test = _context.Test
                     .Where(gr => _context.Uczestnicy.Any(u => u.IdUcznia == iducznia))
-                    .Where(t => t.DataRozpoczecia <= DateTime.Now && t.DataZakonczenia>=DateTime.Now).ToList();
-
+                    .Where(t => t.DataRozpoczecia <= DateTime.Now && t.DataZakonczenia >= DateTime.Now).ToList();
+                }
             }
         }
 

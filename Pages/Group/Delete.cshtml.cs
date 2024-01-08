@@ -56,7 +56,10 @@ namespace ProjektInzynierski.Pages.Group
             
             if (grupy != null)
             {
-                if (grupy.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                if (!User.IsInRole("Admin"))
+                {
+                    if (grupy.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                }
                 Grupy = grupy;
                 foreach(var test in _context.Test.Where(t => t.IdGrupy == grupy.IdGrupy))
                 {

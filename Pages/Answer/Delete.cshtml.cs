@@ -56,7 +56,10 @@ namespace TestTest.Pages.Answer
 
             if (odpowiedzi != null)
             {
-                if (odpowiedzi.IdPytanieNavigation.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                if (!User.IsInRole("Admin"))
+                {
+                    if (odpowiedzi.IdPytanieNavigation.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                }
                 Odpowiedzi = odpowiedzi;
                 _context.Odpowiedz.Remove(Odpowiedzi);
                 await _context.SaveChangesAsync();

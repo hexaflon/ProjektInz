@@ -56,7 +56,10 @@ namespace ProjektInzynierski.Pages.Exam
 
             if (test != null)
             {
-                if (test.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./List");
+                if (!User.IsInRole("Admin"))
+                {
+                    if (test.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./List");
+                }
                 Test = test;
                 foreach(var lp in _context.ListaPytan.Where(l => l.IdTest == test.IdTest))
                 {

@@ -57,7 +57,10 @@ namespace TestTest.Pages.Question
             
             if (pytanie != null)
             {
-                if (pytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                if (!User.IsInRole("Admin"))
+                {
+                    if (pytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+                }
                 Pytanie = pytanie;
 
                 var odpowiedzi = _context.Odpowiedz.Where(o => o.IdPytanie == pytanie.IdPytanie).ToList();
@@ -68,6 +71,10 @@ namespace TestTest.Pages.Question
                         _context.RozwiazanieDoPytan.Remove(rozDP);
                     }
                     _context.Odpowiedz.Remove(odp);
+                }
+                foreach(var lp in _context.ListaPytan.Where(l => l.IdPytanie == pytanie.IdPytanie))
+                {
+                    _context.ListaPytan.Remove(lp);
                 }
 
                 _context.Pytanie.Remove(Pytanie);

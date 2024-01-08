@@ -53,7 +53,10 @@ namespace ProjektInzynierski.Pages.Exam
             {
                 return Page();
             }
-            if (Test.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./List");
+            if (!User.IsInRole("Admin"))
+            {
+                if (Test.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./List");
+            }
             _context.Attach(Test).State = EntityState.Modified;
 
             try

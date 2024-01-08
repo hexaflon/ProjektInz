@@ -29,11 +29,16 @@ namespace ProjektInzynierski.Pages.Group
         {
             if (_context.Grupy != null)
             {
-                var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
-                Grupy = await _context.Grupy
-                    .Where(g=>g.IdNauczyciela==userId)
-                    .ToListAsync();
-                
+                if (User.IsInRole("Admin"))
+                {
+                    Grupy = _context.Grupy.ToList();
+                }
+                else
+                {
+                    var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
+                    Grupy = await _context.Grupy.Where(g=>g.IdNauczyciela==userId)
+                        .ToListAsync();
+                }
 
             }
         }

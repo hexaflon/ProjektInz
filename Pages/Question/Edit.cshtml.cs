@@ -58,7 +58,10 @@ namespace TestTest.Pages.Question
             if (id!=null) { 
                 Pytanie.IdPytanie = (int)id;
             }
-            if(Pytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+            if (!User.IsInRole("Admin"))
+            {
+                if (Pytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+            }
             _context.Attach(Pytanie).State = EntityState.Modified;
 
             try

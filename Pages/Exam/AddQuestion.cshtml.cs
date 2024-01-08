@@ -40,8 +40,10 @@ namespace TestTest.Pages.Exam
             {
                 return RedirectToPage("/List");
             }
-            var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
-            ViewData["IdPytanie"] = new SelectList(_context.Pytanie.Where(p=>p.IdNauczyciela==userId), "IdPytanie", "Tresc");
+            var pytania =  _context.Pytanie.ToList();
+            var pytaniaWTescie = _context.ListaPytan.Where(lp => lp.IdTest == id).Select(lp => lp.IdPytanie).ToList();
+            pytania = pytania.Where(p => !pytaniaWTescie.Contains(p.IdPytanie)).ToList();
+            ViewData["IdPytanie"] = new SelectList(pytania, "IdPytanie", "Tresc");
             return Page();
         }
 
