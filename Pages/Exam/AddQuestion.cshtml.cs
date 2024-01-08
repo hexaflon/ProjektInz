@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TestTest.Models.Db;
 
-namespace ProjektInzynierski.Pages.Exam
+namespace TestTest.Pages.Exam
 {
     [Authorize(Roles = "Nauczyciel,Admin")]
     public class AddQuestionModel : PageModel

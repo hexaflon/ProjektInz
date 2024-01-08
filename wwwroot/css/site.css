@@ -91,6 +91,8 @@ body.dark-mode .text-muted {
     color: #fff;
     background-color: #B85600;
     border-color: #914400;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
     .btn-primary:hover,
@@ -101,40 +103,50 @@ body.dark-mode .text-muted {
         color: #fff;
         background-color: #EC8232;
         border-color: #B85600;
+        font-weight: bold;
     }
 
 .btn-back {
     color: #B85600;
     background-color: #B85600;
     border-color: #B85600;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
     .btn-back:hover {
         color: #B85600;
         background-color: #F8D2B4;
         border-color: #B85600;
+        font-weight: bold;
     }
 
 body.dark-mode .btn-back {
     color: #EC8232;
     background-color: #333333;
     border-color: #EC8232;
+    font-weight: bold;
+    border-radius: 10px;
 }
 
     body.dark-mode .btn-back:hover {
         color: #EC8232;
         background-color: #4d4c4c;
         border-color: #EC8232;
+        font-weight: bold;
     }
 
 .btn-delete {
     color: #fff;
     background-color: #A41623;
     border-color: #7d0913;
+    font-weight: bold;
+    border-radius: 10px;
 }
     .btn-delete:hover {
         color: #fff;
         background-color: #c40818;
+        font-weight: bold;
     }
 
 .column1 {
