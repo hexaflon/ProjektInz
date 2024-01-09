@@ -40,12 +40,18 @@ namespace ProjektInzynierski.Pages.Exam
             }
             else 
             {
-                Test = await _context.Test
+                var idOsoba = _userManager.GetUserAsync(User).Result.IdOsoba;
+                if (idOsoba == rozwiazanie.IdUcznia || User.IsInRole("Admin"))
+                {
+                    Test = await _context.Test
                     .Include(t => t.ListaPytan)
                     .FirstOrDefaultAsync(t => t.IdTest == rozwiazanie.IdTest);
-                if (Test == null) return NotFound();
+                    if (Test == null) return NotFound();
+                    Rozwiazanie = rozwiazanie;
+                }
+                else return Forbid();
 
-                Rozwiazanie = rozwiazanie;
+                
             }
             return Page();
         }
