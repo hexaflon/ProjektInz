@@ -14,6 +14,7 @@ namespace TestTest.Models.Db
 
         [Display(Name = "ID grupy")]
         public int IdGrupy { get; set; }
+        [Display(Name = "ID nauczyciela")]
         public int? IdNauczyciela { get; set; }
         [Display(Name = "Nazwa grupy")]
         [Required(ErrorMessage = "To pole jest wymagane.")]

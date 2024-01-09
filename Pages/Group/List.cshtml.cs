@@ -25,22 +25,27 @@ namespace ProjektInzynierski.Pages.Group
 
         public IList<Grupy> Grupy { get;set; } = default!;
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string? searchText)
         {
-            if (_context.Grupy != null)
-            {
-                if (User.IsInRole("Admin"))
-                {
-                    Grupy = _context.Grupy.ToList();
-                }
-                else
-                {
-                    var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
-                    Grupy = await _context.Grupy.Where(g=>g.IdNauczyciela==userId)
-                        .ToListAsync();
-                }
+            IQueryable<Grupy> query = _context.Grupy;
 
+            if (User.IsInRole("Admin"))
+            {
+                // administrator widzi wszystkie grupy
             }
+            else
+            {
+                var userId = _userManager.GetUserAsync(User).Result.IdOsoba;
+                query = query.Where(g => g.IdNauczyciela == userId);
+            }
+
+            if (!string.IsNullOrEmpty(searchText))
+            {
+                query = query.Where(g => g.Nazwa.Contains(searchText));
+            }
+
+            Grupy = await query.ToListAsync();
         }
+
     }
 }

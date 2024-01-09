@@ -52,7 +52,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <br />
-                        <button type="submit" class="btn btn-primary">Filtruj</button>
+                        <button type="submit" class="btn btn-primary">Szukaj</button>
                     </div>
                 </div>
             </div>
@@ -72,21 +72,21 @@
         <tbody>
             @foreach (var item in Model.Pytanie)
             {
-                <tr class="text1">
+                <tr class="text1 no-border">
                     <td>@Html.DisplayFor(modelItem => item.Tresc)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)</td>
                     <td>
-                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edytuj</a> |
-                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdPytanie">Więcej</a> |
+                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edytuj</a>
+                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdPytanie">Więcej</a>
                         <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdPytanie">Usuń</a>
                     </td>
                 </tr>
                 <tr>
                     <td colspan="5" class="text-left">
                         <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
-                        <button class="btn btn-show-answers" data-question-id="@item.IdPytanie" data-toggle-text="Pokaż odpowiedzi">Pokaż odpowiedzi</button>
+                        <button class="btn btn-show-hide" data-question-id="@item.IdPytanie" data-toggle-text="Pokaż odpowiedzi">Pokaż odpowiedzi</button>
                     </td>
                 </tr>
                 <tr class="text-muted answers-row" id="answers-row-@item.IdPytanie" style="display: none;">
@@ -143,7 +143,7 @@
                 delay: 300
             });
 
-            $(".btn-show-answers").click(function () {
+            $(".btn-show-hide").click(function () {
                 var questionId = $(this).data("question-id");
                 var toggleText = $(this).data("toggle-text");
                 $("#answers-row-" + questionId).toggle();

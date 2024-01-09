@@ -2,18 +2,37 @@
 @model ProjektInzynierski.Pages.Exam.ExamListModel
 
 @{
-    ViewData["Title"] = "Aktywne testy";
+    ViewData["Title"] = "Twoje testy";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1 class="display-4">Aktywne testy</h1>
+<h1 class="display-4">Twoje testy</h1>
+
+<div class="info-section">
+    <p>
+        Przed przystąpieniem do rozwiązania testu zapoznaj się z podstawowymi informacjami, klikając
+        <a href="#" onclick="openExplanation()" class="link">tutaj</a>.
+    </p>
+</div>
+
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h4>Podstawowe informacje</h4>
+        <p>
+            Poniżej znajduje się krótkie wyjaśnienie terminów używanych na stronie:
+        </p>
+        <ul>
+            <li><strong>data rozpoczęcia:</strong> określa datę i godzinę, od której uczeń może przystąpić do rozwiązywania testu,</li>
+            <li><strong>data zakończenia:</strong> określa datę i godzinę, o której test zostaje zamknięty i nie ma możliwości dalszego rozwiązywania,</li>
+            <li><strong>czas trwania:</strong> określa czas (wyrażony w minutach) przeznaczony na rozwiązanie testu, liczony jest od momentu naciśnięcia przycisku "Rozwiąż". Po zakończeniu odliczania, test zostaje automatycznie zakończony.</li>
+        </ul>
+    </div>
+</div>
 
 <table class="table">
     <thead>
         <tr class="text-muted">
-            <th>
-                @Html.DisplayNameFor(model => model.Test[0].CzyWidoczny)
-            </th>
             <th>
                 @Html.DisplayNameFor(model => model.Test[0].DataUtworzenia)
             </th>
@@ -33,9 +52,6 @@
                 @Html.DisplayNameFor(model => model.Test[0].CzasTrwania)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Test[0].IdGrupyNavigation)
-            </th>
-            <th>
                 @Html.DisplayNameFor(model => model.Test[0].IdNauczyciela)
             </th>
             <th></th>
@@ -44,9 +60,6 @@
     <tbody>
 @foreach (var item in Model.Test) {
         <tr class="text1">
-            <td>
-                @Html.DisplayFor(modelItem => item.CzyWidoczny)
-            </td>
             <td>
                 @Html.DisplayFor(modelItem => item.DataUtworzenia)
             </td>
@@ -66,9 +79,6 @@
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.IdGrupyNavigation.IdGrupy)
-            </td>
-            <td>
                 @Html.DisplayFor(modelItem => item.IdNauczyciela)
             </td>
             <td>
@@ -78,3 +88,15 @@
 }
     </tbody>
 </table>
+
+<script>
+    function openExplanation() {
+        var modal = document.getElementById("infoModal");
+        modal.style.display = "block";
+    }
+
+    function closeModal() {
+        var modal = document.getElementById("infoModal");
+        modal.style.display = "none";
+    }
+</script>
