@@ -29,6 +29,7 @@ namespace ProjektInzynierski.Pages.Exam
         }
 
         public List<Pytanie> pytaniaSprawdzianu { get;set; } = default!;
+        public int CzasTrwania { get; set; }
 
         public List<Pytanie> GetQuestions(int examId)
         {
@@ -41,13 +42,15 @@ namespace ProjektInzynierski.Pages.Exam
             return questions;
         }
 
-
         public async Task<IActionResult> OnGetAsync(int id)
         {
             pytaniaSprawdzianu = GetQuestions(id);
             if (pytaniaSprawdzianu == null) return NotFound();
             
             ViewData["idWielokrotnego"] = idWielokrotngo;
+
+            var test = await _context.Test.FindAsync(id);
+            CzasTrwania = test.CzasTrwania ?? 0;
 
             return Page();
         }

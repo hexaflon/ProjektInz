@@ -26,7 +26,7 @@
                     <td>@Html.DisplayFor(m => uczen.Name)</td>
                     <td>@Html.DisplayFor(m => uczen.Email)</td>
                     <td>
-                        <a asp-page-handler="Delete" asp-route-idUcznia="@uczen.IdOsoba" asp-route-idGrupy="@ViewBag.idGrupy">Usuń ucznia</a>
+                        <a asp-page-handler="Delete" asp-route-idUcznia="@uczen.IdOsoba" asp-route-idGrupy="@ViewBag.idGrupy" class="btn btn-delete">Usuń ucznia</a>
                     </td>
                 </tr>
             }

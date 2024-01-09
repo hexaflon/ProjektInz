@@ -6,12 +6,61 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+
+@functions {
+    string ToLowerString(object value) => value?.ToString()?.ToLower();
+}
+
 <div class="container">
     <h1 class="display-4">Testy</h1>
 
     <p>
         <a class="btn btn-create" asp-page="Create">Utwórz test</a>
     </p>
+
+    <form method="get" class="form-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="visibility">Widoczność:</label>
+                        <select class="form-control" id="visibility" name="visibility">
+                            <option value="">Wszystkie</option>
+                            <option value="true">Widoczne</option>
+                            <option value="false">Niewidoczne</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="groupName">Nazwa grupy:</label>
+                        <select class="form-control" id="groupName" name="groupName">
+                            <option value="">Wszystkie</option>
+                            @foreach (var group in Model.Groups)
+                            {
+                                <option value="@group.Nazwa">@group.Nazwa</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="searchText">Wyszukaj tytuł:</label>
+                        <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Wyszukaj tytuł testu..." />
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <br />
+                        <button type="submit" class="btn btn-primary">Szukaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <table class="table">
         <thead>
@@ -21,7 +70,6 @@
                 <th>Data rozpoczęcia</th>
                 <th>Data zakończenia</th>
                 <th>Tytuł</th>
-                <th>Opis</th>
                 <th>Czas trwania</th>
                 <th>ID grupy</th>
                 <th></th>
@@ -30,39 +78,68 @@
         <tbody>
             @foreach (var item in Model.Test)
             {
-                <tr class="text1">
-                    <td>@Html.DisplayFor(modelItem => item.CzyWidoczny)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DataUtworzenia)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DataRozpoczecia)</td>
-                    <td>@Html.DisplayFor(modelItem => item.DataZakonczenia)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Tytul)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Opis)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CzasTrwania)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdGrupyNavigation.IdGrupy)</td>
-                    <td>
-                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdTest">Edytuj</a> |
-                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdTest">Więcej</a> |
-                        <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a> |
-                        <a class="btn btn-primary" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj pytanie</a>
-                    </td>
-                </tr>
-                if (item.ListaPytan != null)
+                var visibilityFilter = Request.Query["visibility"];
+                var groupNameFilter = Request.Query["groupName"];
+                var searchTextFilter = Request.Query["searchText"];
+
+                @if ((string.IsNullOrEmpty(visibilityFilter) || ToLowerString(item.CzyWidoczny) == ToLowerString(visibilityFilter)) &&
+               (string.IsNullOrEmpty(groupNameFilter) || item.IdGrupyNavigation.Nazwa == groupNameFilter) &&
+               (string.IsNullOrEmpty(searchTextFilter) || item.Tytul.Contains(searchTextFilter, StringComparison.OrdinalIgnoreCase)))
+
+
                 {
-                    <tr>
-                        <td class="text-muted" colspan="8">
-                            <b>@Html.DisplayNameFor(x => x.Test.FirstOrDefault().ListaPytan.FirstOrDefault().IdPytanieNavigation.Tresc)</b>
+                    <tr class="text1 no-border">
+                        <td>@Html.DisplayFor(modelItem => item.CzyWidoczny)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DataUtworzenia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DataRozpoczecia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.DataZakonczenia)</td>
+                        <td>@Html.DisplayFor(modelItem => item.Tytul)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CzasTrwania)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdGrupyNavigation.IdGrupy)</td>
+                        <td>
+                            <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdTest">Edytuj</a>
+                            <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdTest">Więcej</a>
+                            <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdTest">Usuń</a>
                         </td>
                     </tr>
-                    foreach (var pytanie in item.ListaPytan)
-                    {
-                        <tr>
-                            <td class="text1" colspan="8">
-                                @Html.DisplayFor(x => pytanie.IdPytanieNavigation.Tresc)
-                            </td>
-                        </tr>
-                    }
+                    <tr>
+                        <td colspan="9">
+                            <a class="btn btn-create" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj pytanie</a>
+                            <button class="btn btn-show-hide" data-test-id="@item.IdTest" data-toggle-text="Pokaż pytania">Pokaż pytania</button>
+                        </td>
+                    </tr>
+                    <tr class="text-muted questions-row" id="questions-row-@item.IdTest" style="display: none;">
+                        <td colspan="9">
+                            <b>Pytania</b>
+                            <table>
+                                @foreach (var pytanie in item.ListaPytan)
+                                {
+                                    <tr class="text1">
+                                        <td colspan="8">
+                                            @Html.DisplayFor(x => pytanie.IdPytanieNavigation.Tresc)
+                                        </td>
+                                    </tr>
+                                }
+                            </table>
+                        </td>
+                    </tr>
                 }
             }
         </tbody>
     </table>
 </div>
+
+@section scripts {
+    <script>
+        $(document).ready(function () {
+            $(".btn-show-hide").click(function () {
+                var testId = $(this).data("test-id");
+                var toggleText = $(this).data("toggle-text");
+                $("#questions-row-" + testId).toggle();
+                $(this).text(function (_, currentText) {
+                    return currentText === toggleText ? "Ukryj pytania" : toggleText;
+                });
+            });
+        });
+    </script>
+}

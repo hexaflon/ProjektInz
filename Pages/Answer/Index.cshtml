@@ -6,8 +6,49 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+@functions {
+    string ToLowerString(object value) => value?.ToString()?.ToLower();
+}
+
 <div class="container">
     <h1 class="display-4">Odpowiedzi</h1>
+
+    <form method="get" class="form-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="questionFilter">Pytanie:</label>
+                        <select class="form-control" id="questionFilter" name="questionFilter">
+                            <option value="">Wszystkie</option>
+                            @foreach (var question in Model.Pytania)
+                            {
+                                <option value="@question.IdPytanie">@question.Tresc</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="correctnessFilter">Poprawność odpowiedzi:</label>
+                        <select class="form-control" id="correctnessFilter" name="correctnessFilter">
+                            <option value="">Wszystkie</option>
+                            <option value="true">Poprawne</option>
+                            <option value="false">Niepoprawne</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <br />
+                        <button type="submit" class="btn btn-primary">Szukaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 
     <table class="table">
         <thead>
@@ -21,16 +62,24 @@
         <tbody>
             @foreach (var item in Model.Odpowiedzi)
             {
-                <tr class="text1">
-                    <td>@Html.DisplayFor(modelItem => item.TrescOdpowiedzi)</td>
-                    <td>@Html.DisplayFor(modelItem => item.CzyPoprawny)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdPytanieNavigation.Tresc)</td>
-                    <td>
-                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdOdpowiedz">Edytuj</a> |
-                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdOdpowiedz">Więcej</a> |
-                        <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdOdpowiedz">Usuń</a>
-                    </td>
-                </tr>
+                var correctnessFilter = Request.Query["correctnessFilter"];
+                var questionFilter = Request.Query["questionFilter"];
+
+                @if ((string.IsNullOrEmpty(correctnessFilter) || ToLowerString(item.CzyPoprawny) == ToLowerString(correctnessFilter)) &&
+               (string.IsNullOrEmpty(questionFilter) || item.IdPytanie == int.Parse(questionFilter)))
+                {
+                    <tr class="text1">
+                        <td>@Html.DisplayFor(modelItem => item.TrescOdpowiedzi)</td>
+                        <td>@Html.DisplayFor(modelItem => item.CzyPoprawny)</td>
+                        <td>@Html.DisplayFor(modelItem => item.IdPytanieNavigation.Tresc)</td>
+                        <td>
+                            <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdOdpowiedz">Edytuj</a>
+                            <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdOdpowiedz">Więcej</a>
+                            <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdOdpowiedz">Usuń</a>
+                        </td>
+                    </tr>
+                }
+
             }
         </tbody>
     </table>

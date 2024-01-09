@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
@@ -21,15 +20,26 @@ namespace TestTest.Pages.Answer
             _context = context;
         }
 
-        public IList<Odpowiedz> Odpowiedzi { get;set; } = default!;
+        public IList<Odpowiedz> Odpowiedzi { get; set; } = default!;
+        public IList<Pytanie> Pytania { get; set; } = default!;
 
         public async Task OnGetAsync()
         {
-            if (_context.Odpowiedz != null)
+            IQueryable<Odpowiedz> query = _context.Odpowiedz
+                .Include(o => o.IdPytanieNavigation);
+
+            var correctnessFilter = Request.Query["correctnessFilter"];
+            var questionFilter = Request.Query["questionFilter"];
+
+            if (!string.IsNullOrEmpty(questionFilter) && int.TryParse(questionFilter, out int questionId))
             {
-                Odpowiedzi = await _context.Odpowiedz
-                .Include(o => o.IdPytanieNavigation).ToListAsync();
+                query = query.Where(o => o.IdPytanie == questionId);
             }
+
+            Odpowiedzi = await query.ToListAsync();
+
+            Pytania = await _context.Pytanie.ToListAsync();
         }
+
     }
 }

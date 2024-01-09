@@ -13,9 +13,27 @@
         <a class="btn btn-create" asp-page="Create">Utwórz grupę</a>
     </p>
 
+    <form method="get" class="form-row">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="searchInput" class="sr-only">Wyszukaj</label>
+                    <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Wyszukaj nazwę grupy...">
+                </div>
+            </div>
+
+             <div class="col-md-2">
+                 <div class="form-group">
+                     <button type="submit" class="btn btn-primary">Szukaj</button>
+                 </div>
+             </div>
+        </div>
+    </form>
+
     <table class="table">
         <thead>
             <tr class="text-muted">
+                <th>@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().IdGrupy)</th>
                 <th>@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().Nazwa)</th>
                 <th>@Html.DisplayNameFor(model => model.Grupy.FirstOrDefault().IdNauczyciela)</th>
                 <th></th>
@@ -25,14 +43,16 @@
             @foreach (var item in Model.Grupy)
             {
                 <tr class="text1">
+                    <td>@Html.DisplayFor(modelItem => item.IdGrupy)</td>
                     <td>@Html.DisplayFor(modelItem => item.Nazwa)</td>
                     <td>@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
-                    <td>
-                        <a class="btn btn-edit" asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Dodaj ucznia</a> |
+                    <td class="text-center">
+                        <a class="btn btn-edit" asp-page="./AddMembers" asp-route-id="@item.IdGrupy">Dodaj ucznia</a>
                         <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdGrupy">Usuń</a>
                     </td>
                 </tr>
             }
         </tbody>
     </table>
+
 </div>
