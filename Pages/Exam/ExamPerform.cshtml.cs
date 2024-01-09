@@ -198,7 +198,7 @@ namespace ProjektInzynierski.Pages.Exam
                 RozwiazanieDoPytanPrzetworzenie(id, odp, rozwiazanieSprawdzianu.IdRozwiazanie);
             }
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("./ExamInfo", new { id = rozwiazanieSprawdzianu.IdRozwiazanie });
         }
     }
 }
