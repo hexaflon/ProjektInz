@@ -1,7 +1,19 @@
 html {
     font-size: 14px;
 }
+.false{
+    border: 2px solid red;
+    padding: 5px;
 
+}
+.true {
+    border: 2px solid green;
+    padding: 5px;
+}
+.good {
+    border: 2px solid lightgreen;
+    padding: 5px;
+}
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -335,6 +347,7 @@ body.dark-mode .ui-autocomplete {
     body.dark-mode .ui-autocomplete.ui-widget-content {
         border: 1px solid #fff;
     }
+
 
 
 

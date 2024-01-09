@@ -28,7 +28,7 @@
                                 foreach (var answer in question.Odpowiedz)
                                 {
                                     <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz">
+                                        <input class="form-check-input" type="checkbox" name="@answer.IdPytanie" value="@answer.IdOdpowiedz">
                                         <label class="form-check-label">
                                             @answer.TrescOdpowiedzi
                                         </label>
@@ -40,7 +40,7 @@
                                 foreach (var answer in question.Odpowiedz)
                                 {
                                     <div class="form-check">
-                                        <input class="form-check-input" type="radio" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz">
+                                        <input class="form-check-input" type="radio" name="@answer.IdPytanie" value="@answer.IdOdpowiedz">
                                         <label class="form-check-label">
                                             @answer.TrescOdpowiedzi
                                         </label>

@@ -72,7 +72,7 @@ namespace ProjektInzynierski.Pages.Exam
             RDP.IdRozwiazanie = idRozwiazanie;
             _context.RozwiazanieDoPytan.Add(RDP);
             rDPId++;
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
         }
 
 

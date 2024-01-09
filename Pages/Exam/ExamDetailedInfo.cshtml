@@ -1,0 +1,100 @@
+﻿@page
+@model ProjektInzynierski.Pages.Exam.ExamDetailedInfoModel
+
+@{
+    ViewData["Title"] = "ExamDetailedInfo";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+
+
+
+<h1>ExamDetailedInfo</h1>
+
+<div>
+    <div id="timer" class="mb-3"></div>
+    <form id="examForm" method="post">
+        <table class="table text1">
+            <tbody>
+                @for (int i = 0; i < Model.pytaniaSprawdzianu.Count; i++)
+                {
+                    var question = Model.pytaniaSprawdzianu[i];
+                    <tr>
+                        <td>
+                            <strong>Pytanie @(i + 1):</strong> @question.Tresc
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            @if (question.IdTypPytania == ViewBag.idWielokrotnego)
+                            {
+                                foreach (var answer in question.Odpowiedz)
+                                {
+                                    @if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny==false){
+                                        Model.newStyleInput = "form-check-input false";
+                                        Model.newStyleLabel = "form-check-label false";
+                                    }
+                                    else if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny == true)
+                                    {
+                                        Model.newStyleInput = "form-check-input true";
+                                        Model.newStyleLabel = "form-check-label true";
+                                    }
+                                    else if(answer.CzyPoprawny==true)
+                                    {
+                                        Model.newStyleInput = "form-check-input good";
+                                        Model.newStyleLabel = "form-check-label good";
+                                    }
+                                    else
+                                    {
+                                        Model.newStyleInput = "form-check-input";
+                                        Model.newStyleLabel = "form-check-label";
+                                    }
+
+                                    <div class="form-check">
+                                        <input class="@Model.newStyleInput" disabled type="checkbox" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz">
+                                        <label class="@Model.newStyleLabel">
+                                            @answer.TrescOdpowiedzi
+                                        </label>
+                                    </div>
+                                }
+                            }
+                            else
+                            {
+                                foreach (var answer in question.Odpowiedz)
+                                {
+                                    @if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny==false){
+                                        Model.newStyleInput = "form-check-input false";
+                                        Model.newStyleLabel = "form-check-label false";
+                                    }
+                                    else if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny == true)
+                                    {
+                                        Model.newStyleInput = "form-check-input true";
+                                        Model.newStyleLabel = "form-check-label true";
+                                    }
+                                    else if(answer.CzyPoprawny==true)
+                                    {
+                                        Model.newStyleInput = "form-check-input good";
+                                        Model.newStyleLabel = "form-check-label good";
+                                    }
+                                    else
+                                    {
+                                        Model.newStyleInput = "form-check-input";
+                                        Model.newStyleLabel = "form-check-label";
+                                    }
+
+                                    <div class="form-check">
+                                        <input class="@Model.newStyleInput" disabled type="radio" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz">
+                                        <label class="@Model.newStyleLabel">
+                                            @answer.TrescOdpowiedzi
+                                        </label>
+                                    </div>
+                                }
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <a asp-page="/Index">Strona główna</a>
+    </form>
+</div>
