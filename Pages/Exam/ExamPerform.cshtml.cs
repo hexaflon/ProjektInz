@@ -52,12 +52,45 @@ namespace ProjektInzynierski.Pages.Exam
             return Page();
         }
         //, Dictionary<int, int[]> selectedAnswers
+
+        public async void RozwiazanieDoPytanPrzetworzenie(int id, int idOdpowiedz, int idRozwiazanie)
+        {
+            int rDPId;
+            Console.WriteLine($"id:{id} Odpowiedz:{idOdpowiedz} rozwiazanie:{idRozwiazanie}");
+            if (_context.RozwiazanieDoPytan.ToList() == null) rDPId = 1;
+            else
+            {
+                rDPId = _context.RozwiazanieDoPytan.OrderByDescending(rdp => rdp.IdRozwiazanieDoPytan)
+                    .Select(rdp => rdp.IdRozwiazanieDoPytan).FirstOrDefault() + 1;
+            }
+            var RDP = new RozwiazanieDoPytan();
+            RDP.IdRozwiazanieDoPytan = rDPId;
+            RDP.IdOdpowiedz = idOdpowiedz;
+            RDP.IdRozwiazanie = idRozwiazanie;
+            _context.RozwiazanieDoPytan.Add(RDP);
+            rDPId++;
+            await _context.SaveChangesAsync();
+        }
+
+
         public async Task<IActionResult> OnPostAsync(int id)
         {
             var selectedAnswers = Request.Form;
             int ilePoprawnych = 0, zaznaczonePoprawne=0;
             double punkty = 0;
             Console.WriteLine(selectedAnswers);
+            
+            Rozwiazanie rozwiazanieSprawdzianu = new Rozwiazanie();
+            if (_context.Rozwiazanie.ToList() == null) rozwiazanieSprawdzianu.IdRozwiazanie = 1;
+            else
+            {
+                rozwiazanieSprawdzianu.IdRozwiazanie =
+                    _context.Rozwiazanie.OrderByDescending(r => r.IdRozwiazanie)
+                    .Select(r => r.IdRozwiazanie).FirstOrDefault() + 1;
+            }
+
+            List<int> odpIds = new List<int>();
+
             foreach (var question in selectedAnswers)
             {
                 var temp = question.Key;
@@ -71,6 +104,7 @@ namespace ProjektInzynierski.Pages.Exam
                 catch (FormatException ex)
                 {
                     Console.WriteLine($"Failed to convert '{temp}' to integer: {ex.Message}");
+                    continue;
                 }
 
                 var pytanie = _context.Pytanie.Include(p => p.Odpowiedz)
@@ -83,11 +117,17 @@ namespace ProjektInzynierski.Pages.Exam
                         .Count();
                 }
 
+
+                
+
+
                 foreach (var answer in question.Value)
                 {
                     temp = answer;
                     int val = 0;
                     Console.WriteLine($"Converting '{temp}' to integer...");
+                    
+                    
                     try
                     {
                         val = Convert.ToInt32(temp);
@@ -96,8 +136,14 @@ namespace ProjektInzynierski.Pages.Exam
                     catch (FormatException ex)
                     {
                         Console.WriteLine($"Failed to convert '{temp}' to integer: {ex.Message}");
+                        continue;
                     }
                     var isCorrect = pytanie.Odpowiedz.Any(o => o.IdOdpowiedz == val && o.CzyPoprawny);
+
+
+                    odpIds.Add(val);
+
+
                     if (czyWielokrotnego)
                     {
                         if (isCorrect)
@@ -128,21 +174,29 @@ namespace ProjektInzynierski.Pages.Exam
                     ilePoprawnych = 0;
                 }
             }
-            Rozwiazanie rozwiazanieSprawdzianu = new Rozwiazanie();
+            
 
-            if (_context.Rozwiazanie == null) rozwiazanieSprawdzianu.IdRozwiazanie = 1;
-            else
-            {
-                rozwiazanieSprawdzianu.IdRozwiazanie =
-                    _context.Rozwiazanie.OrderByDescending(r => r.IdRozwiazanie)
-                    .Select(r => r.IdRozwiazanie).FirstOrDefault()+1;
-            }
+            
 
             rozwiazanieSprawdzianu.IdTest = id;
             rozwiazanieSprawdzianu.IdUcznia = _userManager.GetUserAsync(User).Result.IdOsoba;
             rozwiazanieSprawdzianu.LiczbaPunktow = punkty;
             _context.Rozwiazanie.Add(rozwiazanieSprawdzianu);
+
+
+            
+
+
+
+
+
+
             await _context.SaveChangesAsync();
+            foreach(var odp in odpIds)
+            {
+
+                RozwiazanieDoPytanPrzetworzenie(id, odp, rozwiazanieSprawdzianu.IdRozwiazanie);
+            }
 
             return RedirectToPage("/Index");
         }
