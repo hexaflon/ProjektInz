@@ -33,7 +33,8 @@ namespace TestTest.Pages.Answer
             {
                 return NotFound();
             }            
-            var odpowiedzi =  await _context.Odpowiedz.FirstOrDefaultAsync(m => m.IdOdpowiedz == id);
+            var odpowiedzi =  await _context.Odpowiedz
+                .FirstOrDefaultAsync(m => m.IdOdpowiedz == id);
             if (odpowiedzi == null)
             {
                 return NotFound();
@@ -51,9 +52,17 @@ namespace TestTest.Pages.Answer
             {
                 return Page();
             }
-
+            if (!User.IsInRole("Admin"))
+            {
+                var idNauczyciela = _context.Pytanie
+                .Where(p => p.IdPytanie == Odpowiedzi.IdPytanie)
+                .Select(p => p.IdNauczyciela).FirstOrDefault();
+                var idOsoba = _userManager.GetUserAsync(User).Result.IdOsoba;
+                if (idNauczyciela != idOsoba) return RedirectToPage("./Index");
+            }
+            
             _context.Attach(Odpowiedzi).State = EntityState.Modified;
-            if (Odpowiedzi.IdPytanieNavigation.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return RedirectToPage("./Index");
+            
             try
             {
                 await _context.SaveChangesAsync();
