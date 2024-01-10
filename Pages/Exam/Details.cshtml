@@ -18,6 +18,10 @@
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Test.IdNauczyciela)
         </dd>
+        <dt class="col-sm-2">
+            @Html.Raw($"Średnia: {Model.Avg}")
+        </dt>
+        <dd></dd>
         @foreach(var wynik in Model.Wyniki)
         {
             <dt class="col-sm-2">

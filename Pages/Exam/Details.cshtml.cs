@@ -24,6 +24,28 @@ namespace ProjektInzynierski.Pages.Exam
 
         public Test Test { get; set; } = default!;
         public List<Wynik> Wyniki { get; set; } = default!;
+        public double Avg { get; set; } = 0.0;
+
+
+        public void srednia()
+        {
+            double suma = 0;
+            int liczbaPytan = Test.ListaPytan.Count();
+            foreach(var wynik in Wyniki)
+            {
+                var division = wynik.punkty / liczbaPytan;
+                division *= 100;
+                division %= 100;
+                if (division >= 90) suma += 5;
+                else if (division >= 80 && division < 90) suma += 4.5;
+                else if (division >= 70 && division < 80) suma += 4;
+                else if (division >= 60 && division < 70) suma += 3.5;
+                else if (division >= 50 && division < 60) suma += 3;
+                else suma += 2;
+            }
+            Avg = suma / Wyniki.Count();
+        }
+
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -51,14 +73,13 @@ namespace ProjektInzynierski.Pages.Exam
                 wynik.punkty = (double)rozwiazanie.LiczbaPunktow;
 
                 wynik.nowaWiadomosc(test.ListaPytan.Count());
-                Console.WriteLine(wynik.nazwisko + " " + wynik.imie + " " + wynik.wiadomosc + " " + wynik.punkty);
                 Wyniki.Add(wynik);
 
             }
 
 
             Test = test;
-
+            srednia();
             return Page();
         }
     }

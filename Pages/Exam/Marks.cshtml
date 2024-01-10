@@ -1,0 +1,44 @@
+﻿@page
+@model ProjektInzynierski.Pages.Exam.ExamHistoryModel
+
+@{
+    ViewData["Title"] = "Oceny";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Oceny</h1>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Rozwiazanie[0].IdTestNavigation)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Rozwiazanie[0].LiczbaPunktow)
+            </th>
+            <th>
+                @Html.Raw("Ocena")
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @{int i = 0;}
+@foreach (var item in Model.Rozwiazanie) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.IdTestNavigation.Tytul)
+            </td>
+            <td>
+                @Html.Raw($"{item.LiczbaPunktow} / {item.IdTestNavigation.ListaPytan.Count()}")
+            </td>
+            <td>
+                @Html.Raw($"{Model.Oceny[i]}")
+            </td>
+            </tr>
+            i++;
+        }
+    </tbody>
+</table>
