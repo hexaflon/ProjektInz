@@ -27,6 +27,8 @@ namespace TestTest.Pages.Answer
         public Odpowiedz Odpowiedz { get; set; }
         public Pytanie wysPytanie { get; set; }
 
+        public bool hasCorrectAnswer { get; set; } = false;
+
         public IActionResult OnGet([FromQuery]int? id)
         {
             if (id.HasValue)
@@ -43,6 +45,14 @@ namespace TestTest.Pages.Answer
                     if (wysPytanie.IdNauczyciela != _userManager.GetUserAsync(User).Result.IdOsoba) return Forbid();
                     return RedirectToPage("/Question/Index");
                 }
+
+                if (wysPytanie.IdTypPytania != 2)
+                {
+                    if (wysPytanie.Odpowiedz.Any(o => o.CzyPoprawny == true)) hasCorrectAnswer = true;
+                }
+
+
+
             }
             else
             {
