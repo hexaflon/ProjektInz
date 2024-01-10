@@ -36,6 +36,7 @@ namespace TestTest.Pages.Question
                 .Include(p => p.IdKategoriaPytaniaNavigation)
                 .Include(p => p.IdTypPytaniaNavigation)
                 .Include(p => p.Odpowiedz)
+                .OrderByDescending(p => p.IdPytanie)
                 .AsQueryable();
 
             if (categoryId.HasValue)

@@ -39,6 +39,7 @@ namespace ProjektInzynierski.Pages.Exam
         public async Task OnGetAsync()
         {
             var query = _context.Test
+                .OrderByDescending(t => t.IdTest)
                 .Include(t => t.IdGrupyNavigation)
                 .Include(t => t.ListaPytan)
                 .ThenInclude(lp => lp.IdPytanieNavigation)
@@ -65,6 +66,7 @@ namespace ProjektInzynierski.Pages.Exam
             if (User.IsInRole("Admin"))
             {
                 Test = await _context.Test
+                    .OrderByDescending(t => t.IdTest)
                     .Include(t => t.IdGrupyNavigation)
                     .Include(t => t.ListaPytan)
                     .ThenInclude(lp => lp.IdPytanieNavigation).ToListAsync();
@@ -73,6 +75,7 @@ namespace ProjektInzynierski.Pages.Exam
             {
                 var iduser = _userManager.GetUserAsync(User).Result.IdOsoba;
                 Test = await _context.Test
+                    .OrderByDescending(t => t.IdTest)
                     .Where(t => t.IdNauczyciela == iduser)
                     .Include(t => t.IdGrupyNavigation)
                     .Include(t => t.ListaPytan)

@@ -44,7 +44,7 @@ namespace ProjektInzynierski.Pages.Group
                 query = query.Where(g => g.Nazwa.Contains(searchText));
             }
 
-            Grupy = await query.ToListAsync();
+            Grupy = await query.OrderByDescending(g=>g.IdGrupy).ToListAsync();
         }
 
     }

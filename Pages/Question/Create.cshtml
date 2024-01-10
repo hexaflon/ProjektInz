@@ -22,6 +22,11 @@
                     <label asp-for="Pytanie.IdKategoriaPytania" class="control-label">@Html.DisplayNameFor(model => model.Pytanie.IdKategoriaPytania)</label>
                     <select asp-for="Pytanie.IdKategoriaPytania" class="form-control" asp-items="ViewBag.IdKategoriaPytania"></select>
                 </div>
+                <div id="trueFalseDiv" style="display:none;" class="form-group form-check">
+                    <label class="form-check-label">
+                        <input class="form-check-input" asp-for="isTrueFalse" /> Czy odpowiedź jest poprawna?
+                    </label>
+                </div>
                 <div class="form-group">
                     <label asp-for="Pytanie.Tresc" class="control-label">@Html.DisplayNameFor(model => model.Pytanie.Tresc)</label>
                     <input asp-for="Pytanie.Tresc" class="form-control" />
@@ -38,6 +43,17 @@
 
 @section Scripts {
     @{
+        
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+       document.getElementById('Pytanie_IdTypPytania').addEventListener('change', function () {
+           var trueFalseDiv = document.getElementById('trueFalseDiv');
+           if (this.value == '@Model.IdTrueFalse') {
+               trueFalseDiv.style.display = 'block';
+           } else {
+               trueFalseDiv.style.display = 'none';
+           }
+       });
+   </script>
 }
