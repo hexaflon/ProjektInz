@@ -90,15 +90,11 @@ namespace TestTest.Areas.Identity.Pages.Account
             [Required(ErrorMessage = "To pole jest wymagane.")]
             public string Surname { get; set; }
 
-            [Display(Name = "Rola")]
-            [Required(ErrorMessage = "To pole jest wymagane.")]
-            public string Role { get; set; }
         }
 
 
         public async Task OnGetAsync(string returnUrl = null)
         {
-            ViewData["Roles"] = new SelectList(_context.Roles,"Name");
             ReturnUrl = returnUrl;
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
         }
@@ -134,7 +130,7 @@ namespace TestTest.Areas.Identity.Pages.Account
 
                 if (result.Succeeded)
                 {
-                    await _userManager.AddToRoleAsync(user, Input.Role);
+                    await _userManager.AddToRoleAsync(user, "Uczen");
                     _logger.LogInformation("User created a new account with password.");
 
                     var userId = await _userManager.GetUserIdAsync(user);
