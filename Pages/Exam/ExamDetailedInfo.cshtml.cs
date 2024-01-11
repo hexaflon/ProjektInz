@@ -42,12 +42,18 @@ namespace ProjektInzynierski.Pages.Exam
         public string newStyleInput;
         public string newStyleLabel;
         public Rozwiazanie Rozwiazanie { get; set; } = default!;
-        public async Task OnGetAsync(int id)
+        public async Task<IActionResult> OnGetAsync(int id)
         {
             if (_context.Rozwiazanie != null)
             {
                 Rozwiazanie = _context.Rozwiazanie
                 .FirstOrDefault(r => r.IdRozwiazanie == id);
+
+                if (User.IsInRole("Uczen") && _context.Test
+                    .Where(t => t.IdTest == Rozwiazanie.IdTest)
+                    .Select(t => t.CzyWidoczny)
+                    .FirstOrDefault()==false) return RedirectToPage("./Marks");
+
                 wybraneOdp = _context.RozwiazanieDoPytan
                     .Where(rdp => rdp.IdRozwiazanie==id)
                     .Select(rdp => rdp.IdOdpowiedzNavigation)
@@ -56,7 +62,9 @@ namespace ProjektInzynierski.Pages.Exam
                     .Where(r => r.IdRozwiazanie==id)
                     .Select(r => r.IdTest).First());
                 ViewData["idWielokrotnego"] = idWielokrotngo;
+                
             }
+            return Page();
         }
     }
 }
