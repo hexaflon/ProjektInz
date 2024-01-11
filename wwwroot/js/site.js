@@ -26,3 +26,14 @@ function setTheme(theme) {
         localStorage.setItem('theme', 'dark');
     }
 }
+
+/* okno z informacjami */
+function openExplanation() {
+    var modal = document.getElementById("infoModal");
+    modal.style.display = "block";
+}
+
+function closeModal() {
+    var modal = document.getElementById("infoModal");
+    modal.style.display = "none";
+}

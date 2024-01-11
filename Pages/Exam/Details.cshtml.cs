@@ -24,10 +24,12 @@ namespace ProjektInzynierski.Pages.Exam
 
         public Test Test { get; set; } = default!;
         public List<Wynik> Wyniki { get; set; } = default!;
+        public List<double> Oceny { get; set; } = new List<double>();
+        public IList<Rozwiazanie> Rozwiazanie { get; set; } = default!;
         public double Avg { get; set; } = 0.0;
 
 
-        public void srednia()
+        public void Srednia()
         {
             double suma = 0;
             int liczbaPytan = Test.ListaPytan.Count();
@@ -46,6 +48,24 @@ namespace ProjektInzynierski.Pages.Exam
             Avg = suma / Wyniki.Count();
         }
 
+        public void Ocena()
+        {
+            if (Oceny.Count == 0)
+            {
+                foreach (var wynik in Rozwiazanie)
+                {
+                    var division = wynik.LiczbaPunktow / wynik.IdTestNavigation.ListaPytan.Count();
+                    division *= 100;
+                    division %= 100;
+                    if (division >= 90) Oceny.Add(5);
+                    else if (division >= 80 && division < 90) Oceny.Add(4.5);
+                    else if (division >= 70 && division < 80) Oceny.Add(4);
+                    else if (division >= 60 && division < 70) Oceny.Add(3.5);
+                    else if (division >= 50 && division < 60) Oceny.Add(3);
+                    else Oceny.Add(2);
+                }
+            }
+        }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -61,13 +81,15 @@ namespace ProjektInzynierski.Pages.Exam
             }
             
             var rozwiazania = _context.Rozwiazanie.Where(r => r.IdTest == id).ToList();
-           Wyniki = new List<Wynik>();
-            foreach(var rozwiazanie in rozwiazania)
+            Wyniki = new List<Wynik>();
+            Rozwiazanie = rozwiazania;
+            foreach (var rozwiazanie in rozwiazania)
             {
                 var user = _userManager.Users
                     .Where(u => u.IdOsoba == rozwiazanie.IdUcznia)
                     .Select(u => new {u.Name, u.Surname}).First();
                 var wynik = new Wynik();
+                wynik.idUcznia = rozwiazanie.IdUcznia;
                 wynik.imie = user.Name;
                 wynik.nazwisko = user.Surname;
                 wynik.punkty = (double)rozwiazanie.LiczbaPunktow;
@@ -77,13 +99,10 @@ namespace ProjektInzynierski.Pages.Exam
 
             }
 
-
             Test = test;
-            srednia();
+            Srednia();
+            Ocena();
             return Page();
         }
     }
 }
-
-
-

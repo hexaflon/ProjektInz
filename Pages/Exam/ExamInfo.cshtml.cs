@@ -16,17 +16,33 @@ namespace ProjektInzynierski.Pages.Exam
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
         private readonly UserManager<Osoba> _userManager;
+        private readonly SignInManager<Osoba> _signInManager;
 
-        public ExamInfoModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
+        public ExamInfoModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager, SignInManager<Osoba> signInManager)
         {
             _context = context;
             _userManager = userManager;
+            _signInManager = signInManager;
         }
 
         public Rozwiazanie Rozwiazanie { get; set; } = default!;
         public Test Test { get; set; } = default!;
+        public List<double> Oceny { get; set; } = new List<double>();
 
-        public async Task<IActionResult> OnGetAsync([FromQuery]int id)
+        public void Ocena()
+        {
+            var division = Rozwiazanie.LiczbaPunktow / Rozwiazanie.IdTestNavigation.ListaPytan.Count();
+            division *= 100;
+            division %= 100;
+            if (division >= 90) Oceny.Add(5);
+            else if (division >= 80 && division < 90) Oceny.Add(4.5);
+            else if (division >= 70 && division < 80) Oceny.Add(4);
+            else if (division >= 60 && division < 70) Oceny.Add(3.5);
+            else if (division >= 50 && division < 60) Oceny.Add(3);
+            else Oceny.Add(2);
+        }
+
+        public async Task<IActionResult> OnGetAsync([FromQuery] int id)
         {
             if (id == null || _context.Test == null)
             {
@@ -38,20 +54,19 @@ namespace ProjektInzynierski.Pages.Exam
             {
                 return NotFound();
             }
-            else 
+            else
             {
                 var idOsoba = _userManager.GetUserAsync(User).Result.IdOsoba;
                 if (idOsoba == rozwiazanie.IdUcznia || User.IsInRole("Admin"))
                 {
                     Test = await _context.Test
-                    .Include(t => t.ListaPytan)
-                    .FirstOrDefaultAsync(t => t.IdTest == rozwiazanie.IdTest);
+                        .Include(t => t.ListaPytan)
+                        .FirstOrDefaultAsync(t => t.IdTest == rozwiazanie.IdTest);
                     if (Test == null) return NotFound();
                     Rozwiazanie = rozwiazanie;
                 }
                 else return Forbid();
-
-                
+                Ocena();
             }
             return Page();
         }

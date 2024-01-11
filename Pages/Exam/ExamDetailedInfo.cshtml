@@ -2,17 +2,47 @@
 @model ProjektInzynierski.Pages.Exam.ExamDetailedInfoModel
 
 @{
-    ViewData["Title"] = "ExamDetailedInfo";
+    ViewData["Title"] = "Szczegółowe podsumowanie testu";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
+<h1>Szczegółowe podsumowanie testu</h1>
 
+<div class="info-section">
+    <p>
+        Nie wiesz co oznaczają kolory przy odpowiedziach? Kliknij <a href="#" onclick="openExplanation()" class="link">tutaj</a>.
+    </p>
+</div>
 
+<div id="infoModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <h4>Kolory w podsumowaniu testu</h4>
+        <p>
+            Poniżej znajduje się krótkie wyjaśnienie znaczenia kolorów używanych na stronie:
+        </p>
+        <ul>
+            <li>
+                <input class="form-check-input correct" disabled type="checkbox">
+                <i class="icon fas fa-check-circle text-success"></i>
+                - uczeń poprawnie zaznaczył odpowiedź,
+            </li>
+            <li>
+                <input class="form-check-input incorrect" disabled type="checkbox">
+                <i class="icon fas fa-times-circle text-danger"></i>
+                - uczeń niepoprawnie zaznaczył odpowiedź,
+            </li>
+            <li>
+                <input class="form-check-input missed-correct" disabled type="checkbox">
+                <i class="icon fas fa-check-circle text-success"></i>
+                - odpowiedź była poprawna, ale uczeń jej nie zaznaczył.
+            </li>
+        </ul>
 
-<h1>ExamDetailedInfo</h1>
+    </div>
+</div>
 
 <div>
-    <div id="timer" class="mb-3"></div>
     <form id="examForm" method="post">
         <table class="table text1">
             <tbody>
@@ -30,30 +60,44 @@
                             {
                                 foreach (var answer in question.Odpowiedz)
                                 {
-                                    @if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny==false){
-                                        Model.newStyleInput = "form-check-input false";
-                                        Model.newStyleLabel = "form-check-label false";
-                                    }
-                                    else if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny == true)
+                                    if (Model.wybraneOdp.Contains(answer))
                                     {
-                                        Model.newStyleInput = "form-check-input true";
-                                        Model.newStyleLabel = "form-check-label true";
+                                        if (answer.CzyPoprawny)
+                                        {
+                                            Model.newStyleInput = "form-check-input correct";
+                                            Model.newStyleLabel = "form-check-label correct";
+                                            Model.IconClass = "fas fa-check-circle text-success";
+                                        }
+                                        else
+                                        {
+                                            Model.newStyleInput = "form-check-input incorrect";
+                                            Model.newStyleLabel = "form-check-label incorrect";
+                                            Model.IconClass = "fas fa-times-circle text-danger";
+                                        }
                                     }
-                                    else if(answer.CzyPoprawny==true)
+                                    else if (answer.CzyPoprawny)
                                     {
-                                        Model.newStyleInput = "form-check-input good";
-                                        Model.newStyleLabel = "form-check-label good";
+                                        Model.newStyleInput = "form-check-input missed-correct";
+                                        Model.newStyleLabel = "form-check-label missed-correct";
+                                        Model.IconClass = "fas fa-check-circle text-success";
                                     }
                                     else
                                     {
                                         Model.newStyleInput = "form-check-input";
                                         Model.newStyleLabel = "form-check-label";
+                                        Model.IconClass = "";
                                     }
 
                                     <div class="form-check">
-                                        <input class="@Model.newStyleInput" disabled type="checkbox" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz">
-                                        <label class="@Model.newStyleLabel">
-                                            @answer.TrescOdpowiedzi
+                                        <input class="@Model.newStyleInput" disabled type="checkbox" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz" id="pytanie@(i + 1)_odp@(answer.IdOdpowiedz)">
+                                        <label class="@Model.newStyleLabel" for="pytanie@(i + 1)_odp@(answer.IdOdpowiedz)">
+                                            <div>
+                                                @answer.TrescOdpowiedzi
+                                                @if (!string.IsNullOrEmpty(Model.IconClass))
+                                                {
+                                                    <i class="icon @Model.IconClass"></i>
+                                                }
+                                            </div>
                                         </label>
                                     </div>
                                 }
@@ -62,30 +106,44 @@
                             {
                                 foreach (var answer in question.Odpowiedz)
                                 {
-                                    @if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny==false){
-                                        Model.newStyleInput = "form-check-input false";
-                                        Model.newStyleLabel = "form-check-label false";
-                                    }
-                                    else if(Model.wybraneOdp.Contains(answer) && answer.CzyPoprawny == true)
+                                    if (Model.wybraneOdp.Contains(answer))
                                     {
-                                        Model.newStyleInput = "form-check-input true";
-                                        Model.newStyleLabel = "form-check-label true";
+                                        if (answer.CzyPoprawny)
+                                        {
+                                            Model.newStyleInput = "form-check-input correct";
+                                            Model.newStyleLabel = "form-check-label correct";
+                                            Model.IconClass = "fas fa-check-circle text-success";
+                                        }
+                                        else
+                                        {
+                                            Model.newStyleInput = "form-check-input incorrect";
+                                            Model.newStyleLabel = "form-check-label incorrect";
+                                            Model.IconClass = "fas fa-times-circle text-danger";
+                                        }
                                     }
-                                    else if(answer.CzyPoprawny==true)
+                                    else if (answer.CzyPoprawny)
                                     {
-                                        Model.newStyleInput = "form-check-input good";
-                                        Model.newStyleLabel = "form-check-label good";
+                                        Model.newStyleInput = "form-check-input missed-correct";
+                                        Model.newStyleLabel = "form-check-label missed-correct";
+                                        Model.IconClass = "fas fa-check-circle text-success";
                                     }
                                     else
                                     {
                                         Model.newStyleInput = "form-check-input";
                                         Model.newStyleLabel = "form-check-label";
+                                        Model.IconClass = "";
                                     }
 
                                     <div class="form-check">
-                                        <input class="@Model.newStyleInput" disabled type="radio" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz">
-                                        <label class="@Model.newStyleLabel">
-                                            @answer.TrescOdpowiedzi
+                                        <input class="@Model.newStyleInput" disabled type="radio" name="pytanie@(i + 1)" value="@answer.IdOdpowiedz" id="pytanie@(i + 1)_odp@(answer.IdOdpowiedz)">
+                                        <label class="@Model.newStyleLabel" for="pytanie@(i + 1)_odp@(answer.IdOdpowiedz)">
+                                            <div>
+                                                @answer.TrescOdpowiedzi
+                                                @if (!string.IsNullOrEmpty(Model.IconClass))
+                                                {
+                                                    <i class="icon @Model.IconClass"></i>
+                                                }
+                                            </div>
                                         </label>
                                     </div>
                                 }
@@ -95,6 +153,6 @@
                 }
             </tbody>
         </table>
-        <a asp-page="/Index">Strona główna</a>
+        <a class="btn btn-back" asp-page="./ExamInfo" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Powrót</a>
     </form>
 </div>

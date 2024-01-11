@@ -12,12 +12,12 @@ using TestTest.Models.Db;
 namespace ProjektInzynierski.Pages.Exam
 {
     [Authorize(Roles = "Uczen,Admin")]
-    public class ExamHistoryModel : PageModel
+    public class MarksModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
         private readonly UserManager<Osoba> _userManager;
 
-        public ExamHistoryModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
+        public MarksModel(TestTest.Models.Db.DatabaseContext context, UserManager<Osoba> userManager)
         {
             _context = context;
             _userManager = userManager;
@@ -26,7 +26,7 @@ namespace ProjektInzynierski.Pages.Exam
         public IList<Rozwiazanie> Rozwiazanie { get;set; } = default!;
         public List<double> Oceny { get; set; } = new List<double>();
 
-        public void ocena()
+        public void Ocena()
         {
             foreach (var wynik in Rozwiazanie)
             {
@@ -61,7 +61,7 @@ namespace ProjektInzynierski.Pages.Exam
                     .Where(r => r.IdUcznia == id)
                     .ToListAsync();
                 }
-                ocena();
+                Ocena();
             }
         }
     }

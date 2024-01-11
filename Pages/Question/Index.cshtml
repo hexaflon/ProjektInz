@@ -52,7 +52,7 @@
                 <div class="col-md-2">
                     <div class="form-group">
                         <br />
-                        <button type="submit" class="btn btn-primary">Szukaj</button>
+                        <button type="submit" class="btn btn-standard">Szukaj</button>
                     </div>
                 </div>
             </div>
@@ -62,10 +62,10 @@
     <table class="table">
         <thead>
             <tr class="text-muted">
-                <th class="column1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
-                <th>@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
-                <th>@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
-                <th>@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
+                <th class="col-sm-4">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
+                <th class="text-center col-sm-2">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
+                <th class="text-center col-sm-1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
+                <th class="text-center col-sm-2">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
                 <th></th>
             </tr>
         </thead>
@@ -73,10 +73,10 @@
             @foreach (var item in Model.Pytanie)
             {
                 <tr class="text1 no-border">
-                    <td>@Html.DisplayFor(modelItem => item.Tresc)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
-                    <td>@Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)</td>
+                    <td class="col-sm-4">@Html.DisplayFor(modelItem => item.Tresc)</td>
+                    <td class="text-center col-sm-2">@Html.DisplayFor(modelItem => item.IdKategoriaPytaniaNavigation.Nazwa)</td>
+                    <td class="text-center col-sm-1">@Html.DisplayFor(modelItem => item.IdNauczyciela)</td>
+                    <td class="text-center col-sm-2">@Html.DisplayFor(modelItem => item.IdTypPytaniaNavigation.Nazwa)</td>
                     <td>
                         <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdPytanie">Edytuj</a>
                         <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdPytanie">Więcej</a>

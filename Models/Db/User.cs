@@ -19,7 +19,7 @@ public partial class User
     [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
     public string Password { get; set; } = null!;
 
-    [Display(Name = "Imię")]
+    [Display(Name = "Imię i nazwisko")]
     [Required(ErrorMessage = "To pole jest wymagane.")]
     [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
     public string? Name { get; set; }

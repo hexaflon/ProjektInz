@@ -1,25 +1,32 @@
 ﻿@page
 @model ProjektInzynierski.Pages.Exam.ExamInfoModel
+@using TestTest.Models.Db;
+@using Microsoft.AspNetCore.Mvc;
+@using Microsoft.AspNetCore.Identity
+@inject SignInManager<Osoba> SignInManager
+@inject UserManager<Osoba> UserManager
+
 
 @{
-    ViewData["Title"] = "ExamInfo";
+    ViewData["Title"] = "Informacje dotyczące testu";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>ExamInfo</h1>
+<h1>Podsumowanie testu</h1>
 
 <div>
-    <h4>Test</h4>
+    <h4>Test został automatycznie oceniony, poniżej możesz zobaczyć liczbę uzyskanych punktów oraz ocenę.</h4>
+    <p>Jeśli chcesz zobaczyć poprawne odpowiedzi, przejdź do szczegółowego podsumowania.</p>
     <hr />
     <dl class="row">
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Test.Tytul)
+            @Html.DisplayNameFor(model => model.Test.Tytul):
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Test.Tytul)
         </dd>
         <dt class="col-sm-2">
-            @Html.DisplayNameFor(model => model.Test.Opis)
+            @Html.DisplayNameFor(model => model.Test.Opis):
         </dt>
         <dd class="col-sm-10">
             @Html.DisplayFor(model => model.Test.Opis)
@@ -35,10 +42,29 @@
             }
             @Html.Raw(liczbaPunktow)
         </dd>
-        
+        <dt class="col-sm-2">
+            Ocena:
+        </dt>
+        <dd class="col-sm-10">
+            <text>@Html.Raw($"{Model.Oceny.First()}")</text>
+        </dd>
+
     </dl>
 </div>
 <div>
-    <a asp-page="/Index">Strona główna</a>
-    <a class="btn btn-edit" asp-page="./ExamDetailedInfo" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Szczegóły</a>
+    <a class="btn btn-standard" asp-page="./ExamDetailedInfo" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Zobacz szczegóły</a>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        var userId = UserManager.GetUserId(User);
+        var user = await UserManager.FindByIdAsync(userId);
+
+        if (await UserManager.IsInRoleAsync(user, "Nauczyciel"))
+        {
+            <a class="btn btn-back" asp-page="./Details" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Powrót</a>
+        }
+        else
+        {
+            <a class="btn btn-back ml-2" asp-page="./Marks">Powrót</a>
+        }
+    }
 </div>

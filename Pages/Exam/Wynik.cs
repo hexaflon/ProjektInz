@@ -2,8 +2,7 @@
 {
     public class Wynik
     {
-
-
+        public int? idUcznia { get; set; }
         public string wiadomosc { get; set; }
         public string imie { get; set; }
         public string nazwisko { get; set; }
@@ -12,8 +11,9 @@
         {
 
         }
-        public Wynik(string wiadomosc, string imie, string nazwisko, double punkty)
+        public Wynik(int idUcznia, string wiadomosc, string imie, string nazwisko, double punkty)
         {
+            this.idUcznia = idUcznia;
             this.wiadomosc = wiadomosc;
             this.imie = imie;
             this.nazwisko = nazwisko;

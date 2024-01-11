@@ -1,44 +1,35 @@
 ﻿@page
-@model ProjektInzynierski.Pages.Exam.ExamHistoryModel
+@model ProjektInzynierski.Pages.Exam.MarksModel
 
 @{
-    ViewData["Title"] = "Oceny";
+    ViewData["Title"] = "Twoje oceny";
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Oceny</h1>
+<div class="container mt-5">
+    <h1 class="display-4">Twoje oceny</h1>
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Rozwiazanie[0].IdTestNavigation)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Rozwiazanie[0].LiczbaPunktow)
-            </th>
-            <th>
-                @Html.Raw("Ocena")
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @{int i = 0;}
-@foreach (var item in Model.Rozwiazanie) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdTestNavigation.Tytul)
-            </td>
-            <td>
-                @Html.Raw($"{item.LiczbaPunktow} / {item.IdTestNavigation.ListaPytan.Count()}")
-            </td>
-            <td>
-                @Html.Raw($"{Model.Oceny[i]}")
-            </td>
+    <table class="table mt-4">
+        <thead>
+            <tr class="text-muted text-center">
+                <th class="col-sm-3">@Html.DisplayNameFor(model => model.Rozwiazanie[0].IdTestNavigation)</th>
+                <th class="col-sm-2">@Html.DisplayNameFor(model => model.Rozwiazanie[0].LiczbaPunktow)</th>
+                <th class="col-sm-1">Ocena</th>
+                <th></th>
             </tr>
-            i++;
-        }
-    </tbody>
-</table>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Rozwiazanie)
+            {
+                <tr class="text1 text-center">
+                    <td class="col-sm-3">@Html.DisplayFor(modelItem => item.IdTestNavigation.Tytul)</td>
+                    <td class="col-sm-2">@Html.Raw($"{item.LiczbaPunktow} / {item.IdTestNavigation.ListaPytan.Count()}")</td>
+                    <td class="col-sm-1">@Html.Raw($"{Model.Oceny[Model.Rozwiazanie.IndexOf(item)]}")</td>
+                    <td class="col-sm-2">
+                        <a class="btn btn-details" asp-page="./ExamInfo" asp-route-id="@item.IdRozwiazanie">Zobacz więcej</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

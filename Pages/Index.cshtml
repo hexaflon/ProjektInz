@@ -11,25 +11,22 @@
 
     <table class="table">
         <thead>
-            <tr class="text-muted">
-                <th>@Html.DisplayNameFor(model => model.User.FirstOrDefault().Email)</th>
-                <th class="column1">@Html.DisplayNameFor(model => model.User.FirstOrDefault().PasswordHash)</th>
-                <th>@Html.DisplayNameFor(model => model.User.FirstOrDefault().Name)</th>
+            <tr class="text-muted text-center">
+                <th class="col-sm-2">@Html.DisplayNameFor(model => model.User.FirstOrDefault().Email)</th>
+                <th class="col-sm-3">Hasło</th>
+                <th class="col-sm-2">@Html.DisplayNameFor(model => model.User.FirstOrDefault().Name)</th>
+                <th class="col-sm-2">@Html.DisplayNameFor(model => model.User.FirstOrDefault().Surname)</th>
                 <th></th>
             </tr>
         </thead>
         <tbody>
             @foreach (var item in Model.User)
             {
-                <tr class="text1">
-                    <td>@Html.DisplayFor(modelItem => item.Email)</td>
-                    <td>@Html.DisplayFor(modelItem => item.PasswordHash)</td>
-                    <td>@Html.DisplayFor(modelItem => item.Name)</td>
-                    <td>
-                        <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdOsoba">Edytuj</a> |
-                        <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdOsoba">Więcej</a> |
-                        <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdOsoba">Usuń</a>
-                    </td>
+                <tr class="text1 text-center">
+                    <td class="col-sm-2">@Html.DisplayFor(modelItem => item.Email)</td>
+                    <td class="col-sm-3">@Html.DisplayFor(modelItem => item.PasswordHash)</td>
+                    <td class="col-sm-2">@Html.DisplayFor(modelItem => item.Name)</td>
+                    <td class="col-sm-2">@Html.DisplayFor(modelItem => item.Surname)</td>
                 </tr>
             }
         </tbody>

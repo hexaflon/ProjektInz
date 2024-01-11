@@ -38,12 +38,16 @@ namespace ProjektInzynierski.Pages.Exam
             return questions;
         }
         public List<Odpowiedz> wybraneOdp { get; set; } = default!;
+        public string IconClass { get; set; }
         public string newStyleInput;
         public string newStyleLabel;
+        public Rozwiazanie Rozwiazanie { get; set; } = default!;
         public async Task OnGetAsync(int id)
         {
             if (_context.Rozwiazanie != null)
             {
+                Rozwiazanie = _context.Rozwiazanie
+                .FirstOrDefault(r => r.IdRozwiazanie == id);
                 wybraneOdp = _context.RozwiazanieDoPytan
                     .Where(rdp => rdp.IdRozwiazanie==id)
                     .Select(rdp => rdp.IdOdpowiedzNavigation)

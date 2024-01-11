@@ -33,7 +33,8 @@ namespace TestTest.Models.Db
         [Display(Name = "Opis testu")]
         [StringLength(255, ErrorMessage = "Maksymalna długość to 255 znaków.")]
         public string? Opis { get; set; }
-        [Display(Name = "Czas trwania testu")]
+        [Display(Name = "Czas trwania (min)")]
+        [Required(ErrorMessage = "To pole jest wymagane.")]
         [Range(5, 180, ErrorMessage = "Czas trwania testu musi wynosić od 5 minut do 3 godzin.")]
         public int? CzasTrwania { get; set; }
         [Display(Name = "ID grupy")]

@@ -1,19 +1,7 @@
 html {
     font-size: 14px;
 }
-.false{
-    border: 2px solid red;
-    padding: 5px;
 
-}
-.true {
-    border: 2px solid green;
-    padding: 5px;
-}
-.good {
-    border: 2px solid lightgreen;
-    padding: 5px;
-}
 @media (min-width: 768px) {
     html {
         font-size: 16px;
@@ -93,10 +81,19 @@ body.dark-mode .text1 {
 body.dark-mode .text-muted {
     color: #EC8232 !important;
 }
+body.dark-mode .card {
+    background-color: #333;
+    color: #fff;
+}
+
+body.dark-mode .card-body {
+    background-color: #333;
+    color: #fff;
+}
 
 /* przyciski */
 .btn-create,
-.btn-primary,
+.btn-standard,
 .btn-edit,
 .btn-details,
 .btn-show-hide {
@@ -107,7 +104,7 @@ body.dark-mode .text-muted {
     border-radius: 10px;
 }
 
-    .btn-primary:hover,
+    .btn-standard:hover,
     .btn-edit:hover,
     .btn-details:hover,
     .btn-create:hover,
@@ -176,6 +173,10 @@ body.dark-mode .table > tbody > tr > th {
     border-bottom: 1px solid #555;
 }
 
+.row1 {
+    margin-bottom: 10px;
+}
+
 .column1 {
     width: 500px;
     overflow: hidden;
@@ -188,6 +189,27 @@ body.dark-mode .table > tbody > tr > th {
 
 .registration-links {
     margin-top: 20px;
+}
+
+/* podsumowanie - odpowiedzi */
+.form-check-input.correct {
+    border: 2px solid green;
+}
+
+.form-check-input.incorrect {
+    border: 2px solid red;
+}
+
+body.dark-mode .form-check-input.correct {
+    border: 2px solid #0ecc0e;
+}
+
+body.dark-mode .form-check-input.incorrect {
+    border: 2px solid #eb2a2a;
+}
+
+.icon {
+    margin-left: 5px;
 }
 
 /* okno z informacj¹ */
@@ -348,9 +370,6 @@ body.dark-mode .ui-autocomplete {
         border: 1px solid #fff;
     }
 
-
-
-
 @media (max-width: 575px) {
     html {
         font-size: 8px;
@@ -359,7 +378,7 @@ body.dark-mode .ui-autocomplete {
     .btn-edit,
     .btn-details,
     .btn-delete,
-    .btn-primary {
+    .btn-standard {
         display: block;
         margin-bottom: 5px;
     }
@@ -378,7 +397,7 @@ body.dark-mode .ui-autocomplete {
     .btn-edit,
     .btn-details,
     .btn-delete,
-    .btn-primary {
+    .btn-standard {
         display: block;
         margin-bottom: 5px;
     }
@@ -400,7 +419,7 @@ body.dark-mode .ui-autocomplete {
     .btn-edit,
     .btn-details,
     .btn-delete,
-    .btn-primary {
+    .btn-standard {
         display: block;
         margin-bottom: 5px;
     }
@@ -425,7 +444,7 @@ body.dark-mode .ui-autocomplete {
         margin-bottom: 10px;
     }
 
-    .btn-primary {
+    .btn-standard {
         margin-top: 10px;
         display: block;
     }

@@ -32,71 +32,47 @@
 
 <table class="table">
     <thead>
-        <tr class="text-muted">
-            <th>
-                @Html.DisplayNameFor(model => model.Test[0].DataUtworzenia)
-            </th>
-            <th>
+        <tr class="text-muted text-center">
+            <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Test[0].DataRozpoczecia)
             </th>
-            <th>
+            <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Test[0].DataZakonczenia)
             </th>
-            <th>
+            <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Test[0].Tytul)
             </th>
-            <th>
+            <th class="col-sm-3">
                 @Html.DisplayNameFor(model => model.Test[0].Opis)
             </th>
-            <th>
+            <th class="col-sm-2">
                 @Html.DisplayNameFor(model => model.Test[0].CzasTrwania)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Test[0].IdNauczyciela)
             </th>
             <th></th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Test) {
-        <tr class="text1">
-            <td>
-                @Html.DisplayFor(modelItem => item.DataUtworzenia)
-            </td>
-            <td>
+        @foreach (var item in Model.Test) {
+        <tr class="text1 text-center">
+            <td class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.DataRozpoczecia)
             </td>
-            <td>
+            <td class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.DataZakonczenia)
             </td>
-            <td>
+            <td class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.Tytul)
             </td>
-            <td>
+            <td class="col-sm-3">
                 @Html.DisplayFor(modelItem => item.Opis)
             </td>
-            <td>
+            <td class="col-sm-2">
                 @Html.DisplayFor(modelItem => item.CzasTrwania)
             </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.IdNauczyciela)
-            </td>
-            <td>
-                <a class="btn btn-edit" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
+            <td class="col-sm-1">
+                <a class="btn btn-standard" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
-
-<script>
-    function openExplanation() {
-        var modal = document.getElementById("infoModal");
-        modal.style.display = "block";
-    }
-
-    function closeModal() {
-        var modal = document.getElementById("infoModal");
-        modal.style.display = "none";
-    }
-</script>
