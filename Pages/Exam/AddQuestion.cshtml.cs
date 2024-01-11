@@ -40,7 +40,7 @@ namespace TestTest.Pages.Exam
             {
                 return RedirectToPage("/List");
             }
-            var pytania =  _context.Pytanie.ToList();
+            var pytania =  _context.Pytanie.Include(p => p.Odpowiedz).Where(p => p.Odpowiedz.Count()!=0).ToList();
             var pytaniaWTescie = _context.ListaPytan.Where(lp => lp.IdTest == id).Select(lp => lp.IdPytanie).ToList();
             pytania = pytania.Where(p => !pytaniaWTescie.Contains(p.IdPytanie)).ToList();
             ViewData["IdPytanie"] = new SelectList(pytania, "IdPytanie", "Tresc");
@@ -69,6 +69,7 @@ namespace TestTest.Pages.Exam
                                          select lp.IdListaPytan).FirstOrDefault() + 1;
 
             }
+            if(ListaPytan.IdPytanie==null) return RedirectToPage("", new { id = id });
             ListaPytan.IdTest = id;
             _context.ListaPytan.Add(ListaPytan);
             await _context.SaveChangesAsync();
