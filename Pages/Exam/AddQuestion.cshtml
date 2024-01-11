@@ -27,6 +27,9 @@
                 <td>
                     @Html.DisplayFor(x => pyt.IdPytanieNavigation.Tresc)
                 </td>
+                <td>
+                        <a asp-page-handler="Delete" asp-route-idTest="@pyt.IdTest" asp-route-idPytanie="@pyt.IdPytanie" class="btn btn-delete">Usuń pytanie</a>
+                </td>
             </tr>
         }
     }

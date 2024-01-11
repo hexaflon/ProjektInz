@@ -32,6 +32,10 @@
                                 <td>@nr_pytania</td>
                                 <td>@Html.DisplayFor(z => odp.TrescOdpowiedzi)</td>
                                 <td>@Html.DisplayFor(z => odp.CzyPoprawny)</td>
+                                <td>
+                                <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@odp.IdOdpowiedz" asp-route-idPyt="@odp.IdPytanie">Usuń Odpowiedź</a>
+                                
+                                </td>
                             </tr>
                             nr_pytania++;
                         }

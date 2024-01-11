@@ -11,7 +11,7 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Exam
 {
-    [Authorize(Roles = "Uczen,Admin")]
+    [Authorize]
     public class ExamInfoModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
@@ -57,7 +57,7 @@ namespace ProjektInzynierski.Pages.Exam
             else
             {
                 var idOsoba = _userManager.GetUserAsync(User).Result.IdOsoba;
-                if (idOsoba == rozwiazanie.IdUcznia || User.IsInRole("Admin"))
+                if (idOsoba == rozwiazanie.IdUcznia || User.IsInRole("Admin") || User.IsInRole("Nauczyciel"))
                 {
                     Test = await _context.Test
                         .Include(t => t.ListaPytan)

@@ -75,5 +75,18 @@ namespace TestTest.Pages.Exam
 
             return RedirectToPage("",new { id = id });
         }
+        public async Task<IActionResult> OnGetDelete([FromQuery] int? idTest, [FromQuery] int? idPytanie)
+        {
+
+            if (idTest == null || idPytanie == null) return NotFound();
+            var pytanieDoUsuniecia = await _context.ListaPytan.FirstOrDefaultAsync(lp => lp.IdTest == idTest && lp.IdPytanie == idPytanie);
+
+            if (pytanieDoUsuniecia != null)
+            {
+                _context.ListaPytan.Remove(pytanieDoUsuniecia);
+                await _context.SaveChangesAsync();
+            }
+            return RedirectToPage("", new { id = idTest });
+        }
     }
 }

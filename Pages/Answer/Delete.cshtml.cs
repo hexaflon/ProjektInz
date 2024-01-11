@@ -52,7 +52,14 @@ namespace TestTest.Pages.Answer
             {
                 return NotFound();
             }
-            var odpowiedzi = await _context.Odpowiedz.FindAsync(id);
+            var odpowiedzi = _context.Odpowiedz.Include(o => o.IdPytanieNavigation).Where(o => o.IdOdpowiedz == id).First();
+            var rDPList = _context.RozwiazanieDoPytan.Where(rdp => rdp.IdOdpowiedz == id).ToList();
+
+            foreach(var rdp in rDPList)
+            {
+                _context.RozwiazanieDoPytan.Remove(rdp);
+                _context.SaveChanges();
+            }
 
             if (odpowiedzi != null)
             {
@@ -64,7 +71,7 @@ namespace TestTest.Pages.Answer
                 _context.Odpowiedz.Remove(Odpowiedzi);
                 await _context.SaveChangesAsync();
             }
-
+            return RedirectToPage("./Create", new { id = Odpowiedzi.IdPytanie });
             return RedirectToPage("./Index");
         }
     }

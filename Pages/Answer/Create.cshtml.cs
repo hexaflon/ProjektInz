@@ -13,7 +13,7 @@ using TestTest.Models.Db;
 
 namespace TestTest.Pages.Answer
 {
-    [Authorize(Roles ="Nauczyciel,Admin")]
+    [Authorize(Roles = "Nauczyciel,Admin")]
     public class CreateModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
@@ -29,11 +29,12 @@ namespace TestTest.Pages.Answer
 
         public bool hasCorrectAnswer { get; set; } = false;
 
-        public IActionResult OnGet([FromQuery]int? id)
+        public IActionResult OnGet([FromQuery] int? id)
         {
             if (id.HasValue)
             {
                 ViewData["id"] = id;
+                
 
                 if (_context.Pytanie == null) return Page();
                 var PytanieList = _context.Pytanie.Include(p => p.Odpowiedz).ToList();
@@ -58,17 +59,17 @@ namespace TestTest.Pages.Answer
             {
                 ViewData["id"] = -1;
             }
-            
-            
+
+
             return Page();
         }
-        
-        public async Task<IActionResult> OnPostAsync([FromQuery]int id)
+
+        public async Task<IActionResult> OnPostAsync([FromQuery] int id)
         {
 
             var pytanie = _context.Pytanie.FirstOrDefault(p => p.IdPytanie == id);
             if (pytanie == null) return NotFound();
-            if (!ModelState.IsValid||_context.Odpowiedz == null || Odpowiedz == null)
+            if (!ModelState.IsValid || _context.Odpowiedz == null || Odpowiedz == null)
             {
                 return Page();
             }
@@ -77,16 +78,17 @@ namespace TestTest.Pages.Answer
             {
                 var OdpowiedziList = _context.Odpowiedz.ToList();
                 Odpowiedz.IdOdpowiedz = (from odp in OdpowiedziList
-                              orderby odp.IdOdpowiedz descending
-                              select odp.IdOdpowiedz).FirstOrDefault() + 1;
+                                         orderby odp.IdOdpowiedz descending
+                                         select odp.IdOdpowiedz).FirstOrDefault() + 1;
 
             }
             if (id != null) Odpowiedz.IdPytanie = id;
 
             _context.Odpowiedz.Add(Odpowiedz);
             await _context.SaveChangesAsync();
-
+            
             return RedirectToPage("", new { id = id });
         }
+
     }
 }

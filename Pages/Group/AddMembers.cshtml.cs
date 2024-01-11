@@ -95,10 +95,10 @@ namespace ProjektInzynierski.Pages.Group
 
         public async Task<IActionResult> OnGetDelete([FromQuery]int? idUcznia, [FromQuery]int? idGrupy)
         {
-            Console.WriteLine(idUcznia + " " + idGrupy + " usuwanie\n\n\n\n\n");
+            
             if(idUcznia == null || idGrupy == null) return NotFound();
             var uczestnikDoUsunieca = await _context.Uczestnicy.FirstOrDefaultAsync(u => u.IdUcznia == idUcznia && u.IdGrupy == idGrupy);
-            Console.WriteLine(uczestnikDoUsunieca.IdUczestnicy + " " + uczestnikDoUsunieca.IdUcznia + " " + uczestnikDoUsunieca.IdGrupy);
+            
             if (uczestnikDoUsunieca != null)
             {
                 _context.Uczestnicy.Remove(uczestnikDoUsunieca);

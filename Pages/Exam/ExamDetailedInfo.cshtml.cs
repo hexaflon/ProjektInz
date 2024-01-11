@@ -11,7 +11,7 @@ using TestTest.Models.Db;
 
 namespace ProjektInzynierski.Pages.Exam
 {
-    [Authorize(Roles = "Uczen,Admin")]
+    [Authorize]
     public class ExamDetailedInfoModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
