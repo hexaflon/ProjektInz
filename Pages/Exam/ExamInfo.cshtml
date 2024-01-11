@@ -52,7 +52,12 @@
     </dl>
 </div>
 <div>
-    <a class="btn btn-standard" asp-page="./ExamDetailedInfo" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Zobacz szczegóły</a>
+    @if (User.IsInRole("Uczen") && @Model.Test.CzyWidoczny == false)
+    {}
+    else
+    {
+        <a class="btn btn-standard" asp-page="./ExamDetailedInfo" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Zobacz szczegóły</a>
+    }
     @if (SignInManager.IsSignedIn(User))
     {
         var userId = UserManager.GetUserId(User);
