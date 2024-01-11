@@ -58,11 +58,13 @@ namespace TestTest.Areas.Identity.Pages.Account
         {
             [Required(ErrorMessage = "To pole jest wymagane.")]
             [EmailAddress(ErrorMessage = "Adres e-mail jest niepoprawny.")]
+            [DataType(DataType.EmailAddress)]
             [Display(Name = "Adres e-mail")]
             public string Email { get; set; }
 
             [Required(ErrorMessage = "To pole jest wymagane.")]
-            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Hasło musi mieć co najmniej 8 znaków, jedną małą literę, jedną dużą literę i jedną cyfrę.")]
+            [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$",
+                ErrorMessage = "Hasło musi mieć co najmniej 8 znaków, jedną małą literę, jedną dużą literę, jedną cyfrę i jeden znak specjalny.")]
             [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
             [DataType(DataType.Password)]
             [Display(Name = "Hasło")]
@@ -75,13 +77,15 @@ namespace TestTest.Areas.Identity.Pages.Account
             public string ConfirmPassword { get; set; }
 
             [DataType(DataType.Text)]
-            [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
+            [MinLength(2, ErrorMessage = "Imię musi mieć co najmniej 2 znaki.")]
+            [StringLength(45, ErrorMessage = "Maksymalna długość imienia to 45 znaków.")]
             [Display(Name = "Imię")]
             [Required(ErrorMessage = "To pole jest wymagane.")]
             public string Name { get; set; }
 
             [DataType(DataType.Text)]
-            [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
+            [MinLength(2, ErrorMessage = "Imię musi mieć co najmniej 2 znaki.")]
+            [StringLength(45, ErrorMessage = "Maksymalna długość nazwiska to 45 znaków.")]
             [Display(Name = "Nazwisko")]
             [Required(ErrorMessage = "To pole jest wymagane.")]
             public string Surname { get; set; }

@@ -24,6 +24,7 @@ public partial class Pytanie
         [Display(Name = "Treść pytania")]
         [Required(ErrorMessage = "To pole jest wymagane.")]
         [StringLength(255, ErrorMessage = "Maksymalna długość to 255 znaków.")]
+        [MinLength(5, ErrorMessage = "Pytanie musi mieć co najmnniej 5 znaków.")]
         public string? Tresc { get; set; }
 
         [Display(Name = "Kategoria pytania")]

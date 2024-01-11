@@ -15,7 +15,8 @@ public partial class User
     public string Username { get; set; } = null!;
 
     [Display(Name = "Hasło")]
-    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$", ErrorMessage = "Hasło musi mieć co najmniej 8 znaków, jedną małą literę, jedną dużą literę i jedną cyfrę.")]
+    [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+]).{8,}$", 
+        ErrorMessage = "Hasło musi mieć co najmniej 8 znaków, jedną małą literę, jedną dużą literę, jedną cyfrę i jeden znak specjalny.")]
     [StringLength(45, ErrorMessage = "Maksymalna długość to 45 znaków.")]
     public string Password { get; set; } = null!;
 

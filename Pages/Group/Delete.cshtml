@@ -6,9 +6,9 @@
     Layout = "~/Pages/Shared/_Layout.cshtml";
 }
 
-<h1>Delete</h1>
-
-<h3>Are you sure you want to delete this?</h3>
+<h1 class="display-4">Usuń grupę</h1>
+<hr />
+<h4 class="text-danger">Czy na pewno chcesz usunąć grupę?</h4>
 <div>
     <h4>Grupy</h4>
     <hr />
@@ -29,7 +29,7 @@
     
     <form method="post">
         <input type="hidden" asp-for="Grupy.IdGrupy" />
-        <input type="submit" value="Delete" class="btn btn-danger" />
-        <a asp-page="./Index">Back to List</a>
+        <input type="submit" value="Delete" class="btn btn-delete" />
+        <a class="btn btn-back ml-2" asp-page="List">Powrót</a>
     </form>
 </div>
