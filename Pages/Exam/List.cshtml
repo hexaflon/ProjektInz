@@ -23,8 +23,8 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="visibility">Widoczność:</label>
-                        <select class="form-control" id="visibility" name="visibility">
+                        <label for="visibility" class="row1">Widoczność:</label>
+                        <select class="form-control dropdown" id="visibility" name="visibility">
                             <option value="">Wszystkie</option>
                             <option value="true">Widoczne</option>
                             <option value="false">Niewidoczne</option>
@@ -34,8 +34,8 @@
 
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="groupName">Nazwa grupy:</label>
-                        <select class="form-control" id="groupName" name="groupName">
+                        <label for="groupName" class="row1">Nazwa grupy:</label>
+                        <select class="form-control dropdown" id="groupName" name="groupName">
                             <option value="">Wszystkie</option>
                             @foreach (var group in Model.Groups)
                             {
@@ -47,7 +47,7 @@
 
                 <div class="col-md-8">
                     <div class="form-group">
-                        <label for="searchText">Wyszukaj tytuł:</label>
+                        <label for="searchText" class="row1">Wyszukaj tytuł:</label>
                         <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Wyszukaj tytuł testu..." />
                     </div>
                 </div>
@@ -100,7 +100,7 @@
                     </tr>
                     <tr>
                         <td colspan="9">
-                            <a class="btn btn-create" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Dodaj pytanie</a>
+                            <a class="btn btn-create" asp-page="./AddQuestion" asp-route-id="@item.IdTest">Zarządzaj pytaniami</a>
                             <button class="btn btn-show-hide" data-test-id="@item.IdTest" data-toggle-text="Pokaż pytania">Pokaż pytania</button>
                         </td>
                     </tr>
@@ -126,7 +126,40 @@
 </div>
 
 @section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script>
+        $(document).ready(function () {
+            var tytulyArray = @Html.Raw(Json.Serialize(Model.Test.Select(t => t.Tytul).ToList()));
+
+            $("#searchText").autocomplete({
+                source: function (request, response) {
+                    var results = $.ui.autocomplete.filter(tytulyArray, request.term);
+
+                    if (results.length === 0) {
+                        results.push("Nie odnaleziono.");
+                    }
+
+                    var scrollbarThreshold = 5;
+                    var scrollbar = false;
+
+                    if (results.length > scrollbarThreshold) {
+                        scrollbar = true;
+                    }
+
+                    response(results);
+
+                    if (scrollbar) {
+                        $(".ui-autocomplete").css("max-height", "150px");
+                        $(".ui-autocomplete").css("overflow-y", "auto");
+                    }
+                },
+                minLength: 2,
+                delay: 300
+            });
+        });
+
         $(document).ready(function () {
             $(".btn-show-hide").click(function () {
                 var testId = $(this).data("test-id");

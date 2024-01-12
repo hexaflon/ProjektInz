@@ -28,7 +28,7 @@
                     @Html.DisplayFor(x => pyt.IdPytanieNavigation.Tresc)
                 </td>
                 <td>
-                        <a asp-page-handler="Delete" asp-route-idTest="@pyt.IdTest" asp-route-idPytanie="@pyt.IdPytanie" class="btn btn-delete">Usuń pytanie</a>
+                        <a asp-page-handler="Delete" asp-route-idTest="@pyt.IdTest" asp-route-idPytanie="@pyt.IdPytanie" class="btn btn-delete">Usuń</a>
                 </td>
             </tr>
         }
@@ -42,7 +42,7 @@
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                 <div class="form-group">
                     <label asp-for="ListaPytan.IdPytanie" class="control-label">Wybierz pytanie</label>
-                    <select asp-for="ListaPytan.IdPytanie" class="form-control" asp-items="ViewBag.IdPytanie"></select>
+                    <select asp-for="ListaPytan.IdPytanie" class="form-control dropdown" asp-items="ViewBag.IdPytanie"></select>
                 </div>
                 <div class="form-group mt-3">
                     <input type="submit" value="Dodaj" class="btn btn-standard" />

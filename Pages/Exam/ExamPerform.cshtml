@@ -58,8 +58,8 @@
 
 @section Scripts {
     <script>
-        var countdown = @Model.CzasTrwania; //czas trwania w sekundach (test)
-        //var countdown = @Model.CzasTrwania * 60;
+        //var countdown = @Model.CzasTrwania; //czas trwania w sekundach (test)
+        var countdown = @Model.CzasTrwania * 60;
         var timerElement = document.getElementById('timer');
 
         function updateTimer() {

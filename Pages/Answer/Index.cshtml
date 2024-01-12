@@ -18,8 +18,8 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="questionFilter">Pytanie:</label>
-                        <select class="form-control" id="questionFilter" name="questionFilter">
+                        <label for="questionFilter" class="row1">Pytanie:</label>
+                        <select class="form-control dropdown" id="questionFilter" name="questionFilter">
                             <option value="">Wszystkie</option>
                             @foreach (var question in Model.Pytania)
                             {
@@ -31,8 +31,8 @@
 
                 <div class="col-md-4">
                     <div class="form-group">
-                        <label for="correctnessFilter">Poprawność odpowiedzi:</label>
-                        <select class="form-control" id="correctnessFilter" name="correctnessFilter">
+                        <label for="correctnessFilter" class="row1">Poprawność odpowiedzi:</label>
+                        <select class="form-control dropdown" id="correctnessFilter" name="correctnessFilter">
                             <option value="">Wszystkie</option>
                             <option value="true">Poprawne</option>
                             <option value="false">Niepoprawne</option>
@@ -40,9 +40,8 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-2 custom-margin1">
                     <div class="form-group">
-                        <br />
                         <button type="submit" class="btn btn-standard">Szukaj</button>
                     </div>
                 </div>

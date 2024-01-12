@@ -17,7 +17,7 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="searchInput" class="sr-only">Wyszukaj</label>
+                    <label for="searchInput" class="sr-only row1">Wyszukaj</label>
                     <input type="text" class="form-control" id="searchText" name="searchText" placeholder="Wyszukaj nazwę grupy...">
                 </div>
             </div>
@@ -56,3 +56,39 @@
     </table>
 
 </div>
+@section scripts {
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script>
+        $(document).ready(function () {
+            var grupyArray = @Html.Raw(Json.Serialize(Model.Grupy.Select(g => g.Nazwa).ToList()));
+
+            $("#searchText").autocomplete({
+                source: function (request, response) {
+                    var results = $.ui.autocomplete.filter(grupyArray, request.term);
+
+                    if (results.length === 0) {
+                        results.push("Nie odnaleziono.");
+                    }
+
+                    var scrollbarThreshold = 5;
+                    var scrollbar = false;
+
+                    if (results.length > scrollbarThreshold) {
+                        scrollbar = true;
+                    }
+
+                    response(results);
+
+                    if (scrollbar) {
+                        $(".ui-autocomplete").css("max-height", "150px");
+                        $(".ui-autocomplete").css("overflow-y", "auto");
+                    }
+                },
+                minLength: 2,
+                delay: 300
+            });
+        });
+    </script>
+}

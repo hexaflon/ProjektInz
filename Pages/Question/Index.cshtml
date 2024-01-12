@@ -18,8 +18,8 @@
             <div class="row">
                 <div class="col-md-2">
                     <div class="form-group">
-                        <label for="categoryId">Kategoria:</label>
-                        <select class="form-control" id="categoryId" name="categoryId">
+                        <label for="categoryId" class="row1">Kategoria:</label>
+                        <select class="form-control dropdown" id="categoryId" name="categoryId">
                             <option value="">Wszystkie</option>
                             @foreach (var category in Model.Kategorie)
                             {
@@ -29,10 +29,10 @@
                     </div>
                 </div>
 
-                <div class="col-md-2">
+                <div class="col-md-3">
                     <div class="form-group">
-                        <label for="typeId">Typ pytania:</label>
-                        <select class="form-control" id="typeId" name="typeId">
+                        <label for="typeId" class="row1">Typ pytania:</label>
+                        <select class="form-control dropdown" id="typeId" name="typeId">
                             <option value="">Wszystkie</option>
                             @foreach (var type in Model.TypyPytan)
                             {
@@ -42,9 +42,9 @@
                     </div>
                 </div>
 
-                <div class="col-md-8">
+                <div class="col-md-7">
                     <div class="form-group">
-                        <label for="searchText">Wyszukaj:</label>
+                        <label for="searchText" class="row1">Wyszukaj:</label>
                         <input type="search" class="form-control" id="searchText" name="searchText" placeholder="Wyszukaj pytanie...">
                     </div>
                 </div>
@@ -61,11 +61,11 @@
 
     <table class="table">
         <thead>
-            <tr class="text-muted">
+            <tr class="text-muted text-center">
                 <th class="col-sm-4">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().Tresc)</th>
-                <th class="text-center col-sm-2">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
-                <th class="text-center col-sm-1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
-                <th class="text-center col-sm-2">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
+                <th class="col-sm-2">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdKategoriaPytaniaNavigation.Nazwa)</th>
+                <th class="col-sm-1">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdNauczyciela)</th>
+                <th class="col-sm-2">@Html.DisplayNameFor(model => model.Pytanie.FirstOrDefault().IdTypPytaniaNavigation.Nazwa)</th>
                 <th></th>
             </tr>
         </thead>
@@ -85,7 +85,7 @@
                 </tr>
                 <tr>
                     <td colspan="5" class="text-left">
-                        <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Dodaj odpowiedź</a>
+                        <a class="btn btn-create" asp-page="/Answer/Create" asp-route-id="@item.IdPytanie">Zarządzaj odpowiedziami</a>
                         <button class="btn btn-show-hide" data-question-id="@item.IdPytanie" data-toggle-text="Pokaż odpowiedzi">Pokaż odpowiedzi</button>
                     </td>
                 </tr>
@@ -114,7 +114,6 @@
     <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
     <script>
         $(document).ready(function () {
-            //tablica z treścią pytań (do wyświetlanie podpowiedzi w wyszukiwarce)
             var pytaniaArray = @Html.Raw(Json.Serialize(Model.Pytanie.Select(p => p.Tresc).ToList()));
 
             $("#searchText").autocomplete({

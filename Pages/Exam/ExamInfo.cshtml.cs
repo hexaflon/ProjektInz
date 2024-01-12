@@ -28,6 +28,7 @@ namespace ProjektInzynierski.Pages.Exam
         public Rozwiazanie Rozwiazanie { get; set; } = default!;
         public Test Test { get; set; } = default!;
         public List<double> Oceny { get; set; } = new List<double>();
+        public int OriginalTestId { get; set; } //do powrotu na stronę Details
 
         public void Ocena()
         {
@@ -44,6 +45,7 @@ namespace ProjektInzynierski.Pages.Exam
 
         public async Task<IActionResult> OnGetAsync([FromQuery] int id)
         {
+
             if (id == null || _context.Test == null)
             {
                 return NotFound();
@@ -63,6 +65,7 @@ namespace ProjektInzynierski.Pages.Exam
                         .Include(t => t.ListaPytan)
                         .FirstOrDefaultAsync(t => t.IdTest == rozwiazanie.IdTest);
                     if (Test == null) return NotFound();
+                    OriginalTestId = Test.IdTest;
                     Rozwiazanie = rozwiazanie;
                 }
                 else return Forbid();

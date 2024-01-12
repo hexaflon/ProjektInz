@@ -63,9 +63,9 @@
         var userId = UserManager.GetUserId(User);
         var user = await UserManager.FindByIdAsync(userId);
 
-        if (User.IsInRole("Nauczyciel"))
+        @if ((User.IsInRole("Nauczyciel")) || (User.IsInRole("Admin")))
         {
-            <a class="btn btn-back" asp-page="./Details" asp-route-id="@Model.Rozwiazanie.IdRozwiazanie">Powrót</a>
+            <a class="btn btn-back" asp-page="./Details" asp-route-id="@Model.OriginalTestId">Powrót</a>
         }
         else
         {

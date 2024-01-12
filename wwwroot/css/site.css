@@ -35,8 +35,26 @@ body {
 
         .navbar-nav .nav-item .nav-link:hover {
             background-color: #B85600;
-            color: #fff;
+            color: #fff !important;
         }
+
+.nav-link {
+    color: #B85600 !important;
+}
+
+    .nav-link.active {
+        background-color: #B85600 !important;
+        color: #fff !important;
+    }
+
+body.dark-mode .nav-link {
+    color: #EC8232 !important;
+}
+
+    body.dark-mode .nav-link.active {
+        background-color: #EC8232 !important;
+        color: #fff !important;
+    }
 
 /* g³ówne zak³adki */
 .custom-navbar {
@@ -99,7 +117,7 @@ body.dark-mode .card-body {
 .btn-show-hide {
     color: #fff;
     background-color: #B85600;
-    border-color: #914400;
+    border-color: none;
     font-weight: bold;
     border-radius: 10px;
 }
@@ -140,23 +158,37 @@ body.dark-mode .btn-back {
 
     body.dark-mode .btn-back:hover {
         color: #EC8232;
-        background-color: #4d4c4c;
+        background-color: #e62e3a;
         border-color: #EC8232;
         font-weight: bold;
     }
 
 .btn-delete {
     color: #fff;
-    background-color: #b52d3a;
+    background-color: #c42535;
     border-color: #A41623;
     font-weight: bold;
     border-radius: 10px;
 }
     .btn-delete:hover {
         color: #fff;
-        background-color: #d62b3b;
+        background-color: #e6293c;
         font-weight: bold;
     }
+
+body.dark-mode .btn-delete {
+    color: #fff;
+    background-color: #b52d3a;
+    border-color: #A41623;
+    font-weight: bold;
+    border-radius: 10px;
+}
+
+    body.dark-mode .btn-delete:hover {
+    color: #fff;
+    background-color: #d62b3b;
+    font-weight: bold;
+}
 
 .table > tbody > tr.no-border > td,
 .table > tbody > tr.no-border > th {
@@ -189,6 +221,10 @@ body.dark-mode .table > tbody > tr > th {
 
 .registration-links {
     margin-top: 20px;
+}
+
+.custom-margin1 {
+    margin-top: 2.2rem;
 }
 
 /* podsumowanie - odpowiedzi */
@@ -331,6 +367,7 @@ body.dark-mode form input[type="password"],
 body.dark-mode form input[type="email"],
 body.dark-mode form input[type="number"],
 body.dark-mode form input[type="datetime-local"],
+body.dark-mode form input[type="tel"],
 body.dark-mode form select,
 body.dark-mode form #searchText,
 body.dark-mode form input:-webkit-autofill,
@@ -369,6 +406,29 @@ body.dark-mode .ui-autocomplete {
     body.dark-mode .ui-autocomplete.ui-widget-content {
         border: 1px solid #fff;
     }
+
+/* tryb ciemny - alerty */
+body.dark-mode .alert-success {
+    background-color: #004d40;
+    color: #fff;
+    border-color: #004d40;
+}
+
+.dark-mode .alert-danger {
+    background-color: #6c757d;
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+    .dark-mode .alert-danger .btn-close {
+        color: #dc3545;
+    }
+
+.dark-mode .alert-warning {
+    background-color: #444;
+    color: #f74040;
+    border-color: #f74040;
+}
 
 @media (max-width: 575px) {
     html {
