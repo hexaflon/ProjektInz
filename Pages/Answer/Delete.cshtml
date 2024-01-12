@@ -34,7 +34,7 @@
         <input type="hidden" asp-for="Odpowiedzi.IdOdpowiedz" />
         <div class="form-group mt-3">
             <input type="submit" value="Usuń" class="btn btn-delete" />
-            <a class="btn btn-back ml-2" asp-page="Index">Powrót</a>
+            <a class="btn btn-back ml-2" asp-page="Create"  asp-route-id="@Model.Odpowiedzi.IdPytanie">Powrót</a>
         </div>
     </form>
 </div>

@@ -53,7 +53,7 @@ namespace TestTest.Pages.Question
                 idOdp = odpowiedzi
                     .OrderByDescending(o => o.IdOdpowiedz)
                     .Select(o => o.IdOdpowiedz)
-                    .First() + 1;
+                    .FirstOrDefault() + 1;
             }
             for(int i = 1; i <= 2; i++)
             {
