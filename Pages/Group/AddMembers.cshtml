@@ -7,7 +7,7 @@
 
 <h1 class="display-4">Dodaj ucznia do grupy</h1>
 
-@if (Model.wysUczniowie != null)
+@if (Model.wysUczniowie != null && Model.wysUczniowie.Any())
 {
     <table class="table">
         <thead>
@@ -32,6 +32,10 @@
             }
         </tbody>
     </table>
+}
+else
+{
+    <p class="text-muted">Ta grupa aktualnie jest pusta. Możesz dodać do niej uczniów poniżej.</p>
 }
 
 <h4>Uczestnicy</h4>

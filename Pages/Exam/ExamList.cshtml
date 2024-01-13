@@ -30,49 +30,57 @@
     </div>
 </div>
 
-<table class="table">
-    <thead>
-        <tr class="text-muted text-center">
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Test[0].DataRozpoczecia)
-            </th>
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Test[0].DataZakonczenia)
-            </th>
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Test[0].Tytul)
-            </th>
-            <th class="col-sm-3">
-                @Html.DisplayNameFor(model => model.Test[0].Opis)
-            </th>
-            <th class="col-sm-2">
-                @Html.DisplayNameFor(model => model.Test[0].CzasTrwania)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model.Test) {
-        <tr class="text1 text-center">
-            <td class="col-sm-2">
-                @Html.DisplayFor(modelItem => item.DataRozpoczecia)
-            </td>
-            <td class="col-sm-2">
-                @Html.DisplayFor(modelItem => item.DataZakonczenia)
-            </td>
-            <td class="col-sm-2">
-                @Html.DisplayFor(modelItem => item.Tytul)
-            </td>
-            <td class="col-sm-3">
-                @Html.DisplayFor(modelItem => item.Opis)
-            </td>
-            <td class="col-sm-2">
-                @Html.DisplayFor(modelItem => item.CzasTrwania)
-            </td>
-            <td class="col-sm-1">
-                <a class="btn btn-standard" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
-            </td>
-        </tr>
+@if (Model.Test.Any())
+{
+    <table class="table">
+        <thead>
+            <tr class="text-muted text-center">
+                <th class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Test[0].DataRozpoczecia)
+                </th>
+                <th class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Test[0].DataZakonczenia)
+                </th>
+                <th class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Test[0].Tytul)
+                </th>
+                <th class="col-sm-3">
+                    @Html.DisplayNameFor(model => model.Test[0].Opis)
+                </th>
+                <th class="col-sm-2">
+                    @Html.DisplayNameFor(model => model.Test[0].CzasTrwania)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Test)
+            {
+                <tr class="text1 text-center">
+                    <td class="col-sm-2">
+                        @Html.DisplayFor(modelItem => item.DataRozpoczecia)
+                    </td>
+                    <td class="col-sm-2">
+                        @Html.DisplayFor(modelItem => item.DataZakonczenia)
+                    </td>
+                    <td class="col-sm-2">
+                        @Html.DisplayFor(modelItem => item.Tytul)
+                    </td>
+                    <td class="col-sm-3">
+                        @Html.DisplayFor(modelItem => item.Opis)
+                    </td>
+                    <td class="col-sm-2">
+                        @Html.DisplayFor(modelItem => item.CzasTrwania)
+                    </td>
+                    <td class="col-sm-1">
+                        <a class="btn btn-standard" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
-    </tbody>
-</table>
+else
+{
+    <p class="text2">Nie masz aktualnie żadnych testów do rozwiązania.</p>
+}

@@ -62,6 +62,12 @@
         </div>
     </form>
 
+     @if (!Model.Test.Any())
+    {
+        <p class="text2">Aktualnie w bazie danych nie ma żadnych testów. Możesz je dodać za pomocą przycisku "Utwórz test".</p>
+    }
+    else
+    {
     <table class="table">
         <thead>
             <tr class="text-muted text-center">
@@ -70,7 +76,7 @@
                 <th class="col-sm-2">Data zakończenia</th>
                 <th class="col-sm-2">Tytuł</th>
                 <th class="col-sm-1">Czas trwania</th>
-                <th class="col-sm-1">ID grupy</t>
+                <th class="col-sm-1">ID grupy</th>
                 <th></th>
             </tr>
         </thead>
@@ -123,6 +129,7 @@
             }
         </tbody>
     </table>
+    }
 </div>
 
 @section scripts {

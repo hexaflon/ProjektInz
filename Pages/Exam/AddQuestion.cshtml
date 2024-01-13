@@ -10,14 +10,14 @@
 
 <table class="table">
     <tr class="text-muted border-orange">
-        <td>
+        <td class="fw-bold">
             Tytuł: <span class="text1">@Model.wysTest.Tytul</span>
         </td>
     </tr>
-    @if (Model.wysTest.ListaPytan != null)
+    @if (Model.wysTest.ListaPytan != null && Model.wysTest.ListaPytan.Any())
     {
         <tr class="text-muted">
-            <td>
+            <td class="fw-bold">
                 Pytania dodane do testu:
             </td>
         </tr>
@@ -28,10 +28,18 @@
                     @Html.DisplayFor(x => pyt.IdPytanieNavigation.Tresc)
                 </td>
                 <td>
-                        <a asp-page-handler="Delete" asp-route-idTest="@pyt.IdTest" asp-route-idPytanie="@pyt.IdPytanie" class="btn btn-delete">Usuń</a>
+                    <a asp-page-handler="Delete" asp-route-idTest="@pyt.IdTest" asp-route-idPytanie="@pyt.IdPytanie" class="btn btn-delete">Usuń</a>
                 </td>
             </tr>
         }
+    }
+    else
+    {
+        <tr class="text2">
+            <td class="fw-bold">
+                Ten test aktualnie nie ma żadnych pytań. Możesz dodać je poniżej.
+            </td>
+        </tr>
     }
 </table>
 

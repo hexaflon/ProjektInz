@@ -49,6 +49,11 @@
         </div>
     </form>
 
+    @if (!Model.Odpowiedzi.Any())
+    {
+        <p class="text2">Aktualnie w bazie danych nie ma żadnych odpowiedzi. Możesz dodać odpowiedzi do konkretnego pytania na stronie "Pytania".</p>
+    } else
+    {
     <table class="table">
         <thead>
             <tr class="text-muted text-center">
@@ -73,7 +78,6 @@
                         <td class="col-sm-3">@Html.DisplayFor(modelItem => item.IdPytanieNavigation.Tresc)</td>
                         <td class="col-sm-3">
                             <a class="btn btn-edit" asp-page="./Edit" asp-route-id="@item.IdOdpowiedz">Edytuj</a>
-                            <a class="btn btn-details" asp-page="./Details" asp-route-id="@item.IdOdpowiedz">Więcej</a>
                             <a class="btn btn-delete" asp-page="./Delete" asp-route-id="@item.IdOdpowiedz">Usuń</a>
                         </td>
                     </tr>
@@ -82,4 +86,5 @@
             }
         </tbody>
     </table>
+    }
 </div>

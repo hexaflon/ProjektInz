@@ -7,18 +7,19 @@
 
 <h1 class="display-4">Zarządzaj odpowiedziami</h1>
 <div class="container">
-    <hr />
-    <div class="row">
-        <div class="col-md-4">
-            <h4>Odpowiedzi</h4>
-            @if (Model.wysPytanie.Odpowiedz != null)
-            {
+    @if (Model.wysPytanie.Odpowiedz != null && Model.wysPytanie.Odpowiedz.Any())
+    {
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <h4>Odpowiedzi</h4>
                 <table class="table">
                     <thead>
                         <tr class="text-muted col-sm-3 text-center">
                             <th>Nr pytania</th>
                             <th>Treść odpowiedzi</th>
                             <th>Czy odpowiedź jest poprawna?</th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -40,9 +41,17 @@
                         }
                     </tbody>
                 </table>
-            }
+            </div>
+        </div>
+        <hr />
+    }
 
-            <hr />
+    <div class="row">
+        <div class="col-md-4">
+            @if (!Model.wysPytanie.Odpowiedz.Any())
+            {
+                <p class="text2">To pytanie aktualnie nie ma żadnych odpowiedzi. Możesz dodać je poniżej.</p>
+            }
 
             <form method="post" asp-route-id="@ViewBag.id">
                 <div asp-validation-summary="ModelOnly" class="text-danger"></div>

@@ -22,50 +22,75 @@
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-3 text-muted">Opis testu:</th>
-                        <td class="col-sm-9 text1">@Html.DisplayFor(model => model.Test.Opis)</td>
+                        <td class="col-sm-9 text1">
+                            @if (String.IsNullOrEmpty(Model.Test.Opis))
+                            {
+                                @Html.Raw("-")
+                            }
+                            else
+                            {
+                                @Html.DisplayFor(model => model.Test.Opis)
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-3 text-muted">Średnia ocen:</th>
-                        <td class="col-sm-9 text1">@Html.Raw($"{Model.Avg:F2}")</td>
+                        <td class="col-sm-9 text1">
+                            @if (Double.IsNaN(Model.Avg))
+                            {
+                                @Html.Raw("-")
+                            }
+                            else
+                            {
+                                @Html.Raw($"{Model.Avg:F2}")
+                            }
+                        </td>
                     </tr>
                     <tr>
                         <th scope="row" class="col-sm-3 text-muted">Wyniki</th>
                         <td>
-                            <div class="row text-muted row1">
-                                <div class="col-sm-1">
-                                    <strong>ID</strong>
-                                </div>
-                                <div class="col-sm-3 text-center">
-                                    <strong>Nazwisko i imię</strong>
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <strong>Ilość punktów</strong>
-                                </div>
-                                <div class="col-sm-2 text-center">
-                                    <strong>Ocena</strong>
-                                </div>
-                            </div>
-
-                            @for (int i = 0; i < Model.Wyniki.Count; i++)
+                            @if (!Model.Wyniki.Any())
                             {
-                                <div class="row text1">
+                                <p class="text1">Brak wyników.</p>
+                            }
+                            else
+                            {
+                                <div class="row text-muted row1">
                                     <div class="col-sm-1">
-                                        @Html.Raw($"{Model.Wyniki[i].idUcznia}")
+                                        <strong>ID</strong>
                                     </div>
                                     <div class="col-sm-3 text-center">
-                                        @Html.Raw($"{Model.Wyniki[i].nazwisko} {Model.Wyniki[i].imie}")
+                                        <strong>Nazwisko i imię</strong>
                                     </div>
                                     <div class="col-sm-2 text-center">
-                                        @Html.Raw($"{Model.Wyniki[i].wiadomosc}")
+                                        <strong>Ilość punktów</strong>
                                     </div>
                                     <div class="col-sm-2 text-center">
-                                        @Model.Oceny[i]
-                                    </div>
-                                    <div class="col-sm-3 text-center">
-                                        <a class="btn btn-details" asp-page="./ExamInfo" asp-route-id="@Model.Rozwiazanie[i].IdRozwiazanie">Zobacz więcej</a>
+                                        <strong>Ocena</strong>
                                     </div>
                                 </div>
-                                <br />
+
+                                @for (int i = 0; i < Model.Wyniki.Count; i++)
+                                {
+                                    <div class="row text1">
+                                        <div class="col-sm-1">
+                                            @Html.Raw($"{Model.Wyniki[i].idUcznia}")
+                                        </div>
+                                        <div class="col-sm-3 text-center">
+                                            @Html.Raw($"{Model.Wyniki[i].nazwisko} {Model.Wyniki[i].imie}")
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            @Html.Raw($"{Model.Wyniki[i].wiadomosc}")
+                                        </div>
+                                        <div class="col-sm-2 text-center">
+                                            @Model.Oceny[i]
+                                        </div>
+                                        <div class="col-sm-3 text-center">
+                                            <a class="btn btn-details" asp-page="./ExamInfo" asp-route-id="@Model.Rozwiazanie[i].IdRozwiazanie">Zobacz więcej</a>
+                                        </div>
+                                    </div>
+                                    <br />
+                                }
                             }
                         </td>
                     </tr>

@@ -37,7 +37,8 @@
         <dd class="col-sm-10">
             @{
                 var maxPunkt = Model.Test.ListaPytan.Count();
-                var liczbaPunktow = $"{Model.Rozwiazanie.LiczbaPunktow.ToString()}/{maxPunkt.ToString()} pkt.";
+                var liczbaPunktow = Model.Rozwiazanie.LiczbaPunktow % 1 != 0 ? $"{Model.Rozwiazanie.LiczbaPunktow:G2}" : $"{Model.Rozwiazanie.LiczbaPunktow}";
+                liczbaPunktow += $"/{maxPunkt.ToString()} pkt.";
                 Console.WriteLine(liczbaPunktow);
             }
             @Html.Raw(liczbaPunktow)

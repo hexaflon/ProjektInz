@@ -12,12 +12,12 @@ using TestTest.Models.Db;
 namespace TestTest.Pages
 {
     [Authorize]
-    public class IndexModel : PageModel
+    public class IndexAdminModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
-        private readonly ILogger<IndexModel> _logger;
+        private readonly ILogger<IndexAdminModel> _logger;
         private readonly UserManager<Osoba> _userManager;
-        public IndexModel(TestTest.Models.Db.DatabaseContext context, ILogger<IndexModel> logger, UserManager<Osoba> userManager)
+        public IndexAdminModel(TestTest.Models.Db.DatabaseContext context, ILogger<IndexAdminModel> logger, UserManager<Osoba> userManager)
         {
             _userManager = userManager;
             _logger = logger;

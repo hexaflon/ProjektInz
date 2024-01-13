@@ -30,6 +30,12 @@
         </div>
     </form>
 
+    @if (!Model.Grupy.Any())
+    {
+        <p class="text2">Aktualnie w bazie danych nie ma żadnych grup. Możesz je dodać za pomocą przycisku "Utwórz grupę".</p>
+    }
+    else
+    {
     <table class="table">
         <thead>
             <tr class="text-muted text-center">
@@ -54,8 +60,9 @@
             }
         </tbody>
     </table>
-
+    }
 </div>
+
 @section scripts {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
