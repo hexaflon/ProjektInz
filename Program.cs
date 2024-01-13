@@ -38,7 +38,7 @@ namespace TestTest
 
 
             app.MapRazorPages();
-            app.MapFallbackToPage("/IndexStudent");
+            app.MapFallbackToPage("/Index");
             /*
             app.MapFallback(context =>
             {

@@ -11,7 +11,7 @@ using TestTest.Models.Db;
 
 namespace TestTest.Pages
 {
-    [Authorize]
+    [Authorize(Roles ="Admin")]
     public class IndexAdminModel : PageModel
     {
         private readonly TestTest.Models.Db.DatabaseContext _context;
