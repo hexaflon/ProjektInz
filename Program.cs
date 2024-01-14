@@ -39,29 +39,6 @@ namespace TestTest
 
             app.MapRazorPages();
             app.MapFallbackToPage("/Index");
-            /*
-            app.MapFallback(context =>
-            {
-                var user = context.User;
-                if (user.IsInRole("Admin"))
-                {
-                    context.Response.Redirect("/IndexAdmin");
-                }
-                else if (user.IsInRole("Uczen"))
-                {
-                    context.Response.Redirect("/IndexStudent");
-                }
-                else if (user.IsInRole("Nauczyciel"))
-                {
-                    context.Response.Redirect("/IndexTeacher");
-                }
-                else
-                {
-                    throw new Exception("Unknown role");
-                }
-                return Task.CompletedTask;
-            });             
-             */
 
             app.UseAuthentication();
             app.UseAuthorization();

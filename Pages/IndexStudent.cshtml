@@ -10,12 +10,12 @@
 
 <div class="row mt-5">
     <div class="col-md-7 d-flex align-items-center justify-content-start">
-        <div class="mt-1">
+        <div class="mt-1 button-container">
             @if (Model.Test.Any())
             {
-                <button class="btn btn-big" onclick="location.href='@Url.Page("Exam/ExamList")'">Zacznij rozwiązywanie testów</button>
+                <button class="btn btn-big btn-lg btn-block" onclick="location.href='@Url.Page("Exam/ExamList")'">Zacznij rozwiązywanie testów</button>
             }
-            <button class="btn btn-big" onclick="location.href='@Url.Page("Exam/Marks")'">Przejdź do rozwiązanych testów</button>
+            <button class="btn btn-big btn-lg btn-block" onclick="location.href='@Url.Page("Exam/Marks")'">Przejdź do rozwiązanych testów</button>
         </div>
     </div>
     <div class="col-md-5 text-center">
@@ -23,6 +23,7 @@
             @if (Model.Test.Any())
             {
                 <h3>Testy, które niedługo zostaną zamknięte:</h3>
+                <div class="table-responsive">
                 <table class="table">
                     <thead>
                         <tr class="text-muted text-center">
@@ -42,6 +43,7 @@
                         }
                     </tbody>
                 </table>
+                </div>
             }
             else
             {

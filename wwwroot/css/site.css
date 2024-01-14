@@ -131,7 +131,6 @@ body.dark-mode .card-body {
 .btn-show-hide {
     color: #fff;
     background-color: #B85600;
-    border-color: none;
     font-weight: bold;
     border-radius: 10px;
     margin: 2px;
@@ -229,6 +228,22 @@ body.dark-mode .btn-delete {
         color: #fff;
     }
 
+@media only screen and (max-width: 575px) {
+    .button-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+    }
+
+    .btn-big {
+        font-size: 14px;
+        width: 100%;
+        padding: 15px 0;
+        margin-left: 25px;
+    }
+}
+
 .table {
     margin-top: 10px;
     width: 100%;
@@ -261,6 +276,10 @@ body.dark-mode .btn-delete {
 
 .table {
     box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+}
+
+.table-responsive {
+    overflow-x: auto;
 }
 
 /* tryb ciemny - tabele */
@@ -498,7 +517,7 @@ body.dark-mode .ui-autocomplete {
 body.dark-mode .alert-success {
     background-color: #004d40;
     color: #fff;
-    border-color: #004d40;
+    border-color: #00241e;
 }
 
 .dark-mode .alert-danger {
@@ -595,15 +614,3 @@ body.dark-mode .alert-success {
         margin-top: 10px;
         display: block;
     }
-}
-
-@media (max-width: 767.98px) {
-    .navbar-nav .nav-item {
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-
-        .navbar-nav .nav-item .nav-link {
-            border-radius: 5px;
-        }
-}
