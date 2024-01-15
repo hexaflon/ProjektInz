@@ -25,7 +25,16 @@ namespace TestTest.Pages.Exam
             _userManager = userManager;
         }
 
-        public IActionResult OnGet([FromQuery] int? id)
+        public IList<KategoriaPytania> Kategorie { get; set; } = default!;
+        public IList<TypPytania> TypyPytan { get; set; } = default!;
+
+        public int? CategoryId { get; set; }
+        public int? TypeId { get; set; }
+        public string SearchText { get; set; }
+
+        public IList<Pytanie> lPytan { get; set; } = new List<Pytanie>();
+
+        public IActionResult OnGet([FromQuery] int? id, int? categoryId, int? typeId, string searchText)
         {
             if (id.HasValue)
             {
@@ -43,7 +52,16 @@ namespace TestTest.Pages.Exam
             var pytania =  _context.Pytanie.Include(p => p.Odpowiedz).Where(p => p.Odpowiedz.Count()!=0).ToList();
             var pytaniaWTescie = _context.ListaPytan.Where(lp => lp.IdTest == id).Select(lp => lp.IdPytanie).ToList();
             pytania = pytania.Where(p => !pytaniaWTescie.Contains(p.IdPytanie)).ToList();
+
+            if (categoryId.HasValue) pytania = pytania.Where(p => p.IdKategoriaPytania == categoryId).ToList();
+            if (typeId.HasValue) pytania = pytania.Where(p => p.IdTypPytania == typeId).ToList();
+            if (!string.IsNullOrEmpty(searchText)) pytania = pytania.Where(p => p.Tresc.Contains(searchText)).ToList();
+          
+
             ViewData["IdPytanie"] = new SelectList(pytania, "IdPytanie", "Tresc");
+            lPytan = pytania;
+            Kategorie =  _context.KategoriaPytania.ToList();
+            TypyPytan =  _context.TypPytania.ToList();
             return Page();
         }
 

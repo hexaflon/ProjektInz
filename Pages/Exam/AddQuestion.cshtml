@@ -43,7 +43,59 @@
     }
 </table>
 
+
+
 <div class="container">
+
+    <form method="get" class="form-row">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <label for="categoryId" class="row1">Kategoria:</label>
+                        <select class="form-control dropdown" id="categoryId" name="categoryId">
+                            <option value="">Wszystkie</option>
+                            @foreach (var category in Model.Kategorie)
+                            {
+                                <option value="@category.IdKategoriaPytania">@category.Nazwa</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+                <div hidden>
+                    <input id="id" name="id" value="@ViewBag.IdTest" />
+                </div>
+
+                <div class="col-md-3">
+                    <div class="form-group">
+                        <label for="typeId" class="row1">Typ pytania:</label>
+                        <select class="form-control dropdown" id="typeId" name="typeId">
+                            <option value="">Wszystkie</option>
+                            @foreach (var type in Model.TypyPytan)
+                            {
+                                <option value="@type.IdTypPytania">@type.Nazwa</option>
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-7">
+                    <div class="form-group">
+                        <label for="searchText" class="row1">Wyszukaj:</label>
+                        <input type="search" class="form-control" id="searchText" name="searchText" placeholder="Wyszukaj pytanie...">
+                    </div>
+                </div>
+
+                <div class="col-md-2">
+                    <div class="form-group">
+                        <br />
+                        <button type="submit" class="btn btn-standard">Szukaj</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+
     <div class="row">
         <div class="col-md-4">
             <form method="post" asp-route-id="@ViewBag.IdTest">
@@ -65,4 +117,48 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css" />
+    <script>
+        $(document).ready(function () {
+            var pytaniaArray = @Html.Raw(Json.Serialize(Model.lPytan.Select(p => p.Tresc).ToList()));
+            console.log(pytaniaArray);
+
+            $("#searchText").autocomplete({
+                source: function (request, response) {
+                    var results = $.ui.autocomplete.filter(pytaniaArray, request.term);
+
+                    if (results.length === 0) {
+                        results.push("Nie odnaleziono.");
+                    }
+
+                    var scrollbarThreshold = 5;
+                    var scrollbar = false;
+
+                    if (results.length > scrollbarThreshold) {
+                        scrollbar = true;
+                    }
+
+                    response(results);
+
+                    if (scrollbar) {
+                        $(".ui-autocomplete").css("max-height", "150px");
+                        $(".ui-autocomplete").css("overflow-y", "auto");
+                    }
+                },
+                minLength: 2,
+                delay: 300
+            });
+
+            $(".btn-show-hide").click(function () {
+                var questionId = $(this).data("question-id");
+                var toggleText = $(this).data("toggle-text");
+                $("#answers-row-" + questionId).toggle();
+                $(this).text(function (_, currentText) {
+                    return currentText === toggleText ? "Ukryj odpowiedzi" : toggleText;
+                });
+            });
+        });
+    </script>
 }
