@@ -84,7 +84,7 @@ namespace TestTest.Areas.Identity.Pages.Account
             public string Name { get; set; }
 
             [DataType(DataType.Text)]
-            [MinLength(2, ErrorMessage = "Imię musi mieć co najmniej 2 znaki.")]
+            [MinLength(2, ErrorMessage = "Nazwisko musi mieć co najmniej 2 znaki.")]
             [StringLength(45, ErrorMessage = "Maksymalna długość nazwiska to 45 znaków.")]
             [Display(Name = "Nazwisko")]
             [Required(ErrorMessage = "To pole jest wymagane.")]
