@@ -40,9 +40,11 @@ namespace TestTest.Pages
                 else
                 {
                     var iducznia = _userManager.GetUserAsync(User).Result.IdOsoba;
+                    var grupucznia = _context.Uczestnicy.Where(u => u.IdUcznia == iducznia)
+                        .Select(u => u.IdGrupy);
 
                     Test = _context.Test
-                        .Where(gr => _context.Uczestnicy.Any(u => u.IdUcznia == iducznia))
+                        .Where(t => grupucznia.Contains(t.IdGrupy))
                         .Where(t => t.DataRozpoczecia <= DateTime.Now && t.DataZakonczenia >= DateTime.Now)
                         .OrderBy(t => t.DataZakonczenia)
                         .ToList();

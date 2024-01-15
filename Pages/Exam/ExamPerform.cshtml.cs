@@ -194,7 +194,7 @@ namespace ProjektInzynierski.Pages.Exam
 
 
 
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             foreach(var odp in odpIds)
             {
 

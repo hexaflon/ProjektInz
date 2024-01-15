@@ -54,6 +54,7 @@
             </tr>
         </thead>
         <tbody>
+            @{ int i =0;}
             @foreach (var item in Model.Test)
             {
                 <tr class="text1 text-center">
@@ -72,9 +73,19 @@
                     <td class="col-sm-2">
                         @Html.DisplayFor(modelItem => item.CzasTrwania)
                     </td>
-                    <td class="col-sm-1">
-                        <a class="btn btn-standard" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
-                    </td>
+                    @if (!Model.czyRozwiazany.ElementAt(i))
+                    {
+                        <td class="col-sm-1">
+                            <a class="btn btn-standard" asp-page="./ExamPerform" asp-route-id="@item.IdTest">Rozwiąż</a>
+                        </td>
+                    }
+                    else
+                    {
+                        <td class="col-sm-1">
+                            <a class="btn btn-standard" asp-page="./Marks">Oceny</a>
+                        </td>
+                    }
+                    @{i++;}
                 </tr>
             }
         </tbody>

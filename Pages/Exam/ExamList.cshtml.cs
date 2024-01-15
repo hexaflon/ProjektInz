@@ -24,6 +24,19 @@ namespace ProjektInzynierski.Pages.Exam
         }
 
         public IList<Test> Test { get;set; } = default!;
+        public IList<bool> czyRozwiazany { get; set; } = new List<bool>();
+
+        public void sprawdzCzyRozwiazany()
+        {
+            foreach(var t in Test)
+            {
+                var iducznia = _userManager.GetUserAsync(User).Result.IdOsoba;
+                if (_context.Rozwiazanie
+                    .Where(r => r.IdTest == t.IdTest && r.IdUcznia == iducznia).FirstOrDefault() == null) czyRozwiazany.Add(false);
+                else czyRozwiazany.Add(true);
+
+            }
+        }
 
         public async Task OnGetAsync()
         {
@@ -38,10 +51,12 @@ namespace ProjektInzynierski.Pages.Exam
                 }
                 else { 
                     var iducznia = _userManager.GetUserAsync(User).Result.IdOsoba;
-
+                    var grupucznia = _context.Uczestnicy.Where(u => u.IdUcznia == iducznia)
+                        .Select(u => u.IdGrupy);
                     Test = _context.Test
-                    .Where(gr => _context.Uczestnicy.Any(u => u.IdUcznia == iducznia))
+                    .Where(t => grupucznia.Contains(t.IdGrupy))
                     .Where(t => t.DataRozpoczecia <= DateTime.Now && t.DataZakonczenia >= DateTime.Now).ToList();
+                    sprawdzCzyRozwiazany();                
                 }
             }
         }
